@@ -11,35 +11,41 @@
 
 #include "SingleNode.h"
 
-using namespace std;
+#include <iostream>
 
-typedef int ElemType;
+using namespace std;
+typedef double ElemType;
+
 
 class CyclicLinkedList {
     
     private:
-    SingleNode *head;   // Pointer to the head of the list.
-    SingleNode *tail;   // Pointer to the tail of the list.
+    SingleNode<ElemType> *p;   // Pointer to the head of the list.
+    SingleNode<ElemType> *q;   // Pointer to the tail of the list.
     int n;  // Integer to store the size of the list.
     
     
     public:
     
     // Constructor
-    CyclicLinkedList() {
-        
-        head = nullptr;
-        tail = nullptr;
-        n = 0;
-        
+    CyclicLinkedList():p(nullptr), q(nullptr), n(0) {
+
     }
     
     int size() const {
-        return n;
+        SingleNode<ElemType> *temp;
+        int count = 0;
+        temp = p;
+        
+        while (temp->next != q->next) {
+            count++;
+        }
+        return count;
+        
     }
     bool empty() const {
         //Return true if list is empty, false otherwise.
-        if (head != nullptr) {
+        if (p != nullptr) {
             return false;
         }
         
@@ -52,56 +58,131 @@ class CyclicLinkedList {
         
         if (empty()) {
             
-            throw underflow_error;
+            throw underflow_error("Empty list");
             
         }
         
-        return head->nodeData;
+        return p->nodeData;
         
     }
     
     ElemType back() const {
         
         if (empty()) {
-            throw underflow_error;
+            throw underflow_error("Empty list");
         }
         
-        return tail->nodeData;
+        return q->nodeData;
     }
     
     // Returns head pointer
     SingleNode<ElemType> *head() const {
-        return head;
+        return p;
     }
     
     // Returns tail pointer
     SingleNode<ElemType> *tail() const {
-        return tail;
+        return q;
     }
     
-    int count(ElemType const &) const {
+    int count(ElemType const & item_to_count) const {
         // Returns the number of nodes in the linked list,
         // storing a value equal to the argument.
+        SingleNode<ElemType> *temp;
+        int count = 0;
+        
+        temp = p;
+        
+        while (temp->getNext() != q->next) {
+            
+            if (temp->getData() == item_to_count) {
+                
+                count++;
+            
+            }
+            
+            temp = temp->next;
+            
+        }
+        
+        return count;
+        
     }
     
-    void push_front(ElemType const &) {
+    void push_front(ElemType const &item) {
+        
+        SingleNode<ElemType> *newNode = nullptr;
+        newNode->nodeData = item;
+        newNode->next = p;
+        p = newNode;
         
         
     }
     
-    void push_back(ElemType const &) {
+    void push_back(ElemType const &item) {
+        
+        SingleNode<ElemType> *newNode = nullptr;
+        newNode->nodeData = item;
+        
+        if (q != nullptr) {
+            
+            q->next = newNode;
+            
+        } else {
+        
+            q = newNode;
+            
+        }
+        newNode->next = p;
         
     }
     
     ElemType pop_front() {
+        SingleNode<ElemType> *temp = nullptr;
+        temp = p;
+        
+        ElemType deleted = temp->getData();
+        
+        return deleted;
         
     }
     
-    int erase(ElemType const &) {
+    int erase(ElemType const &item) {
+        SingleNode<ElemType> *temp1 = nullptr;
+        SingleNode<ElemType> *temp2 = nullptr;
         
+        int count = 0;
         
-    }
-
+        if (p->nodeData == item) {
+            temp1 = p->next;
+            delete p;
+            p = temp1;
+            count++;
+        }
+            
+            temp1 = head();
+            while (temp1 != q->next && temp1->nodeData != item) {
+                temp2 = temp1;
+                temp1 = temp1->next;
+            }
+            
+            if (temp1->next == q && q->nodeData == item) {
+                
+                temp1->next = q->next;
+                temp2->next = temp1;
+                delete q;
+                count++;
+                
+            } else if (temp1) {
+                temp2->next = temp1->next;
+                delete temp1;
+                count++;
+            }
+        
+        return count;
+        
+        }
+    
 };
 
 
