@@ -39,6 +39,7 @@ int main() {
         cin >> ch;
     }
     
+    
     if (ch == 's') {
         
         cout << "1. Create list" << endl;
@@ -55,6 +56,7 @@ int main() {
         cout << "11. Print list" << endl;
         cout << "12. Exit" << endl;
         cin >> menu_number;
+        while (menu_number != 12 ) {
         
         switch(menu_number) {
             case 1:
@@ -105,7 +107,7 @@ int main() {
             break;
         }
     }
-    
+    }
     if (ch == 'd') {
         
         cout << "1. Create list" << endl;
@@ -122,6 +124,8 @@ int main() {
         cout << "11. Print list" << endl;
         cout << "12. Exit" << endl;
         cin >> menu_number;
+        
+        while (menu_number != 12 ) {
         
         switch(menu_number) {
             
@@ -165,6 +169,7 @@ int main() {
             default: break;
         }
         
+    }
     }
     
     
