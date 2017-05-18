@@ -164,6 +164,7 @@ class DoublyLinkedList {
             else if(h->next == nullptr){
                 if(p->data == arg){
                     count = 1;
+                    n--;
                     delete p;
                     h = nullptr;
                     t = nullptr;
