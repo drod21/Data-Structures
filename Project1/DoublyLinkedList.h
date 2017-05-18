@@ -9,46 +9,193 @@
 #ifndef DoublyLinkedList_h
 #define DoublyLinkedList_h
 
+#include <iostream>
+#include "DoubleNode.h"
+
+
 template <class T>
 
 class DoublyLinkedList {
-    
+    // private data members
+    private:
+        DoubleNode<T>* h;   // head
+        DoubleNode<T>* t;   // tail
+        int n;              // size
+
     public:
+        // constructor sets member values to 0 or null as appropriate
+        DoublyLinkedList() {
+        h = nullptr;
+        t = nullptr;
+        n = 0;
+        }
+        // destructor, delete each node in list
+        ~DoublyLinkedList() {
+            DoubleNode<T>* i = h;
+            if(i == NULL){
+                cout << "List is empty" << endl;
+                return;
+            }
+            while(i->next != nullptr){
+                i++;
+                delete i->previous;
+            }
+            delete i;
+        }
 
-DoublyLinkedList() { //This constructor sets all member variables to 0 or nullptr,as appropriate.
+        // size function returns number of elements in the list
+        int size(void) const{
+         /*   int count = 0;
+            DoubleNode<T>* i = h;
+            if(i == nullptr){
+                return count;
+            }
+            else if(i->next == nullptr){
+                count = 1;
+                return count;
+            }
+            count = 1;
+            while(i->next != t){
+                count++;
+                i++;
+            }
+            return count;
+        */
+            return n;
+        }
 
-}
+        // returns true if list is empty, else returns false
+        bool empty(void) const{
+            if(h == nullptr){
+                return true;
+            }
+            return false;
+        }
 
-~DoublyLinkedList() {
-    
-}
+        // returns data stored at head node
+        T front(void) const{
+            if(empty() == true){
+                throw underflow_error("Error: List is empty");
+            }
+            return h->data;
+        }
 
+        // returns data stored at tail node
+        T back() const {
+            if(empty() == true){
+                throw underflow_error("Error: List is empty");
+            }
+            return t->data;
+        }
 
-int size() const; //returns the number of items in the list.
-bool empty() const; //Returns true if the list is empty, false otherwise.
-T front() const; //Retrieves the object stored in the node pointed to by the head pointer. This function throws a underflow if the list is empty.
-T back() const; //Retrieves the object stored in the node pointed to by the tail pointer. This function throws a underflow if the list is empty.
-//DoubleNode<T> *head() const; //Returns the head pointer.
-//DoubleNode<T> *tail() const; //Returns the tail pointer.
-/*int count( Type const & ) const; Returns the number of nodes in the
-linked list storing a value equal to the argument.
-Mutators
-void push front( Type const & ); Creates a new DoubleNode< Type >
-storing the argument, the next pointer of which is set to the current head pointer.
-The head pointer is set to this new node. If the list was originally empty, the
-tail pointer is set to point to the new node.
-void push back( Type const & ); Similar to push front, this places a
-new node at the back of the list.
-Type pop front(); Delete the node at the front of the linked list and, as
-necessary, update the head and tail pointers. Return the object stored in the
-node being popped. Throw an under
-ow exception if the list is empty.
-int erase( Type const & ); Delete the node(s) (from the front) in the
-linked list that contains the element equal to the argument (use == to to test
-                                                             for equality with the retrieved element). As necessary, update the head and
-tail pointers and the next pointer of any other node within the list. Return the
-number of nodes that were deleted.
-    };*/
+        // returns head pointer
+        DoubleNode<T> *head() const{
+            return h;
+        }
+        // returns tail pointer
+        DoubleNode<T> *tail() const {
+            return t;
+        }
+
+        // count function returns number of nodes with same data as argument
+        int count(T const& arg) const {
+            int count = 0;
+            DoubleNode<T>* i = h;
+            while(i != nullptr){
+                if(arg == i->data){
+                    count++;
+                }
+                i = i->next;
+            }
+            return count;
+        }
+
+        // push_front function creates new DoubleNode at the beginning of the list
+        void push_front(T const& d){
+            DoubleNode<T>* newNode = nullptr;
+            newNode->data = d;
+            if(h == nullptr){
+                newNode->next = nullptr;
+                newNode->previous = nullptr;
+            }
+            else{
+            newNode->previous = nullptr;
+            newNode->next = h;
+            h = newNode;
+            }
+            n++;
+        }
+
+        // push_back function creates a new DoubleNode at the end of the list
+        void push_back(T const& d){
+            DoubleNode<T>* newNode = nullptr;
+            newNode->data = d;
+            if(h == nullptr){
+                newNode->next = nullptr;
+                newNode->previous = nullptr;
+            }
+            else{
+                newNode->next = nullptr;
+                newNode->previous = t;
+                t = newNode;
+            }
+            n++;
+        }
+
+        // returns data stored in list head, deletes list head, adjusts head pointer, adjusts size
+        T pop_front(void){
+            DoubleNode<T>* node = h;
+            T item = h->getData();
+            h = node->next;
+            delete node;
+            n--;
+        }
+
+        // erases any elements of list with data equal to the argument
+        // returns number of nodes deleted
+        int erase(T const& arg){
+            int count = 0;
+            DoubleNode<T>* p = h;
+            // if list is empty
+            if(p == nullptr){
+                return count;
+            }
+            // if list has 1 element
+            else if(h->next == nullptr){
+                if(p->data == arg){
+                    count = 1;
+                    delete p;
+                    h = nullptr;
+                    t = nullptr;
+                }
+                return count;
+            }
+            // if list has > 1 elements
+            for(p = h; p != t; p++){
+                if(p->data == arg){
+                    count++;
+                    n--;
+                    // if at end of list
+                    if(p->next == nullptr){
+                        t = p->previous;
+                        delete p;
+                    }
+                    // if at beginning of list
+                    else if(p->previous == nullptr){
+                        h = p->next;
+                        delete p;
+                    }
+                    // not at beginning or end of list
+                    else{
+                        DoubleNode<T>* temp = p->previous;
+                        p->previous->next = p->next;
+                        p->next->previous = temp;
+                        delete p;
+                    }
+                }
+            }
+            return count;
+        }
 };
 
 #endif /* DoublyLinkedList_h */
