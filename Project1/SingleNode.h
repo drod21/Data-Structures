@@ -16,25 +16,26 @@ using namespace std;
 template <class T>
 
 class SingleNode {
-    friend class CyclicLinkedList;
+    template <class Type> friend class CyclicLinkedList;
 
     // Public members. nodeData and *next are public because they'll be accessed in
     // CyclicLinkedList class as private members
     
-    public:
+    private:
     T nodeData;
     SingleNode *next;
     
     // Constructor
+    public:
     
     SingleNode(T const & data, SingleNode *p) {
-        
-        data = 0;
-        p = nullptr;
         
         nodeData = data;
         next = p;
         
+    }
+    // Empty type constructor
+    SingleNode<T>() {
         
     }
     // Accessors
