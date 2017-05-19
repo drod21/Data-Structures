@@ -56,11 +56,11 @@ int main() {
         cout << "10. Delete instance(s) of an item" << endl;
         cout << "11. Print list" << endl;
         cout << "12. Exit" << endl;
+        
         cin >> menu_number;
+        
         while (1) {
             
-            
-        
         switch(menu_number) {
             case 1:
             cout << "Creating list..." << endl;
@@ -116,32 +116,36 @@ int main() {
             break;
             
             case 8:
+            cout << "Deleting front item.. " << endl;
+            item_to_delete = singly_list->pop_front();
             cout << "Make another selection: " << endl;
             cin >> menu_number;
             break;
             
             case 9:
+            cout << "Deleting back item.. " << endl;
+            item_to_delete = singly_list->pop_back();
             cout << "Make another selection: " << endl;
             cin >> menu_number;
             break;
             
             case 10:
+            cout << "Enter item to delete: " << endl;
+            cin >> item_to_delete;
+            singly_list->erase(item_to_delete);
             cout << "Make another selection: " << endl;
             cin >> menu_number;
             break;
             
-            case 11:
-            SingleNode<double> *p;
+            case 11:;
             cout << "Items in list: " << endl;
-            for (p = singly_list->head(); p != singly_list->tail(); p = p->getNext()) {
-                cout << p->getData() << endl;
-            }
+            singly_list->print_list();
             cout << "Make another selection: " << endl;
             cin >> menu_number;
             break;
             
             case 12:
-            menu_exit = false;
+            return 0;
             break;
             default:
             cout << "Invalid selection. ";

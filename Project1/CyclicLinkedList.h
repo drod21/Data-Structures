@@ -29,6 +29,7 @@ class CyclicLinkedList {
     
     // Constructor, sets member values to 0 or nullptr
     CyclicLinkedList() {
+        
         p = nullptr;
         q = nullptr;
         n = 0;
@@ -53,13 +54,13 @@ class CyclicLinkedList {
     // Return size of list
     int size() const {
         /*SingleNode<ElemType> *temp;
-        int count = 0;
-        temp = p;
-        
-        while (temp->next != q->next) {
-            count++;
-        }
-        return count;*/
+         int count = 0;
+         temp = p;
+         
+         while (temp->next != q->next) {
+         count++;
+         }
+         return count;*/
         
         return n;
         
@@ -128,7 +129,7 @@ class CyclicLinkedList {
             if (temp->getData() == item_to_count) {
                 
                 count++;
-            
+                
             }
             
             temp = temp->next;
@@ -143,16 +144,30 @@ class CyclicLinkedList {
     void push_front(T const &item) {
         
         SingleNode<T> *newNode = new SingleNode<T>();
-        newNode->nodeData = item;
-        q = new SingleNode<T>();
         
-        if (p == nullptr) {
-            p = new SingleNode<T>(item, q);
+        newNode->nodeData = item;
+        
+        // If list is empty
+        if (empty()) {
+            p = new SingleNode<T>();
+            q = new SingleNode<T>();
+            p = newNode;
+            p->next = q;
             q->next = p;
-        } else {
+            
+        } else if (p->next != nullptr) {
+            // If one item in list
+            q->next = p;
             newNode->next = p;
             p = newNode;
             q->next = p;
+            
+        } else {
+            // If more than one item in list
+            q->next = newNode;
+            newNode->next = p;
+            p = newNode;
+            
         }
         
         
@@ -166,30 +181,25 @@ class CyclicLinkedList {
         
         SingleNode<T> *newNode = new SingleNode<T>;
         SingleNode<T> *temp = nullptr;
-        SingleNode<T> *previous = nullptr;
+        SingleNode<T> *previous;
         newNode->nodeData = item;
         
         // List is empty
         if (p == nullptr) {
-            p = new SingleNode<T>(item, q);
-            q = p;
-            p->next = q;
+            cout << "Can't add to end of list, list is empty." << endl;
+            return;
         }
-        if (q == nullptr) {
-            q = new SingleNode<T>(item, p);
-            
-        } else {
-            temp = p;
-            while (temp != q) {
-                previous = temp;
-                temp = temp->next;
-            }
-            temp = q;
-            previous->next = temp;
-            p->next = previous;
+        // Tail is empty
+        if (q != nullptr) {
+            for (temp = p, previous = nullptr; temp != q; previous = temp, temp = temp->next);
+            previous->next = newNode;
+            q->next = newNode;
             newNode->next = p;
+            
             q = newNode;
+            
         }
+        
         
         
         n++;
@@ -199,7 +209,7 @@ class CyclicLinkedList {
     // Returns the data to be popped,
     // Deletes list head, adjust size
     T pop_front() {
-        SingleNode<T> *temp = p;
+        SingleNode<T> *temp = p->next;
         
         
         T deleted = temp->getData();
@@ -207,7 +217,12 @@ class CyclicLinkedList {
         // Only set list head to next pointer if
         // head is not only node
         if (temp->next != nullptr) {
-            p = temp->next;
+            delete p;
+            p = temp;
+            q->next = p;
+        } else {
+            delete p;
+            p = new SingleNode<T>();
         }
         
         n--;
@@ -216,6 +231,34 @@ class CyclicLinkedList {
         
     }
     
+    // Returns the data to be popped,
+    // Deletes list head, adjust size
+    T pop_back() {
+        SingleNode<T> *temp = q;
+        
+        
+        T deleted = temp->getData();
+        
+        // Only set list head to next pointer if
+        // head is not only node
+        if (temp->next != nullptr) {
+            delete q;
+            q = temp->next;
+            
+        }
+        
+        n--;
+        
+        return deleted;
+        
+    }
+    
+    void print_list() {
+        SingleNode<T> *temp;
+        for (temp = p ; temp->next != q; temp = temp->next) {
+            cout << temp->nodeData << endl;
+        }
+    }
     int erase(T const &item) {
         SingleNode<T> *temp1 = p;
         SingleNode<T> *temp2 = q;
@@ -227,7 +270,7 @@ class CyclicLinkedList {
         if (temp1 == nullptr) {
             return count;
         } else if (temp1->nodeData == item && temp1->next == nullptr) {
-        // If item is at front of list and list has one element
+            // If item is at front of list and list has one element
             count++;
             n--;
             delete temp1;
@@ -246,18 +289,18 @@ class CyclicLinkedList {
             q = previous;
             return count;
         } else {
-        
+            
             // Item is somewhere else in the list
             for (temp1 = p, previous = nullptr; temp1 != temp2 && temp1->nodeData != item; previous = temp1, temp1 = temp1->next);
             
             previous->next = temp1->next;
             delete temp1;
-        
+            
         }
         
         return count;
         
-        }
+    }
     
 };
 
