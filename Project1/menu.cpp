@@ -24,10 +24,8 @@ int main() {
     item_to_add,
     instances_of_item;
     
-    SingleNode<double> *head;
-    SingleNode<double> *tail = nullptr;
     
-    CyclicLinkedList singly_list;
+    CyclicLinkedList<double> *singly_list;
     //DoublyLinkedList<double> doubly_list;
     
     cout << "Enter the type of linked list: \n"
@@ -42,6 +40,9 @@ int main() {
     
     if (ch == 's') {
         
+        
+        
+        bool menu_exit = true;
         cout << "1. Create list" << endl;
         cout << "2. Count number of items" << endl;
         cout << "3. Retrieve first item" << endl;
@@ -56,55 +57,96 @@ int main() {
         cout << "11. Print list" << endl;
         cout << "12. Exit" << endl;
         cin >> menu_number;
-        while (menu_number != 12 ) {
+        while (1) {
+            
+            
         
         switch(menu_number) {
             case 1:
-            tail = singly_list.tail();
+            cout << "Creating list..." << endl;
+            singly_list = new CyclicLinkedList<double>();
+            cout << "List created. Enter a new option." << endl;
+            cin >> menu_number;
             break;
             case 2:
-            singly_list.size();
+            cout << "The list has : " << singly_list->size() << " elements." << endl;
+            cout << "Select a new option: " << endl;
+            cin >> menu_number;
             break;
             case 3:
-            first_item = singly_list.front();
+            if (singly_list->head() != NULL) {
+            first_item = singly_list->front();
             cout << first_item << endl;
+            } else {
+                cout << "List is empty; make another selection." << endl;
+                cin >> menu_number;
+            }
+            cout << "Select a new option: " << endl;
+            cin >> menu_number;
             break;
             case 4:
-            last_item = singly_list.back();
+            last_item = singly_list->back();
             cout << last_item << endl;
+            cout << "Select a new option: " << endl;
+            cin >> menu_number;
             break;
             case 5:
             cout << "Enter the item to find count of: ";
             cin >> instances_of_item;
-            singly_list.count(instances_of_item);
+            singly_list->count(instances_of_item);
+            cout << "Select a new option: " << endl;
+            cin >> menu_number;
             break;
             case 6:
             cout << "Enter value to add: ";
             cin >> item_to_add;
-            singly_list.push_front(item_to_add);
+            singly_list->push_front(item_to_add);
+            cout << "Item added " << item_to_add << " added." << endl;
+            cout << "Select a new option: " << endl;
+            cin >> menu_number;
             break;
             
             case 7:
             cout << "Enter value to add: ";
             cin >> item_to_add;
-            singly_list.push_back(item_to_add);
+            singly_list->push_back(item_to_add);
+            cout << "Item added " << item_to_add << " added." << endl;
+            cout << "Select a new option: " << endl;
+            cin >> menu_number;
             break;
             
             case 8:
+            cout << "Make another selection: " << endl;
+            cin >> menu_number;
             break;
             
             case 9:
+            cout << "Make another selection: " << endl;
+            cin >> menu_number;
             break;
             
             case 10:
+            cout << "Make another selection: " << endl;
+            cin >> menu_number;
             break;
             
             case 11:
+            SingleNode<double> *p;
+            cout << "Items in list: " << endl;
+            for (p = singly_list->head(); p != singly_list->tail(); p = p->getNext()) {
+                cout << p->getData() << endl;
+            }
+            cout << "Make another selection: " << endl;
+            cin >> menu_number;
             break;
             
             case 12:
-            return 0;
+            menu_exit = false;
             break;
+            default:
+            cout << "Invalid selection. ";
+            cout << "Make another selection: " << endl;
+            cin >> menu_number;
         }
     }
     }
@@ -125,7 +167,8 @@ int main() {
         cout << "12. Exit" << endl;
         cin >> menu_number;
         
-        while (menu_number != 12 ) {
+        bool menu_exit = true;
+        while (menu_exit) {
         
         switch(menu_number) {
             
@@ -164,7 +207,7 @@ int main() {
             break;
             
             case 12:
-            return 0;
+            menu_exit = false;
             break;
             default: break;
         }
