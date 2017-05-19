@@ -13,12 +13,12 @@
 using namespace std;
 
 // template for data type
-template <class T>;
+template <class T>
 
 // DoubleNode class definition
-class DoubleNode(){
+class DoubleNode {
     // a DoublyLinkedList has a DoubleNode
-    friend DoublyLinkedList;
+    friend class DoublyLinkedList;
     // private data members
     private:
             T data;
@@ -28,8 +28,8 @@ class DoubleNode(){
         // constructor. usage: DoubleNode(data, previous, next)
         DoubleNode(T const& d, DoubleNode* p, DoubleNode* n){
             data = d;
-            previous = p
-            next = n
+            previous = p;
+            next = n;
         }
         // destructor
         ~DoubleNode();
@@ -45,7 +45,7 @@ class DoubleNode(){
         DoubleNode* getPrevious(void) const {
             return previous;
         }
-}
+};
 
 #endif /* DoubleNode_h */
 
