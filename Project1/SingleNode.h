@@ -1,3 +1,4 @@
+
 //
 //  SingleNode.h
 //  Project1
@@ -20,35 +21,35 @@ class SingleNode {
 
     // Public members. nodeData and *next are public because they'll be accessed in
     // CyclicLinkedList class as private members
-    
+
     private:
     T nodeData;
     SingleNode *next;
-    
+
     // Constructor
     public:
-    
+
     SingleNode(T const & data, SingleNode *p) {
-        
+
         nodeData = data;
         next = p;
-        
+
     }
     // Empty type constructor
     SingleNode<T>() {
-        
+
     }
     // Accessors
-    
+
     T getData() const {
         return nodeData;        // Returns the data for the node.
     }
-    
+
     SingleNode *getNext() const {
         return next;            // Returns a pointer to the next element.
     }
-    
-    
+
+
 };
 
 

@@ -1,3 +1,4 @@
+
 //
 //  DoublyLinkedList.h
 //  Project1
@@ -71,7 +72,7 @@ class DoublyLinkedList {
             if (h != nullptr) {
                 return false;
             }
-            
+
             return true;
         }
 
@@ -105,35 +106,35 @@ class DoublyLinkedList {
             int count = 0;
             DoubleNode<T> *temp = h->next;
             // Data is in first node
-            
+
             if (temp->previous->data == arg) {
                 count++;
             }
             // Data is elsewhere
             while (temp != NULL) {
-                
+
                 if (temp->data == arg) {
-                    
+
                     count++;
-                    
+
                 }
-                
+
                 temp = temp->next;
-                
+
             }
-            
+
             return count;
 
         }
 
         // push_front function creates new DoubleNode at the beginning of the list
         void push_front(T const& d) {
-            DoubleNode<T>* newNode = new DoubleNode<T>();
+            DoubleNode<T>* newNode = new DoubleNode<T>;
             newNode->data = d;
-            
+
             // List is empty
             if (empty()) {
-                h = new DoubleNode<T>();
+                h = new DoubleNode<T>;
                 newNode->next = nullptr;
                 newNode->previous = nullptr;
                 h = newNode;
@@ -153,7 +154,7 @@ class DoublyLinkedList {
         void push_back(T const& d){
             DoubleNode<T>* newNode = new DoubleNode<T>();
             DoubleNode<T>* temp;
-            
+
             newNode->data = d;
             // Insert to front of list if list is empty
             if(h == nullptr){
@@ -169,7 +170,7 @@ class DoublyLinkedList {
                 temp->next = newNode;
                 t = temp->next;
                 t->previous = temp;
-                
+
             }
             n++;
         }
@@ -183,32 +184,31 @@ class DoublyLinkedList {
             n--;
             return item;
         }
-    
+
     T pop_back() {
         DoubleNode<T> *temp = t;
-        
-        
+
+
         T deleted = temp->getData();
-        
+
         // Only set list head to next pointer if
         // head is not only node
         if (temp->next != nullptr) {
             delete t;
             t = temp->next;
-            
+
         }
-        
+
         n--;
-        
+
         return deleted;
     }
-    
-    
+
+
     // Function to print out the list
     void print_list() {
         DoubleNode<T> *temp;
         if (h != nullptr) {
-            cout << "List: " << endl;
             for (temp = h; temp != nullptr; temp = temp->next) {
                 cout << temp->data << endl;
             }
@@ -219,22 +219,22 @@ class DoublyLinkedList {
         // erases any elements of list with data equal to the argument
         // returns number of nodes deleted
         int erase(T const& arg){
-            
+
             DoubleNode<T> *temp1;
             DoubleNode<T> *temp2 = t;
             DoubleNode<T> *itemDelete;
-            
+
             int count = 0;
-            
+
             for (temp1 = h, itemDelete = nullptr; temp1 != nullptr && temp1->data != arg;
                  itemDelete = temp1, temp1 = temp1->next);
-            
+
             // List is empty
             if (h == nullptr) {
-                
+
                 cout << "List is empty" << endl;
                 return count;
-                
+
             } else if (temp1 == nullptr) {
                 return count;
             } else if (temp1->previous == nullptr) {
@@ -256,13 +256,13 @@ class DoublyLinkedList {
                 n--;
             }
             if (DoublyLinkedList::count(arg) >= count) {
-            
+
             DoublyLinkedList::erase(arg);
                 count++;
             }
             delete temp1;
             return count;
-            
+
 
            /* int count = 0;
             DoubleNode<T>* p = h;
@@ -305,7 +305,7 @@ class DoublyLinkedList {
                     }
                 }
             }
-            return count;*/
+            return count; */
         }
 };
 

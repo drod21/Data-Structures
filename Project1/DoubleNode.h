@@ -1,3 +1,4 @@
+
 //
 //  DoubleNode.h
 //  Project1
@@ -33,11 +34,11 @@ class DoubleNode {
         }
     // Empty constructor for type
     DoubleNode<T>() {
-        
+
     }
         // destructor
     ~DoubleNode() {
-        
+
     }
         // get data function returns data stored at node
         T getData(void) const {

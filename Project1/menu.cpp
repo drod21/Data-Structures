@@ -1,3 +1,4 @@
+
 //
 //  main.cpp
 //  Project1
@@ -9,40 +10,40 @@
 #include <iostream>
 #include "CyclicLinkedList.h"
 #include "DoublyLinkedList.h"
-
+//#include "SingleNode.h"
+//#include "SingleNode.h"
 
 int main() {
-    
+
     char ch;
-    
+
     int menu_number = 0;
-    
-    double list_count,
-    first_item,
+
+    double first_item,
     last_item,
     item_to_delete,
     item_to_add,
     instances_of_item;
     int size = 0, deleted_item_number;
-    
-    
+
+
     CyclicLinkedList<double> *singly_list;
     DoublyLinkedList<double> *doubly_list;
-    
+
     cout << "Enter the type of linked list: \n"
     << "'s' for single, 'd' for double. " << endl;
     cin >> ch;
-    
+
     if (isupper(ch)) {
         cout << "Enter a lowercase letter 's' or 'd'." << endl;
         cin >> ch;
     }
-    
+
     //cout << "Make another selection: " << endl;
     //cin >> menu_number;
-    
+
     if (ch == 's') {
-        
+
         while (menu_number != 12) {
             cout << "1. Create list" << endl;
             cout << "2. Count number of items" << endl;
@@ -57,22 +58,22 @@ int main() {
             cout << "10. Delete instance(s) of an item" << endl;
             cout << "11. Print list" << endl;
             cout << "12. Exit" << endl;
-            
+
             cin >> menu_number;
-            
+
         switch(menu_number) {
-            
+
             case 1:
             cout << "Creating list..." << endl;
             //singly_list = new CyclicLinkedList<double>();
-            singly_list = new CyclicLinkedList<double>();
+            singly_list = new CyclicLinkedList<double>;
             break;
-            
+
             case 2:
             size = singly_list->size();
             cout << "The list has : " << size << " elements." << endl;
             break;
-            
+
             case 3:
             if (singly_list->head() != NULL) {
             first_item = singly_list->front();
@@ -81,56 +82,58 @@ int main() {
                 cout << "List is empty." << endl;
             }
             break;
-            
+
             case 4:
             last_item = singly_list->back();
             cout << last_item << endl;
             break;
-            
+
             case 5:
             cout << "Enter the item to find count of: ";
             cin >> instances_of_item;
             cout << "Item appears " << singly_list->count(instances_of_item) << " times." << endl;
             break;
-            
+
             case 6:
             cout << "Enter value to add: ";
+            //cin.ignore();
             cin >> item_to_add;
+            //cin.ignore();
             singly_list->push_front(item_to_add);
-            cout << "Item added " << singly_list->front() << " added." << endl;
+            cout << "Item " << singly_list->front() << " added." << endl;
             break;
-            
+
             case 7:
             cout << "Enter value to add: ";
             cin >> item_to_add;
             singly_list->push_back(item_to_add);
             cout << "Item added " << singly_list->back() << " added." << endl;
             break;
-            
+
             case 8:
             cout << "Deleting front item.. " << endl;
             item_to_delete = singly_list->pop_front();
             cout << item_to_delete << " was removed." << endl;
             break;
-            
+
             case 9:
             cout << "Deleting back item.. " << endl;
             item_to_delete = singly_list->pop_back();
             cout << item_to_delete << " was removed." << endl;
             break;
-            
+
             case 10:
             cout << "Enter item to delete: " << endl;
             cin >> item_to_delete;
             deleted_item_number = singly_list->erase(item_to_delete);
             cout << item_to_delete << " was removed " << deleted_item_number << " times." << endl;
             break;
-            
+
             case 11:;
             cout << "Items in list: " << endl;
             singly_list->print_list();
             break;
-            
+
             case 12:
             return 0;
             break;
@@ -141,9 +144,9 @@ int main() {
         }
     }
     }
-    
+
     if (ch == 'd') {
-        
+
         while (menu_number != 12) {
             cout << "1. Create list" << endl;
             cout << "2. Count number of items" << endl;
@@ -158,87 +161,87 @@ int main() {
             cout << "11. Print list" << endl;
             cout << "12. Exit" << endl;
             cin >> menu_number;
-        
+
         switch(menu_number) {
-            
+
             case 1:
             cout << "Creating list..." << endl;
             doubly_list = new DoublyLinkedList<double>();
             cout << "List created. " << endl;
-            
+
             break;
             case 2:
             size = doubly_list->size();
             cout << "The list has : " << size << " elements." << endl;
             break;
-            
+
             case 3:
             first_item = doubly_list->front();
             cout << first_item << endl;
             break;
-            
+
             case 4:
             last_item = doubly_list->back();
             cout << last_item << endl;
             break;
-            
+
             case 5:
             cout << "Enter the item to find count of: ";
             cin >> instances_of_item;
             cout << "Item appears " << doubly_list->count(instances_of_item) << " times." << endl;
             break;
-            
+
             case 6:
             cout << "Enter value to add: ";
             cin >> item_to_add;
             doubly_list->push_front(item_to_add);
             cout << "Item added " << doubly_list->front() << " added." << endl;
             break;
-            
+
             case 7:
             cout << "Enter value to add: ";
             cin >> item_to_add;
             doubly_list->push_back(item_to_add);
             cout << "Item added " << doubly_list->back() << " added." << endl;
             break;
-            
+
             case 8:
             cout << "Deleting front item.. " << endl;
             item_to_delete = doubly_list->pop_front();
             cout << item_to_delete << " was removed." << endl;
             break;
-            
+
             case 9:
             cout << "Deleting back item.. " << endl;
             item_to_delete = doubly_list->pop_back();
             cout << item_to_delete << " was removed." << endl;
             break;
-            
+
             case 10:
             cout << "Enter item to delete: " << endl;
             cin >> item_to_delete;
             deleted_item_number = doubly_list->erase(item_to_delete);
             cout << item_to_delete << " was removed " << deleted_item_number << " times."<< endl;
             break;
-            
+
             case 11:;
             cout << "Items in list: " << endl;
             doubly_list->print_list();
             break;
-            
+
             case 12:
             return 0;
             break;
-            
+
             default:
             cout << "Invalid selection. ";
             cout << "Make another selection: " << endl;
             cin >> menu_number;
         }
-        
+
         }
     }
-    
-    
+
+
     return 0;
 }
