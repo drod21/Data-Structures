@@ -33,16 +33,6 @@ class DoublyLinkedList {
         }
         // destructor, delete each node in list
         ~DoublyLinkedList() {
-            /*DoubleNode<T>* i = h;
-            if(i == nullptr){
-                cout << "List is empty" << endl;
-                return;
-            }
-            while(i->next != nullptr){
-                i++;
-                delete i->previous;
-            }
-            delete i;*/
             while (!empty()) {
                 pop_front();
             }
@@ -50,22 +40,7 @@ class DoublyLinkedList {
 
         // size function returns number of elements in the list
         int size(void) const{
-         /*   int count = 0;
-            DoubleNode<T>* i = h;
-            if(i == nullptr){
-                return count;
-            }
-            else if(i->next == nullptr){
-                count = 1;
-                return count;
-            }
-            count = 1;
-            while(i->next != t){
-                count++;
-                i++;
-            }
-            return count;
-        */
+         
             return n;
         }
 
@@ -211,7 +186,9 @@ class DoublyLinkedList {
     // Function to print out the list
     void print_list() {
         DoubleNode<T> *temp;
-        if (h != nullptr) {
+        if (h == nullptr) {
+            cout << "List is empty" << endl;
+        } else {
             for (temp = h; temp != nullptr; temp = temp->next) {
                 cout << temp->data << endl;
             }
