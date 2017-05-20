@@ -249,44 +249,40 @@ class CyclicLinkedList {
 
     int erase(T const &item) {
         
-        SingleNode<T> *temp1;
+        SingleNode<T> *temp1 = nullptr;
         SingleNode<T> *previous;
-
+        
         int cNum = CyclicLinkedList<T>::count(item);
         int count = 0;
-
+        
         while (count != cNum) {
-        for (temp1 = p, previous = nullptr; temp1 != q && temp1->nodeData != item;
-             previous = temp1, temp1 = temp1->next);
-        
-        // List is empty
-        if (temp1 == nullptr) {
-            return count;
-        } else if (previous == nullptr) {
-            // If item is at front of list and list has one element
-            p = p->next;
-            q->next = p;
-            count++;
-            n--;
-        } else if (q->nodeData == item) {
-            pop_back();
-            count++;
-        } else {
-            // Item is at end of list
-            previous->next = temp1->next;
-            count++;
-            n--;
+            for (temp1 = p, previous = nullptr; temp1 != q && temp1->nodeData != item;
+                 previous = temp1, temp1 = temp1->next);
+            
+            // List is empty
+            if (temp1 == nullptr) {
+                return count;
+            } else if (previous == nullptr) {
+                // If item is at front of list and list has one element
+                p = p->next;
+                q->next = p;
+                count++;
+                n--;
+            } else if (q->nodeData == item) {
+                pop_back();
+                count++;
+            } else {
+                // Item is at end of list
+                previous->next = temp1->next;
+                count++;
+                n--;
+            }
+            
         }
-
-            // Item is somewhere else in the list
-        
-        
-        
-
-    }
         delete temp1;
         return count;
     }
+
 
 };
 
