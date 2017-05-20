@@ -208,13 +208,15 @@ class DoublyLinkedList {
     // Function to print out the list
     void print_list() {
         DoubleNode<T> *temp;
-        if (h != nullptr) {
+        if(h == nullptr){
+            cout << "List is empty" << endl;
+        }
+        else{
             for (temp = h; temp != nullptr; temp = temp->next) {
                 cout << temp->data << endl;
             }
         }
     }
-
 
         // erases any elements of list with data equal to the argument
         // returns number of nodes deleted

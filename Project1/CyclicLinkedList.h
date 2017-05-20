@@ -249,6 +249,7 @@ class CyclicLinkedList {
         SingleNode<T> *temp = p;
         if(p == nullptr){
             cout << "The list is empty" << endl;
+            return;
         }
         else {
             do{
@@ -259,7 +260,6 @@ class CyclicLinkedList {
         }
         cout << q->nodeData << endl;
     }
-
 
     int erase(T const &item) {
         SingleNode<T> *temp1 = p;
