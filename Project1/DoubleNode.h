@@ -18,7 +18,7 @@ template <class T>
 // DoubleNode class definition
 class DoubleNode {
     // a DoublyLinkedList has a DoubleNode
-    friend class DoublyLinkedList;
+    template <class Type> friend class DoublyLinkedList;
     // private data members
     private:
             T data;
@@ -31,8 +31,14 @@ class DoubleNode {
             previous = p;
             next = n;
         }
+    // Empty constructor for type
+    DoubleNode<T>() {
+        
+    }
         // destructor
-        ~DoubleNode();
+    ~DoubleNode() {
+        
+    }
         // get data function returns data stored at node
         T getData(void) const {
             return data;

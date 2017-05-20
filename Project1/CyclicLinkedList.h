@@ -150,27 +150,23 @@ class CyclicLinkedList {
         // If list is empty
         if (empty()) {
             p = new SingleNode<T>();
-            q = new SingleNode<T>();
             p = newNode;
             p->next = q;
-            q->next = p;
+            q= p;
             
         } else if (p->next != nullptr) {
             // If one item in list
-            q->next = p;
             newNode->next = p;
             p = newNode;
             q->next = p;
             
         } else {
             // If more than one item in list
-            q->next = newNode;
             newNode->next = p;
             p = newNode;
+            q->next = p;
             
         }
-        
-        
         // Increase size
         n++;
         
@@ -189,18 +185,13 @@ class CyclicLinkedList {
             cout << "Can't add to end of list, list is empty." << endl;
             return;
         }
-        // Tail is empty
-        if (q != nullptr) {
-            for (temp = p, previous = nullptr; temp != q; previous = temp, temp = temp->next);
-            previous->next = newNode;
-            q->next = newNode;
-            newNode->next = p;
-            
-            q = newNode;
-            
-        }
         
-        
+        // List is not empty
+            for (temp = p; temp != q; temp = temp->next)
+            ;
+                temp->next = newNode;
+                newNode->next = p;
+                q = newNode;
         
         n++;
         
@@ -253,12 +244,21 @@ class CyclicLinkedList {
         
     }
     
+    // Function to print out the list
     void print_list() {
-        SingleNode<T> *temp;
-        for (temp = p ; temp->next != q; temp = temp->next) {
-            cout << temp->nodeData << endl;
+        SingleNode<T> *temp = p;
+        if (p != nullptr) {
+            cout << "List: " << endl;
+            do {
+                cout << temp->nodeData << endl;
+                temp = temp->next;
+            }
+            while (temp != p);
         }
+        cout << endl;
     }
+    
+    
     int erase(T const &item) {
         SingleNode<T> *temp1 = p;
         SingleNode<T> *temp2 = q;
@@ -269,34 +269,36 @@ class CyclicLinkedList {
         // List is empty
         if (temp1 == nullptr) {
             return count;
-        } else if (temp1->nodeData == item && temp1->next == nullptr) {
+        } else if (temp1->nodeData == item) {
             // If item is at front of list and list has one element
+            temp1 = temp1->next;
+            delete p;
+            p = temp1;
             count++;
             n--;
-            delete temp1;
-            p = nullptr;
-            return count;
         } else if (temp2->nodeData == item) {
             // At end of list
             previous = p;
             while (previous->next != temp2) {
                 previous = previous->next;
             }
-            count++;
-            n--;
             previous->next = temp2->next;
             delete temp2;
             q = previous;
-            return count;
-        } else {
-            
-            // Item is somewhere else in the list
-            for (temp1 = p, previous = nullptr; temp1 != temp2 && temp1->nodeData != item; previous = temp1, temp1 = temp1->next);
-            
-            previous->next = temp1->next;
-            delete temp1;
-            
+            count++;
+            n--;
         }
+        
+            SingleNode<T> *deleteItem;
+            // Item is somewhere else in the list
+            for (deleteItem = p, previous = nullptr; deleteItem != temp2 && deleteItem->nodeData != item; previous = deleteItem, deleteItem = deleteItem->next);
+            
+            previous->next = deleteItem->next;
+            delete deleteItem;
+            count++;
+            n--;
+            
+    
         
         return count;
         
