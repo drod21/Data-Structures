@@ -15,20 +15,21 @@
 
 int main() {
 
+    typedef double T;
+
     char ch;
 
     int menu_number = 0;
 
-    double first_item,
+    T first_item,
     last_item,
     item_to_delete,
     item_to_add,
     instances_of_item;
     int size = 0, deleted_item_number;
 
-
-    CyclicLinkedList<double> *singly_list;
-    DoublyLinkedList<double> *doubly_list;
+    CyclicLinkedList<T> *singly_list;
+    DoublyLinkedList<T> *doubly_list;
 
     cout << "Enter the type of linked list: \n"
     << "'s' for single, 'd' for double. " << endl;
@@ -65,8 +66,7 @@ int main() {
 
             case 1:
             cout << "Creating list..." << endl;
-            //singly_list = new CyclicLinkedList<double>();
-            singly_list = new CyclicLinkedList<double>;
+            singly_list = new CyclicLinkedList<T>;
             break;
 
             case 2:
@@ -96,9 +96,7 @@ int main() {
 
             case 6:
             cout << "Enter value to add: ";
-            //cin.ignore();
             cin >> item_to_add;
-            //cin.ignore();
             singly_list->push_front(item_to_add);
             cout << "Item " << singly_list->front() << " added." << endl;
             break;
@@ -166,7 +164,7 @@ int main() {
 
             case 1:
             cout << "Creating list..." << endl;
-            doubly_list = new DoublyLinkedList<double>();
+            doubly_list = new DoublyLinkedList<T>();
             cout << "List created. " << endl;
 
             break;
