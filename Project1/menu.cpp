@@ -7,6 +7,7 @@
 //  Copyright © 2017 Derek Rodriguez. All rights reserved.
 //
 
+#include <string>
 #include <iostream>
 #include "CyclicLinkedList.h"
 #include "DoublyLinkedList.h"
@@ -44,7 +45,6 @@ int main() {
     //cin >> menu_number;
 
     if (ch == 's') {
-
         while (menu_number != 12) {
             cout << "1. Create list" << endl;
             cout << "2. Count number of items" << endl;
@@ -133,6 +133,7 @@ int main() {
             break;
 
             case 12:
+            delete singly_list;
             return 0;
             break;
             default:
@@ -228,6 +229,7 @@ int main() {
             break;
 
             case 12:
+            delete doubly_list;
             return 0;
             break;
 

@@ -33,7 +33,7 @@ class DoublyLinkedList {
         }
         // destructor, delete each node in list
         ~DoublyLinkedList() {
-            DoubleNode<T>* i = h;
+            /*DoubleNode<T>* i = h;
             if(i == nullptr){
                 cout << "List is empty" << endl;
                 return;
@@ -42,7 +42,10 @@ class DoublyLinkedList {
                 i++;
                 delete i->previous;
             }
-            delete i;
+            delete i;*/
+            while (!empty()) {
+                pop_front();
+            }
         }
 
         // size function returns number of elements in the list
@@ -208,15 +211,13 @@ class DoublyLinkedList {
     // Function to print out the list
     void print_list() {
         DoubleNode<T> *temp;
-        if(h == nullptr){
-            cout << "List is empty" << endl;
-        }
-        else{
+        if (h != nullptr) {
             for (temp = h; temp != nullptr; temp = temp->next) {
                 cout << temp->data << endl;
             }
         }
     }
+
 
         // erases any elements of list with data equal to the argument
         // returns number of nodes deleted
@@ -228,8 +229,7 @@ class DoublyLinkedList {
 
             int count = 0;
 
-            for (temp1 = h, itemDelete = nullptr; temp1 != nullptr && temp1->data != arg;
-                 itemDelete = temp1, temp1 = temp1->next);
+            for (temp1 = h; temp1 != nullptr && temp1->data != arg; temp1 = temp1->next);
 
             // List is empty
             if (h == nullptr) {
@@ -250,9 +250,8 @@ class DoublyLinkedList {
                 count++;
                 n--;
             } else {
-            for (temp1 = h; temp1 != nullptr && temp1->data != arg;
-                 itemDelete = temp1, temp1 = temp1->next)
-            ;
+            //for (temp1 = h; temp1 != nullptr && temp1->data != arg; temp1 = temp1->next)
+            //;
                 temp1->previous->next = temp1->next;
                 count++;
                 n--;
