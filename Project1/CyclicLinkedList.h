@@ -38,20 +38,6 @@ class CyclicLinkedList {
 
     // Destructor
     ~CyclicLinkedList() {
-        /*SingleNode<T> *temp = new SingleNode<T>;
-        // If the list is initially empty
-        if (p == NULL) {
-            cout <<"List is empty" << endl;
-            return;
-        }
-        // Loop through till p->next is not null.
-        while (p->next != nullptr) {
-            temp = p;
-            p = p->next;
-            if (temp != nullptr) {
-                delete temp;
-            }
-        }*/
         while (!empty()) {
             pop_front();
         }
@@ -59,22 +45,13 @@ class CyclicLinkedList {
 
     // Return size of list
     int size() const {
-        /*SingleNode<ElemType> *temp;
-         int count = 0;
-         temp = p;
-
-         while (temp->next != q->next) {
-         count++;
-         }
-         return count;*/
-
         return n;
-
     }
 
 
+    //Return true if list is empty, false otherwise.
     bool empty() const {
-        //Return true if list is empty, false otherwise.
+        
         if (p != nullptr) {
             return false;
         }
@@ -82,14 +59,12 @@ class CyclicLinkedList {
         return true;
     }
 
+    // Retrieve the object stored in the node pointed to by the head pointer.
+    // Throw underflow if list is empty.
     T front() const {
-        // Retrieve the object stored in the node pointed to by the head pointer.
-        // Throw underflow if list is empty.
-
+        
         if (empty()) {
-
             throw underflow_error("Empty list");
-
         }
 
         return p->nodeData;
@@ -131,15 +106,10 @@ class CyclicLinkedList {
         }
 
         while (temp->next != q->next) {
-
             if (temp->nodeData == item_to_count) {
-
                 count++;
-
             }
-
             temp = temp->next;
-
         }
 
         return count;
@@ -148,32 +118,33 @@ class CyclicLinkedList {
 
     // Creates new node at the beginning of the list
     void push_front(T const &item) {
-
-        SingleNode<T> *newNode = new SingleNode<T>(item, p);
-
+        
+        SingleNode<T> *newNode = new SingleNode<T>();
         newNode->nodeData = item;
-
+        
         // If list is empty
         if (empty()) {
-            p = new SingleNode<T>(item, q);
+            p = newNode;
+            p->next = q;
             q = p;
-
+            
         } else {
             // If more than one item in list
-            
+            newNode->next = p;
             p = newNode;
             q->next = p;
-
+            
         }
         // Increase size
         n++;
-
+        
     }
+
 
     // Creates a new node at the end of the list
     void push_back(T const &item) {
 
-        SingleNode<T> *newNode = new SingleNode<T>(item, p);
+        SingleNode<T> *newNode = new SingleNode<T>;
         SingleNode<T> *temp = nullptr;
         newNode->nodeData = item;
 
@@ -186,8 +157,11 @@ class CyclicLinkedList {
         // List is not empty
         for (temp = p; temp != q; temp = temp->next)
         ;
+        
         temp->next = newNode;
+        newNode->next = p;
         q = newNode;
+        
         n++;
 
     }
@@ -218,6 +192,7 @@ class CyclicLinkedList {
 
         // Loop to the end of the list
         for (temp = p, prev = nullptr; temp != q; prev = temp, temp = temp->next);
+        
         prev->next = p;
         q = prev;
         delete temp;
@@ -234,8 +209,10 @@ class CyclicLinkedList {
             cout << "The list is empty" << endl;
             return;
         } else if (p->next == nullptr) {
+            cout << "Items in list: " << endl;
             cout << p->nodeData << endl;
         } else {
+            cout << "Items in list: " << endl;
             do{
                 cout << temp->nodeData << endl;
                 temp = temp->next;

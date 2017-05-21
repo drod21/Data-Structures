@@ -22,36 +22,40 @@ class DoubleNode {
     template <class Type> friend class DoublyLinkedList;
     // private data members
     private:
-            T data;
-            DoubleNode* next;
-            DoubleNode* previous;
+    T data;
+    DoubleNode* next;
+    DoubleNode* previous;
+    
     public:
-        // constructor. usage: DoubleNode(data, previous, next)
-        DoubleNode(T const& d, DoubleNode* p, DoubleNode* n){
-            data = d;
-            previous = p;
-            next = n;
-        }
-    // Empty constructor for type
-    DoubleNode<T>() {
-
+    // constructor. usage: DoubleNode(data, previous, next)
+    // Email from TA said to use no paramaters, waiting for verification
+    /*DoubleNode(T const& d, DoubleNode* p, DoubleNode* n){
+     data = d;
+     previous = p;
+     next = n;
+     }*/
+    DoubleNode() {
+        data = 0;
+        previous = nullptr;
+        next = nullptr;
     }
-        // destructor
+    
+    // destructor
     ~DoubleNode() {
-
+        
     }
-        // get data function returns data stored at node
-        T getData(void) const {
-            return data;
-        }
-        // getNext function returns pointer to next element
-        DoubleNode* getNext(void) const {
-            return next;
-        }
-        // getPrevious function returns pointer to previous element
-        DoubleNode* getPrevious(void) const {
-            return previous;
-        }
+    // get data function returns data stored at node
+    T getData(void) const {
+        return data;
+    }
+    // getNext function returns pointer to next element
+    DoubleNode* getNext(void) const {
+        return next;
+    }
+    // getPrevious function returns pointer to previous element
+    DoubleNode* getPrevious(void) const {
+        return previous;
+    }
 };
 
 #endif /* DoubleNode_h */

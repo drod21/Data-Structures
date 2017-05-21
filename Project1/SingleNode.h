@@ -29,24 +29,21 @@ class SingleNode {
     // Constructor
     public:
 
-    SingleNode(T const & data, SingleNode *p) {
-
-        nodeData = data;
-        next = p;
-
-    }
-    // Empty type constructor
-    SingleNode<T>() {
-
+    // Email from TA said to use no paramaters
+    SingleNode() {
+        nodeData = 0;
+        next = nullptr;
     }
     // Accessors
 
+    // Returns the data for the node.
     T getData() const {
-        return nodeData;        // Returns the data for the node.
+        return nodeData;
     }
 
+    // Returns a pointer to the next element.
     SingleNode *getNext() const {
-        return next;            // Returns a pointer to the next element.
+        return next;
     }
 
 
