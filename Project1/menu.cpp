@@ -130,7 +130,6 @@ int main() {
                 break;
 
                 case 12:
-                delete singly_list;
                 return 0;
                 break;
     
@@ -227,7 +226,6 @@ int main() {
                 break;
 
                 case 12:
-                delete doubly_list;
                 return 0;
                 break;
 
