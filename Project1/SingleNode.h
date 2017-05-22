@@ -18,35 +18,42 @@ template <class T>
 
 class SingleNode {
     template <class Type> friend class CyclicLinkedList;
-
+    
     // Public members. nodeData and *next are public because they'll be accessed in
     // CyclicLinkedList class as private members
-
-    private:
+    
+private:
     T nodeData;
     SingleNode *next;
-
+    
     // Constructor
-    public:
-
-    // Email from TA said to use no paramaters
-    SingleNode() {
-        nodeData = 0;
-        next = nullptr;
+public:
+    
+    // Constructor
+    SingleNode(T const &data, SingleNode *n) {
+        nodeData = data;
+        next = n;
+    }
+    // Constructor for data only
+    SingleNode(T const &data) {
+        nodeData = data;
+    }
+    // Constructor with no paramaters
+    SingleNode():nodeData(0),next(nullptr) {
     }
     // Accessors
-
+    
     // Returns the data for the node.
     T getData() const {
         return nodeData;
     }
-
+    
     // Returns a pointer to the next element.
     SingleNode *getNext() const {
         return next;
     }
-
-
+    
+    
 };
 
 

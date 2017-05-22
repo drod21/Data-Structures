@@ -21,24 +21,32 @@ class DoubleNode {
     // a DoublyLinkedList has a DoubleNode
     template <class Type> friend class DoublyLinkedList;
     // private data members
-    private:
+private:
     T data;
     DoubleNode* next;
     DoubleNode* previous;
     
-    public:
+public:
     // constructor. usage: DoubleNode(data, previous, next)
-    // Email from TA said to use no paramaters, waiting for verification
-    /*DoubleNode(T const& d, DoubleNode* p, DoubleNode* n){
-     data = d;
-     previous = p;
-     next = n;
-     }*/
-    DoubleNode() {
-        data = 0;
-        previous = nullptr;
-        next = nullptr;
+    DoubleNode(T const& d, DoubleNode* p, DoubleNode* n) {
+        data = d;
+        previous = p;
+        next = n;
     }
+    // Constructor for next and previous pointers only
+    DoubleNode(DoubleNode* n, DoubleNode *p) {
+        next = n;
+        previous = p;
+    }
+    // Constructor for data only
+    DoubleNode(T const& d) {
+        data = d;
+    }
+    
+    // Default constructor
+    DoubleNode():data(0), previous(nullptr), next(nullptr) {
+    }
+    
     
     // destructor
     ~DoubleNode() {
