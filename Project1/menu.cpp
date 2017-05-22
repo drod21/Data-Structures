@@ -76,17 +76,22 @@ int main() {
                     break;
                     
                 case 3:
-                    if (singly_list->head() != NULL) {
+                    try {
                         first_item = singly_list->front();
                         cout << first_item << endl;
-                    } else {
-                        cout << "List is empty." << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
                     }
                     break;
                     
                 case 4:
-                    last_item = singly_list->back();
-                    cout << last_item << endl;
+                    try {
+                        last_item = singly_list->back();
+                        cout << last_item << endl;
+                    }
+                    catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 5:
@@ -110,17 +115,25 @@ int main() {
                     break;
                     
                 case 8:
-                    cout << "Deleting front item.. " << endl;
-                    item_to_delete = singly_list->pop_front();
-                    if (item_to_delete != 0) {
-                        cout << item_to_delete << " was removed." << endl;
+                    try {
+                        cout << "Deleting front item.. " << endl;
+                        item_to_delete = singly_list->pop_front();
+                        if (item_to_delete != 0) {
+                            cout << item_to_delete << " was removed." << endl;
+                        }
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
                     }
                     break;
                     
                 case 9:
+                    try {
                     cout << "Deleting back item.. " << endl;
                     item_to_delete = singly_list->pop_back();
                     cout << item_to_delete << " was removed." << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 10:
@@ -177,13 +190,21 @@ int main() {
                     break;
                     
                 case 3:
-                    first_item = doubly_list->front();
-                    cout << first_item << endl;
+                    try {
+                        first_item = doubly_list->front();
+                        cout << first_item << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 4:
-                    last_item = doubly_list->back();
-                    cout << last_item << endl;
+                    try {
+                        last_item = doubly_list->back();
+                        cout << last_item << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 5:
@@ -200,22 +221,34 @@ int main() {
                     break;
                     
                 case 7:
-                    cout << "Enter value to add: ";
-                    cin >> item_to_add;
-                    doubly_list->push_back(item_to_add);
-                    cout << "Item added " << doubly_list->back() << " added." << endl;
+                    try {
+                        cout << "Enter value to add: ";
+                        cin >> item_to_add;
+                        doubly_list->push_back(item_to_add);
+                        cout << "Item added " << doubly_list->back() << " added." << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 8:
-                    cout << "Deleting front item.. " << endl;
-                    item_to_delete = doubly_list->pop_front();
-                    cout << item_to_delete << " was removed." << endl;
+                    try {
+                        cout << "Deleting front item.. " << endl;
+                        item_to_delete = doubly_list->pop_front();
+                        cout << item_to_delete << " was removed." << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 9:
-                    cout << "Deleting back item.. " << endl;
-                    item_to_delete = doubly_list->pop_back();
-                    cout << item_to_delete << " was removed." << endl;
+                    try {
+                        cout << "Deleting back item.. " << endl;
+                        item_to_delete = doubly_list->pop_back();
+                        cout << item_to_delete << " was removed." << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 10:

@@ -22,12 +22,9 @@ class SingleNode {
     // Public members. nodeData and *next are public because they'll be accessed in
     // CyclicLinkedList class as private members
     
-private:
+public:
     T nodeData;
     SingleNode *next;
-    
-    // Constructor
-public:
     
     // Constructor
     SingleNode(T const &data, SingleNode *n) {

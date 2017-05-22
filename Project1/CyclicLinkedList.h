@@ -164,8 +164,7 @@ public:
     // Deletes list head, adjust size
     T pop_front() {
         if (empty()) {
-            cout << "List is empty, cannot remove first element." << endl;
-            return NULL;
+            throw underflow_error("List is empty, cannot remove first element.");
         }
         
         // Set temp to the first node in the list
@@ -189,8 +188,7 @@ public:
     T pop_back() {
         
         if (empty()) {
-            cout << "List is empty, cannot remove last element." << endl;
-            return NULL;
+            throw underflow_error("List is empty, cannot remove first element.");
         }
         
         SingleNode<T> *temp;
@@ -241,12 +239,13 @@ public:
         int count = 0;
         
         if (cNum == 0) {
-            cout << "No instances of item." << endl;
+            cout << "No instances of item " << item << endl;
             return count;
         }
         
         while (count != cNum) {
-            for (temp1 = p, previous = nullptr; temp1 != q && temp1->nodeData != item;
+            for (temp1 = p, previous = nullptr;
+                 temp1 != q && temp1->nodeData != item;
                  previous = temp1, temp1 = temp1->next);
             
             // List is empty
@@ -256,7 +255,6 @@ public:
                 // If item is at front of list and list has one element
                 pop_front();
                 count++;
-                n--;
             } else if (q->nodeData == item) {
                 pop_back();
                 count++;
@@ -264,7 +262,6 @@ public:
             } else {
                 // Item is at end of list
                 previous->next = temp1->next;
-                
                 count++;
                 n--;
             }

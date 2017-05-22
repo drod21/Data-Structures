@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC92A9921ECCC86B00B2913C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC92A9911ECCC86B00B2913C /* main.cpp */; };
+		AC92A9921ECCC86B00B2913C /* menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC92A9911ECCC86B00B2913C /* menu.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +23,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AC1CC99E1ED30D53001260B6 /* DoubleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleNode.h; sourceTree = "<group>"; };
 		AC92A98E1ECCC86B00B2913C /* Project1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project1; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC92A9911ECCC86B00B2913C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AC92A9911ECCC86B00B2913C /* menu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = menu.cpp; sourceTree = "<group>"; };
+		AC92A9981ECCD89F00B2913C /* SingleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleNode.h; sourceTree = "<group>"; };
+		AC92A99B1ECCD8D700B2913C /* DoublyLinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoublyLinkedList.h; sourceTree = "<group>"; };
+		AC92A99C1ECF2EB800B2913C /* CyclicLinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CyclicLinkedList.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +61,11 @@
 		AC92A9901ECCC86B00B2913C /* Project1 */ = {
 			isa = PBXGroup;
 			children = (
-				AC92A9911ECCC86B00B2913C /* main.cpp */,
+				AC92A9911ECCC86B00B2913C /* menu.cpp */,
+				AC92A9981ECCD89F00B2913C /* SingleNode.h */,
+				AC92A99C1ECF2EB800B2913C /* CyclicLinkedList.h */,
+				AC92A99B1ECCD8D700B2913C /* DoublyLinkedList.h */,
+				AC1CC99E1ED30D53001260B6 /* DoubleNode.h */,
 			);
 			path = Project1;
 			sourceTree = "<group>";
@@ -119,7 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC92A9921ECCC86B00B2913C /* main.cpp in Sources */,
+				AC92A9921ECCC86B00B2913C /* menu.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +256,7 @@
 				AC92A9971ECCC86B00B2913C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

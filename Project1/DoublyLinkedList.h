@@ -117,8 +117,7 @@ public:
         
         // If list is empty
         if(h == nullptr){
-            cout << "Can not add to end of list, list is empty." << endl;
-            return;
+            throw underflow_error("Can not add to end of list, list is empty.");
         } else {
             // Add to end of list
             for (temp = h; temp->next != nullptr; temp = temp->next) ;
@@ -131,6 +130,9 @@ public:
     
     // returns data stored in list head, deletes list head, adjusts head pointer, adjusts size
     T pop_front(void){
+        if (empty()) {
+            throw underflow_error("List is empty, cannot remove first item.");
+        }
         DoubleNode<T>* node = h;
         T item = h->getData();
         h = node->next;
@@ -143,11 +145,20 @@ public:
     }
     
     T pop_back() {
+        if (empty()) {
+            throw underflow_error("List is empty, cannot remove last item.");
+        }
         DoubleNode<T> *temp = t;
         
         T deleted = temp->getData();
-        if (temp->previous != nullptr) {
-            temp->previous->next = temp->next;
+        if (temp->previous == h) {
+            h->next = t = nullptr;
+        } else if (temp == h) {
+            h = t = nullptr;
+        }
+        
+        if (temp->previous != nullptr && temp->next == nullptr) {
+            temp->previous->next = nullptr;
             t = temp->previous;
         }
         delete temp;
@@ -176,13 +187,14 @@ public:
     // Returns number of nodes deleted
     int erase(T const& arg){
         
-        DoubleNode<T> *temp1 = nullptr;
+        DoubleNode<T> *temp1 = new DoubleNode<T>;
+        DoubleNode<T> *previous;
         int cNum = DoublyLinkedList<T>::count(arg);
         int count = 0;
         
         while (count != cNum) {
             
-            for (temp1 = h; temp1 != nullptr && temp1->data != arg; temp1 = temp1->next)
+            for (temp1 = h; temp1 != t && temp1->data != arg; temp1 = temp1->next)
                 ;
             
             // List is empty
@@ -191,8 +203,12 @@ public:
             } else if (temp1->previous == nullptr) {
                 // If item is at front of list and list has one element
                 pop_front();
+                //cout << h->data << endl;
                 count++;
-                n--;
+                
+            } else if (t->data == arg) {
+                pop_back();
+                count++;
             } else {
                 // Item is elsewhere
                 temp1->previous->next = temp1->next;
@@ -201,10 +217,10 @@ public:
             }
             
         }
-        // Free memory
-        delete temp1;
+        //delete temp1;
         return count;
     }
+    
 };
 
 #endif /* DoublyLinkedList_h */
