@@ -1,11 +1,8 @@
-
-//
-//  CyclicLinkedList.h
-//  Project1
-//
-//  Created by Derek Rodriguez on 5/17/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
+/******************************************************
+Derek Rodriguex, Derek Caprio
+COP 4530, Project 1
+CyclicLinkedLiost.h
+******************************************************/
 
 #ifndef CyclicLinkedList_h
 #define CyclicLinkedList_h
@@ -173,13 +170,15 @@ public:
         SingleNode<T> *temp = p;
         T deleted = p->nodeData;
         
+        // If only item in list
+        if (p == q) {
+            p->next = nullptr;
+            q->next = nullptr;
+        }
+
         p = temp->next;
         q->next = p;
-        // If only item in list
-        if (p->next == q) {
-            p = nullptr;
-            q = nullptr;
-        }
+
         delete temp;
         n--;
         
