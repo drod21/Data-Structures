@@ -122,7 +122,9 @@ public:
         // If list is empty, allocate memory for p
         if (empty()) {
             p = new SingleNode<T>(item);
+            // Set q to p
             q = p;
+            // Make it circular
             q->next = p;
         } else {
             newNode->next = p;
