@@ -173,8 +173,10 @@ public:
         
         p = temp->next;
         q->next = p;
-        if (q->next == nullptr) {
-            q = p;
+        // If only item in list
+        if (p->next == q) {
+            p = nullptr;
+            q = nullptr;
         }
         delete temp;
         n--;

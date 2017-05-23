@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517227406.276683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
             landmarkName = "erase(T const &amp;item)"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517227406.276683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
             landmarkName = "erase(T const &amp;item)"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517227406.276683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
             landmarkName = "erase(T const &amp;item)"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517227406.276683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "class CyclicLinkedList"
             landmarkType = "3">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517227406.276683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
             landmarkName = "class CyclicLinkedList"
             landmarkType = "3">
          </BreakpointContent>
@@ -227,12 +227,12 @@
                   moduleName = "Project1"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/derekrodriguez/Documents/School/DataStructures/Assignments/Project1/Project1/Project1/CyclicLinkedList.h"
-                  timestampString = "517171140.954119"
+                  timestampString = "517227747.05309"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "137"
-                  endingLineNumber = "137"
-                  offsetFromSymbolStart = "260">
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "276">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -365,11 +365,11 @@
                   moduleName = "Project1"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/derekrodriguez/Documents/School/DataStructures/Assignments/Project1/Project1/Project1/CyclicLinkedList.h"
-                  timestampString = "517171140.982813"
+                  timestampString = "517227747.137928"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "231"
-                  endingLineNumber = "231"
+                  startingLineNumber = "232"
+                  endingLineNumber = "232"
                   offsetFromSymbolStart = "363">
                </Location>
             </Locations>
@@ -382,11 +382,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517227406.276683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "print_list()"
             landmarkType = "7">
          </BreakpointContent>
@@ -398,39 +398,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
-            landmarkName = "print_list()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "230"
-            endingLineNumber = "230"
-            landmarkName = "print_list()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517227406.276683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "229"
@@ -446,7 +414,39 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153350.076753"
+            timestampString = "517227406.276683"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
+            landmarkName = "print_list()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project1/CyclicLinkedList.h"
+            timestampString = "517227406.276683"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "print_list()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project1/CyclicLinkedList.h"
+            timestampString = "517227746.668735"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "153"
@@ -462,7 +462,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153350.076753"
+            timestampString = "517227746.668735"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "155"
@@ -478,7 +478,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153350.076753"
+            timestampString = "517227746.668735"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "157"
@@ -494,11 +494,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153518.929343"
+            timestampString = "517227746.668735"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "pop_front()"
             landmarkType = "7">
          </BreakpointContent>
@@ -510,12 +510,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517226893.289932"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
-            landmarkName = "pop_front()"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "push_front(T const &amp;item)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -526,12 +526,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517226894.794138"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
-            landmarkName = "pop_front()"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "push_front(T const &amp;item)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -542,12 +542,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project1/CyclicLinkedList.h"
-            timestampString = "517153621.692916"
+            timestampString = "517227055.639884"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
-            landmarkName = "pop_front()"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "push_front(T const &amp;item)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project1/CyclicLinkedList.h"
+            timestampString = "517227746.668735"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "push_front(T const &amp;item)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project1/CyclicLinkedList.h"
+            timestampString = "517226898.329922"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "push_front(T const &amp;item)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project1/CyclicLinkedList.h"
+            timestampString = "517227746.668735"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "push_front(T const &amp;item)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project1/CyclicLinkedList.h"
+            timestampString = "517227746.668735"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "push_front(T const &amp;item)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
