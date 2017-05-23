@@ -123,9 +123,9 @@ public:
         if (empty()) {
             p = new SingleNode<T>(item);
             q = p;
+            q->next = p;
         } else {
             newNode->next = p;
-            
             // Set p to newNode
             p = newNode;
             // Make it circular
