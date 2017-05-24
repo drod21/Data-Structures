@@ -97,11 +97,12 @@ public:
             newNode = new DoubleNode<T>(d, nullptr, nullptr);
             h = newNode;
             t = h;
+            t->previous = h;
             // List is not empty
         } else {
             newNode = new DoubleNode<T>(d, nullptr, h);
+            h->previous = newNode;
             h = newNode;
-            h->next->previous = h;
             t->previous = h->next;
         }
         n++;
@@ -118,7 +119,7 @@ public:
         } else {
             // Add to end of list
             for (temp = h; temp->next != nullptr; temp = temp->next) ;
-            newNode = new DoubleNode<T>(d, temp, nullptr);
+            newNode = new DoubleNode<T>(d, t, nullptr);
             t->next = newNode;
             t = newNode;
         }
@@ -132,8 +133,8 @@ public:
         }
         DoubleNode<T>* node = h;
         T item = h->getData();
-        h = node->next;
-        
+        h = h->next;
+        h->previous = nullptr;
         delete node;
         
         n--;
