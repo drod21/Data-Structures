@@ -75,7 +75,7 @@ int main() {
                 case 3:
                     try {
                         first_item = singly_list->front();
-                        cout << first_item << endl;
+                        cout << first_item << " is the first time in the list." << endl;
                     } catch (underflow_error &e) {
                         cout << e.what() << endl;
                     }
@@ -84,7 +84,7 @@ int main() {
                 case 4:
                     try {
                         last_item = singly_list->back();
-                        cout << last_item << endl;
+                        cout << last_item << " is the last time in the list." << endl;
                     }
                     catch (underflow_error &e) {
                         cout << e.what() << endl;
@@ -189,7 +189,7 @@ int main() {
                 case 3:
                     try {
                         first_item = doubly_list->front();
-                        cout << first_item << endl;
+                        cout << first_item << " is the first time in the list." << endl;
                     } catch (underflow_error &e) {
                         cout << e.what() << endl;
                     }
@@ -198,7 +198,7 @@ int main() {
                 case 4:
                     try {
                         last_item = doubly_list->back();
-                        cout << last_item << endl;
+                        cout << last_item << " is the last time in the list." << endl;
                     } catch (underflow_error &e) {
                         cout << e.what() << endl;
                     }
