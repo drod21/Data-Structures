@@ -1,8 +1,8 @@
 /****************************************
-Derek Rodriguez, Derek Caprio
-COP 4530 Project 1
-DoublyLinkedList.h
-****************************************/
+ Derek Rodriguez, Derek Caprio
+ COP 4530 Project 1
+ DoublyLinkedList.h
+ ****************************************/
 
 #ifndef DoublyLinkedList_h
 #define DoublyLinkedList_h
@@ -133,9 +133,14 @@ public:
         }
         DoubleNode<T>* node = h;
         T item = h->getData();
-        h = h->next;
-        h->previous = nullptr;
-        delete node;
+        if (h->next == nullptr) {
+            delete h;
+            h = nullptr;
+        } else {
+            h = h->next;
+            h->previous = nullptr;
+            delete node;
+        }
         
         n--;
         
@@ -186,7 +191,6 @@ public:
     int erase(T const& arg){
         
         DoubleNode<T> *temp1 = new DoubleNode<T>;
-        DoubleNode<T> *previous;
         int cNum = DoublyLinkedList<T>::count(arg);
         int count = 0;
         

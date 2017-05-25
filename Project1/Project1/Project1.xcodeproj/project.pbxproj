@@ -24,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		AC1CC99E1ED30D53001260B6 /* DoubleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleNode.h; sourceTree = "<group>"; };
+		AC2E39071ED5F7E3004FE1D5 /* week2examples.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = week2examples.cpp; path = ../../../PracticeProblems/week2examples.cpp; sourceTree = "<group>"; };
 		AC92A98E1ECCC86B00B2913C /* Project1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project1; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC92A9911ECCC86B00B2913C /* menu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = menu.cpp; sourceTree = "<group>"; };
 		AC92A9981ECCD89F00B2913C /* SingleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleNode.h; sourceTree = "<group>"; };
@@ -45,6 +46,7 @@
 		AC92A9851ECCC86B00B2913C = {
 			isa = PBXGroup;
 			children = (
+				AC2E39071ED5F7E3004FE1D5 /* week2examples.cpp */,
 				AC92A9901ECCC86B00B2913C /* Project1 */,
 				AC92A98F1ECCC86B00B2913C /* Products */,
 			);
