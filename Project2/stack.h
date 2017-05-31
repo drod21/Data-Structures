@@ -22,8 +22,8 @@ private:
     T *array; // To be used as an array
     
     int count, // Counter
-    initialSize, // Initial size of the array
-    arraySize; // Current size of the array
+        initialSize, // Initial size of the array
+        arraySize; // Current size of the array
     
 public:
     // Constructor
@@ -82,8 +82,8 @@ public:
         
         cout << endl << "Contents of the stack: " << endl;
         
-        for (count = 0; count < arraySize; count++) {
-            cout << array[count] << endl;
+        for (int i = arraySize; i >= 0; i--) {
+            cout << array[i] << endl;
         }
         
         cout << endl;
@@ -105,8 +105,9 @@ public:
             
         }
         
-        a[arraySize] = data;
         arraySize++;
+        a[arraySize] = data;
+        
     }
     
     
