@@ -41,7 +41,7 @@ public:
     // Destructor
     ~DynStack() {
         if (!empty()) {
-            delete array;
+            delete[] array;
         }
     }
     

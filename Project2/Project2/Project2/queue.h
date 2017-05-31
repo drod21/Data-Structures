@@ -40,7 +40,7 @@ public:
     // Destructor
     ~DynQueue() {
         if (!empty())
-            delete array;
+            delete[] array;
     }
     
     // Accessors
