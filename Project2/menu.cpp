@@ -15,7 +15,7 @@ using namespace std;
 
 int main() {
     
-    typedef string T;
+    typedef string Type;
     
     char ch;
     int menu_number = 0;

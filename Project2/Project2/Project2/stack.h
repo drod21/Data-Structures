@@ -36,6 +36,9 @@ public:
         }
         // Allocate memory
         array = new T[initialSize];
+        
+        assert(array != 0);
+        
     }
     
     // Destructor
@@ -95,10 +98,15 @@ public:
         if (size() == capacity()) {
             initialSize = initialSize * 2;
             a = new T[initialSize];
+            for (count = 0; count < arraySize; count++) {
+                a[count] = array[count];
+            }
+            array = a;
             
         }
         
-        //array[iHead];
+        a[arraySize] = data;
+        arraySize++;
     }
     
     
@@ -109,6 +117,6 @@ public:
     void clear() {
         
     }
-
+};
 
 #endif /* stack_h */

@@ -34,7 +34,7 @@ public:
             initialSize = n;
         }
         // Allocate memory
-        array = new T[initialSize];
+        array = new Type[initialSize];
     }
     
     // Destructor
@@ -87,10 +87,10 @@ public:
     // Mutators
     
     void enqueue(Type const &data) {
-        T *a = nullptr;
+        Type *a = nullptr;
         if (size() == capacity()) {
             initialSize = initialSize * 2;
-            a = new T[initialSize];
+            a = new Type[initialSize];
             
         }
         
