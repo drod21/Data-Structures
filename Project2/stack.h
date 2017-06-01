@@ -27,7 +27,7 @@ private:
     
 public:
     // Constructor
-    DynStack(int n = 15):arraySize(0), count(0)  {
+    DynStack(int n = 15):arraySize(15), count(0)  {
         // Test values to set initial size
         if (n <= 0) {
             initialSize = 1;
@@ -89,7 +89,7 @@ public:
     
     int capacity() const {
         // Return total capacity of stack
-        return initialSize;
+        return arraySize;
     }
     
     void display() {
@@ -109,22 +109,18 @@ public:
     
     // Mutators
     
+    // push data to top of stack, resize if neccessary
     void push(T const &data) {
         T *a = nullptr;
         if (size() != capacity()) {
-            
+     		array[count] = data;   
+       	        count++;             
         } else {
             a = new T[initialSize * 2];
             a = array;
             delete [] array;
             array = a;
-        }
-        
-        arraySize++;
-        array[arraySize] = data;
-        
-        count++;
-        
+        }       
     }
     
     // pop and return item on top of stack, resize if neccessary
