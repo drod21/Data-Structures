@@ -81,6 +81,7 @@ public:
         
     }
     
+    // check if stack is empty
     bool empty() const {
 	if(count == 0) return true;
 	else return false;
@@ -149,8 +150,12 @@ public:
 	}
     }
     
-    void clear() {
-        
+    // remove all elements and resize to initial size
+    void clear(void) {
+	delete[] array;
+	T* array = new T[initialSize];
+	count = 0;
+	arraySize = initialSize;
     }
     
     // Overload assignment operator
