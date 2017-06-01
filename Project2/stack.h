@@ -71,7 +71,7 @@ public:
             throw underflow_error("Queue is empty");
             
             // Return head element
-            return array[arraySize];
+            return array[count-1];
     }
 
     
