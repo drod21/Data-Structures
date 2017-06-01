@@ -1,10 +1,9 @@
-//
-//  stack.h
-//  Project2
-//
-//  Created by Derek Rodriguez on 5/30/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
+/***********************************************
+Derek Rodriguez, Derek Caprio
+COP4530 Project2
+stack.h
+***********************************************/
+
 
 #ifndef stack_h
 #define stack_h
@@ -40,10 +39,8 @@ public:
         
     }
     
-    // Copy Constructor
-    
+    // Copy Constructor    
     DynStack(const DynStack &stack):initialSize(stack.initialSize), arraySize(stack.arraySize), count(stack.count) {
-        
         array = new (nothrow) T[initialSize];
         if (array != 0) {
             for (int i = 0; i < initialSize; i++) {
@@ -52,8 +49,7 @@ public:
         } else {
             cerr << "Cannot allocate memory";
             exit(1);
-        }
-        
+        }        
     }
     
     // Destructor
@@ -65,20 +61,18 @@ public:
     
     // Accessors
     
+    // peek at top element of stack
     T top() const throw(std::underflow_error) {
         // Throw underflow error if queue is empty.
         if (empty())
             throw underflow_error("Queue is empty");
-            
-            // Return head element
+            // Return top element
             return array[count-1];
     }
 
-    
-    int size() const {
-        
-        return count;
-        
+    // return number of elements in stack
+    int size() const {        
+        return count;        
     }
     
     // check if stack is empty
@@ -87,24 +81,18 @@ public:
 	else return false;
     }
     
+    // Return total capacity of stack
     int capacity() const {
-        // Return total capacity of stack
         return arraySize;
     }
     
+    // Print the contents of the stack
     void display() {
-        
-        // Print the contents of the stack
-        
-        cout << endl << "Contents of the stack: " << endl;
-        
+        cout << endl << "Contents of the stack: " << endl;        
         for (int i = count; i >= 0; i--) {
             cout << array[i] << endl;
         }
-        
-        cout << endl;
-        
-        
+        cout << endl;        
     }
     
     // Mutators
