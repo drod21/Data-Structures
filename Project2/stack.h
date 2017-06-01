@@ -97,7 +97,7 @@ public:
         
         cout << endl << "Contents of the stack: " << endl;
         
-        for (int i = arraySize; i >= 0; i--) {
+        for (int i = count; i >= 0; i--) {
             cout << array[i] << endl;
         }
         
@@ -126,12 +126,27 @@ public:
         
     }
     
-    
+    // pop and return item on top of stack, resize if neccessary
     T pop() throw(std::underflow_error) {
-        T popped = 0;
-        
+	// if array is empty, throw underflpw error	
+	if(empty() == true){
+		throw std::underflow_error("Stack is empty");
+	}
+	// otherwise pop top item
+        T popped = array[count];
+	count--;
         return popped;
-        
+       	// resize array if neccessary
+	if(count <= .25*arraySize && arraySize > initialSize){
+		int newSize = .5 * arraySize;
+		T* resizedArray= new T[newSize];
+		for(int i = count-1; i >= 0; i--){
+			resizedArray[i] = array[i];
+		}
+		T* temp = array;
+		array = resizedArray;
+		delete[] temp;
+	}
     }
     
     void clear() {

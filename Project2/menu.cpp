@@ -74,7 +74,7 @@ int main() {
             
             case 5:
                 removed = stack.pop();
-                cout << "Item " << removed << " popped from the stack.";
+                cout << "Item " << removed << " popped from the stack." << endl;
                 break;
             
             case 6:
