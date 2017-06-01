@@ -111,15 +111,18 @@ public:
     
     // push data to top of stack, resize if neccessary
     void push(T const &data) {
-        T *a = nullptr;
         if (size() != capacity()) {
      		array[count] = data;   
        	        count++;             
         } else {
-            a = new T[initialSize * 2];
-            a = array;
+            T* a = new T[arraySize * 2];
+	    for(int i = 0; i < count; i++){
+		a[i] = array[i];
+	    }
             delete [] array;
-            array = a;
+            T* array = a;
+	    count++;
+	    array[count-1] = data;
         }       
     }
     
