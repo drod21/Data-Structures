@@ -82,8 +82,8 @@ public:
     }
     
     bool empty() const {
-        // Check if arraysize is empty
-        return (arraySize == 0);
+	if(count == 0) return true;
+	else return false;
     }
     
     int capacity() const {
