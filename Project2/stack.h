@@ -27,7 +27,7 @@ private:
     
 public:
     // Constructor
-    DynStack(int n = 15) {
+    DynStack(int n = 15):arraySize(0), count(0)  {
         // Test values to set initial size
         if (n <= 0) {
             initialSize = 1;
@@ -37,7 +37,22 @@ public:
         // Allocate memory
         array = new T[initialSize];
         
-        assert(array != 0);
+        
+    }
+    
+    // Copy Constructor
+    
+    DynStack(const DynStack &stack):initialSize(stack.initialSize), arraySize(stack.arraySize), count(stack.count) {
+        
+        array = new (nothrow) T[initialSize];
+        if (array != 0) {
+            for (int i = 0; i < initialSize; i++) {
+                array[i] = stack.array[i];
+            }
+        } else {
+            cerr << "Cannot allocate memory";
+            exit(1);
+        }
         
     }
     
@@ -62,7 +77,7 @@ public:
     
     int size() const {
         
-        return arraySize;
+        return count;
         
     }
     
@@ -95,29 +110,50 @@ public:
     
     void push(T const &data) {
         T *a = nullptr;
-        if (size() == capacity()) {
-            initialSize = initialSize * 2;
-            a = new T[initialSize];
-            for (count = 0; count < arraySize; count++) {
-                a[count] = array[count];
-            }
-            array = a;
+        if (size() != capacity()) {
             
+        } else {
+            a = new T[initialSize * 2];
+            a = array;
+            delete [] array;
+            array = a;
         }
         
         arraySize++;
-        a[arraySize] = data;
+        array[arraySize] = data;
+        
+        count++;
         
     }
     
     
     T pop() throw(std::underflow_error) {
+        T popped = 0;
+        
+        return popped;
         
     }
     
     void clear() {
         
     }
+    
+    // Overload assignment operator
+    DynStack &operator=(const DynStack &stack) {
+        if (this != &stack) {
+            arraySize = stack.arraySize;
+            initialSize = stack.initialSize;
+            if (initialSize != stack.initialSize) {
+                delete [] array;
+                array = new(nothrow) T[initialSize];
+            }
+            for (int i = 0; i < initialSize; i++) {
+                array[i] = stack.array[i];
+            }
+        }
+        return *this;
+    }
+    
 };
 
 #endif /* stack_h */

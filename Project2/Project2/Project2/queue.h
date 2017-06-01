@@ -91,7 +91,10 @@ public:
         if (size() == capacity()) {
             initialSize = initialSize * 2;
             a = new Type[initialSize];
-            
+            for (count = 0; count < arraySize; count++) {
+                a[count] = array[count];
+            }
+            array = a;
         }
         
         //array[iHead];
@@ -105,6 +108,7 @@ public:
     void clear() {
         
     }
+    
     
 };
 
