@@ -1,8 +1,8 @@
 /***********************************************
-Derek Rodriguez, Derek Caprio
-COP4530 Project2
-stack.h
-***********************************************/
+ Derek Rodriguez, Derek Caprio
+ COP4530 Project2
+ stack.h
+ ***********************************************/
 
 
 #ifndef stack_h
@@ -21,8 +21,8 @@ private:
     T *array; // To be used as an array
     
     int count, // Counter
-        initialSize, // Initial size of the array
-        arraySize; // Current size of the array
+    initialSize, // Initial size of the array
+    arraySize; // Current size of the array
     
 public:
     // Constructor
@@ -39,7 +39,7 @@ public:
         
     }
     
-    // Copy Constructor    
+    // Copy Constructor
     DynStack(const DynStack &stack):initialSize(stack.initialSize), arraySize(stack.arraySize), count(stack.count) {
         array = new (nothrow) T[initialSize];
         if (array != 0) {
@@ -49,7 +49,7 @@ public:
         } else {
             cerr << "Cannot allocate memory";
             exit(1);
-        }        
+        }
     }
     
     // Destructor
@@ -69,9 +69,9 @@ public:
             // Return top element
             return array[count];
     }
-
+    
     // return number of elements in stack
-    int size() const {        
+    int size() const {
         return (count + 1);
     }
     
@@ -87,11 +87,11 @@ public:
     
     // Print the contents of the stack
     void display() {
-        cout << endl << "Contents of the stack: " << endl;        
+        cout << endl << "Contents of the stack: " << endl;
         for (int i = count; i >= 0; i--) {
             cout << array[i] << endl;
         }
-        cout << endl;        
+        cout << endl;
     }
     
     // Mutators
@@ -124,7 +124,7 @@ public:
         T popped = array[count];
         --count;
         
-
+        
        	// resize array if neccessary
         if(count <= .25*arraySize && arraySize > initialSize) {
             arraySize = .5 * arraySize;
@@ -145,7 +145,7 @@ public:
     // remove all elements and resize to initial size
     void clear(void) {
         delete[] array;
-        T* array = new T[initialSize];
+        array = new T[initialSize];
         count = 0;
         arraySize = initialSize;
     }
@@ -155,6 +155,7 @@ public:
         if (this != &stack) {
             arraySize = stack.arraySize;
             initialSize = stack.initialSize;
+            count = stack.count;
             if (initialSize != stack.initialSize) {
                 delete [] array;
                 array = new(nothrow) T[initialSize];
