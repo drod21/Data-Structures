@@ -8,7 +8,7 @@ stack.h
 #ifndef stack_h
 #define stack_h
 
-
+#include <string>
 using namespace std;
 
 template <class T>
@@ -26,7 +26,7 @@ private:
     
 public:
     // Constructor
-    DynStack(int n = 15):arraySize(15), count(0)  {
+    DynStack(int n = 15):arraySize(n), count(0)  {
         // Test values to set initial size
         if (n <= 0) {
             initialSize = 1;
@@ -65,7 +65,7 @@ public:
     T top() const throw(std::underflow_error) {
         // Throw underflow error if queue is empty.
         if (empty())
-            throw underflow_error("Queue is empty");
+            throw underflow_error("Stack is empty");
             // Return top element
             return array[count-1];
     }
@@ -99,42 +99,48 @@ public:
     
     // push data to top of stack, resize if neccessary
     void push(T const &data) {
-        if (size() != capacity()) {
-     		array[count] = data;   
-       	        count++;             
-        } else {
-            T* a = new T[arraySize * 2];
-	    for(int i = 0; i < count; i++){
-		a[i] = array[i];
-	    }
+        if (size() == capacity()) {
+            arraySize = arraySize * 2;
+            T* a = new T[arraySize];
+            // TODO: Not correctly resizing.. skips over last element, doesn't work properly with strings
+            for(int i = 0; i < count; i++){
+                a[i] = array[i];
+            }
             delete [] array;
-            T* array = a;
-	    count++;
-	    array[count-1] = data;
-        }       
+            array = a;
+            
+        }
+        count++;
+        array[count] = data;
     }
     
     // pop and return item on top of stack, resize if neccessary
     T pop() throw(std::underflow_error) {
-	// if array is empty, throw underflpw error	
-	if(empty() == true){
-		throw std::underflow_error("Stack is empty");
-	}
-	// otherwise pop top item
+        // if array is empty, throw underflpw error
+        if(empty() == true){
+            throw std::underflow_error("Stack is empty");
+        }
+        // otherwise pop top item
+        
         T popped = array[count];
-	count--;
+        count--;
         return popped;
+
        	// resize array if neccessary
-	if(count <= .25*arraySize && arraySize > initialSize){
-		int newSize = .5 * arraySize;
-		T* resizedArray= new T[newSize];
-		for(int i = count-1; i >= 0; i--){
-			resizedArray[i] = array[i];
-		}
-		T* temp = array;
-		array = resizedArray;
-		delete[] temp;
-	}
+        if(count <= .25*arraySize && arraySize > initialSize){
+            int newSize = .5 * arraySize;
+            T* resizedArray= new T[newSize];
+            
+            for(int i = count; i >= 0; i--){
+                resizedArray[i] = array[i];
+            }
+            
+            T* temp = array;
+            array = resizedArray;
+            delete[] temp;
+        }
+        
+        
     }
     
     // remove all elements and resize to initial size
