@@ -123,12 +123,12 @@ public:
         
         T popped = array[count];
         --count;
-        return popped;
+        
 
        	// resize array if neccessary
         if(count <= .25*arraySize && arraySize > initialSize) {
-            int newSize = .5 * arraySize;
-            T* resizedArray= new T[newSize];
+            arraySize = .5 * arraySize;
+            T* resizedArray= new T[arraySize];
             
             for(int i = count; i >= 0; i--){
                 resizedArray[i] = array[i];
@@ -138,7 +138,7 @@ public:
             array = resizedArray;
             delete[] temp;
         }
-        
+        return popped;
         
     }
     
