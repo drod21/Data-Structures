@@ -26,7 +26,8 @@ int main() {
         removed,
         toAdd;
     
-    DynStack<Type> stack(15);
+    // Decreased for ease of testing
+    DynStack<Type> stack(3);
     DynQueue<Type> queue;
     
     
@@ -46,6 +47,7 @@ int main() {
             cout << "5. Delete item ('pop' for Stack, 'dequeue' for Queue)" << endl;
             cout << "6. Display" << endl;
             cout << "7. Clear" << endl;
+            cout << "8. Exit" << endl;
             
             cin >> menu_number;
         switch (menu_number) {
@@ -83,6 +85,9 @@ int main() {
             
             case 7:
                 stack.clear();
+                break;
+            case 8:
+                return 0;
                 break;
             
             default:
@@ -122,6 +127,10 @@ int main() {
                 
             case 7:
                 
+                break;
+                    
+            case 8:
+                return 0;
                 break;
                 
             default:
