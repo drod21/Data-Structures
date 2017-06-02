@@ -10,8 +10,9 @@
 #define queue_h
 
 #include <string>
-template <class Type>
 using namespace std;
+
+template <class Type>
 
 class DynQueue {
     
