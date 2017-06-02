@@ -141,7 +141,10 @@ public:
     }
     
     void clear() {
-        
+        delete[] array;
+        array = new T[initialSize];
+        iHead = iTail = count = 0;
+        arraySize = initialSize;
     }
     
     // Overload assignment operator
