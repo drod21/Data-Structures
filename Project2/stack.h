@@ -26,7 +26,7 @@ private:
     
 public:
     // Constructor
-    DynStack(int n = 15):arraySize(n), count(0)  {
+    DynStack(int n = 15):arraySize(n), count(-1)  {
         // Test values to set initial size
         if (n <= 0) {
             initialSize = 1;
@@ -67,18 +67,17 @@ public:
         if (empty())
             throw underflow_error("Stack is empty");
             // Return top element
-            return array[count-1];
+            return array[count];
     }
 
     // return number of elements in stack
     int size() const {        
-        return count;        
+        return (count + 1);
     }
     
     // check if stack is empty
     bool empty() const {
-	if(count == 0) return true;
-	else return false;
+        return count < 0;
     }
     
     // Return total capacity of stack
@@ -99,19 +98,19 @@ public:
     
     // push data to top of stack, resize if neccessary
     void push(T const &data) {
-        if (size() == capacity()) {
+        if (size() != capacity()) {
+            array[++count] = data;
+        } else {
             arraySize = arraySize * 2;
             T* a = new T[arraySize];
-            // TODO: Not correctly resizing.. skips over last element, doesn't work properly with strings
-            for(int i = 0; i < count; i++){
+            for(int i = 0; i <= count; i++){
                 a[i] = array[i];
             }
             delete [] array;
             array = a;
-            
+            array[++count] = data;
         }
-        count++;
-        array[count] = data;
+        
     }
     
     // pop and return item on top of stack, resize if neccessary
@@ -123,11 +122,11 @@ public:
         // otherwise pop top item
         
         T popped = array[count];
-        count--;
+        --count;
         return popped;
 
        	// resize array if neccessary
-        if(count <= .25*arraySize && arraySize > initialSize){
+        if(count <= .25*arraySize && arraySize > initialSize) {
             int newSize = .5 * arraySize;
             T* resizedArray= new T[newSize];
             
@@ -145,10 +144,10 @@ public:
     
     // remove all elements and resize to initial size
     void clear(void) {
-	delete[] array;
-	T* array = new T[initialSize];
-	count = 0;
-	arraySize = initialSize;
+        delete[] array;
+        T* array = new T[initialSize];
+        count = 0;
+        arraySize = initialSize;
     }
     
     // Overload assignment operator
