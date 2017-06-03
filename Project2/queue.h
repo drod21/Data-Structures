@@ -142,7 +142,7 @@ public:
     
     void clear() {
         delete[] array;
-        array = new T[initialSize];
+        array = new Type[initialSize];
         iHead = iTail = count = 0;
         arraySize = initialSize;
     }
