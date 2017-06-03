@@ -28,7 +28,7 @@ private:
     
 public:
     // Constructor
-    DynQueue(int n = 15) : arraySize(n), count(0), iHead(0), iTail(0) {
+    DynQueue(int n = 15) : arraySize(n), count(0), iHead(-1), iTail(-1) {
         // Test values to set initial size
         if (n <= 0) {
             initialSize = 1;
@@ -97,46 +97,61 @@ public:
         
     }
     void display() {
+        int i;
+        int cap = capacity();
         cout << "Contents of the queue: " << endl;
-        for (int i = count; i >= 0; i--) {
-            cout << array[i] << endl;
+        for (i = iHead; i != iTail + 1; i++) {
+            cout << array[i % cap] << endl;
         }
         cout << endl;
-        
     }
     
     // Mutators
     
     void enqueue(Type const &data) {
-        
-        if (size() != capacity()) {
-            array[iTail] = data;
-            iTail = (iTail + 1) % arraySize;
-            ++count;
-        } else {
+
+        if (size() == capacity()) {
+            
             arraySize = arraySize * 2;
             Type *a = new Type[arraySize];
-            for(int i = 0; i <= count; i++){
+            
+            for(int i = iHead; i <= iTail; i++){
                 a[i] = array[i];
             }
+            
             delete [] array;
             array = a;
-            array[iTail] = data;
-            iTail = (iTail + 1) % arraySize;
-            ++count;
+            
         }
+        
+        array[iTail++] = data;
+        count++;
         
     }
     
     
     Type dequeue() throw(std::underflow_error) {
-        Type removed = array[iHead];
+        Type removed;
         if (empty()) {
             throw underflow_error("Queue is empty");
         }
         
-        iHead = (iHead + 1) % arraySize;
-        --count;
+        removed = front();
+        iHead++;
+        count--;
+        
+        // resize array if neccessary
+        if(count <= .25 * arraySize && arraySize > initialSize) {
+            arraySize = .5 * arraySize;
+            Type* resizedArray= new Type[arraySize];
+            
+            for(int i = iHead; i <= iTail; i++){
+                resizedArray[i] = array[i];
+            }
+            delete [] array;
+            array = resizedArray;
+        }
+
         return removed;
     }
     
