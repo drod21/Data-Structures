@@ -18,17 +18,18 @@ int main() {
     typedef string Type;
     
     char ch;
+    
     int menu_number = 0,
-    size,
-    capacity;
+        size,
+        capacity;
     
     Type top,
-    removed,
-    toAdd;
+        removed,
+        toAdd;
     
-    // Decreased for ease of testing
-    DynStack<Type> stack(3);
-    DynQueue<Type> queue(3);
+    // Default sizes of 15
+    DynStack<Type> stack(15);
+    DynQueue<Type> queue(15);
     
     
     cout << "Please enter 's' for stack, 'q' for queue: ";
