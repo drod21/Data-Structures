@@ -98,18 +98,21 @@ public:
     
     // push data to top of stack, resize if neccessary
     void push(T const &data) {
-        if (size() != capacity()) {
-            array[++count] = data;
-        } else {
+        
+        if (size() == capacity()) {
+            
             arraySize = arraySize * 2;
             T* a = new T[arraySize];
+            
             for(int i = 0; i <= count; i++){
                 a[i] = array[i];
             }
+            
             delete [] array;
             array = a;
-            array[++count] = data;
         }
+        
+        array[++count] = data;
         
     }
     
