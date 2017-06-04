@@ -31,13 +31,9 @@ int main() {
     DynStack<Type> stack(15);
     DynQueue<Type> queue(15);
     
-    
     cout << "Please enter 's' for stack, 'q' for queue: ";
     cin >> ch;
-    
-    
-    
-    
+
     if (ch == 's') {
         while (menu_number != 8) {
             
@@ -64,8 +60,12 @@ int main() {
                     break;
                     
                 case 3:
-                    top = stack.top();
-                    cout << "First item of the stack: " << top << endl;
+                    try {
+                        top = stack.top();
+                        cout << "First item of the stack: " << top << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 4:
@@ -76,8 +76,12 @@ int main() {
                     break;
                     
                 case 5:
-                    removed = stack.pop();
-                    cout << "Item " << removed << " popped from the stack." << endl;
+                    try {
+                        removed = stack.pop();
+                        cout << "Item " << removed << " popped from the stack." << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 6:
@@ -122,8 +126,12 @@ int main() {
                     break;
                     
                 case 3:
-                    top = queue.front();
-                    cout << "First item of the queue: " << top << endl;
+                    try {
+                        top = queue.front();
+                        cout << "First item of the queue: " << top << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 4:
@@ -134,8 +142,12 @@ int main() {
                     break;
                     
                 case 5:
-                    removed = queue.dequeue();
-                    cout << "Item " << removed << " removed from the queue." << endl;
+                    try {
+                        removed = queue.dequeue();
+                        cout << "Item " << removed << " removed from the queue." << endl;
+                    } catch (underflow_error &e) {
+                        cout << e.what() << endl;
+                    }
                     break;
                     
                 case 6:
@@ -145,6 +157,7 @@ int main() {
                 case 7:
                     queue.clear();
                     break;
+                    
                 case 8:
                     return 0;
                     break;

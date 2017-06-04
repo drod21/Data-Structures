@@ -119,14 +119,12 @@ public:
     // pop and return item on top of stack, resize if neccessary
     T pop() throw(std::underflow_error) {
         // if array is empty, throw underflpw error
-        if(empty() == true){
+        if(empty() == true) {
             throw std::underflow_error("Stack is empty");
         }
         // otherwise pop top item
-        
-        T popped = array[count];
+        T popped = top();
         --count;
-        
         
        	// resize array if neccessary
         if(count <= .25*arraySize && arraySize > initialSize) {

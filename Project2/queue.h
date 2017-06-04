@@ -28,7 +28,7 @@ private:
     
 public:
     // Constructor
-    DynQueue(int n = 15) : arraySize(n), count(0), iHead(-1), iTail(-1) {
+    DynQueue(int n = 15) : arraySize(n), count(0), iHead(0), iTail(0) {
         // Test values to set initial size
         if (n <= 0) {
             initialSize = 1;
@@ -88,7 +88,7 @@ public:
     }
     
     bool empty() const {
-        return (arraySize == 0);
+        return (count == 0);
     }
     
     int capacity() const {
@@ -123,7 +123,6 @@ public:
             array = a;
             
         }
-        
         array[iTail++] = data;
         count++;
         
