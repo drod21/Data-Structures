@@ -96,11 +96,11 @@ public:
         
     }
     void display() {
-        int i;
+        int i, j;
         int cap = capacity();
         cout << "Contents of the queue: " << endl;
-        for (i = iHead; i != iTail; i++) {
-            cout << array[i % cap] << endl;
+        for (i = iHead, j = 0; j < count; i = (i + 1) % cap, j++) {
+            cout << array[i] << endl;
         }
         cout << endl;
     }
@@ -114,19 +114,19 @@ public:
             arraySize = arraySize * 2;
             Type *a = new Type[arraySize];
             
-            for(int i = iHead; i <= iTail; i++){
-                a[i] = array[i];
+            for (int i = iHead, j = 0; j < count; i = (i + 1) % arraySize, j++) {
+                a[i + 1] = array[i];
             }
+            
             
             delete [] array;
             array = a;
             
         }
         
-        array[iTail++] = data;
-        if (iTail % arraySize != iHead) {
-            iTail = iTail % capacity();
-        }
+        array[iTail] = data;
+        iTail = (iTail + 1) % capacity();
+        
         cout << iTail << endl;
         count++;
         
