@@ -87,7 +87,7 @@ public:
     }
     
     bool empty() const {
-        return (count == 0);
+        return (iHead == iTail);
     }
     
     int capacity() const {
@@ -99,7 +99,7 @@ public:
         int i;
         int cap = capacity();
         cout << "Contents of the queue: " << endl;
-        for (i = iHead; i != iTail + 1; i++) {
+        for (i = iHead; i != iTail; i++) {
             cout << array[i % cap] << endl;
         }
         cout << endl;
@@ -122,8 +122,11 @@ public:
             array = a;
             
         }
-        array[iTail] = data;
-        iTail = (iTail + 1) % arraySize;
+        
+        array[iTail++] = data;
+        if (iTail % arraySize != iHead) {
+            iTail = iTail % capacity();
+        }
         cout << iTail << endl;
         count++;
         
