@@ -1,10 +1,9 @@
-//
-//  queue.h
-//  Project2
-//
-//  Created by Derek Rodriguez on 5/30/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
+/***********************************************
+ Derek Rodriguez, Derek Caprio
+ COP4530 Project2
+ stack.h
+ ***********************************************/
+
 
 #ifndef queue_h
 #define queue_h
@@ -123,7 +122,9 @@ public:
             array = a;
             
         }
-        array[iTail++] = data;
+        array[iTail] = data;
+        iTail = (iTail + 1) % arraySize;
+        cout << iTail << endl;
         count++;
         
     }
@@ -136,7 +137,7 @@ public:
         }
         
         removed = front();
-        iHead++;
+        iHead = (iHead + 1) % arraySize;
         count--;
         
         // resize array if neccessary

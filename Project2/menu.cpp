@@ -1,10 +1,9 @@
-//
-//  main.cpp
-//  Project2
-//
-//  Created by Derek Rodriguez on 5/30/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
+/***********************************************
+ Derek Rodriguez, Derek Caprio
+ COP4530 Project2
+ stack.h
+ ***********************************************/
+
 
 #include <iostream>
 #include <string>
@@ -29,7 +28,7 @@ int main() {
     
     // Default sizes of 15
     DynStack<Type> stack(15);
-    DynQueue<Type> queue(15);
+    DynQueue<Type> queue(3);
     
     cout << "Please enter 's' for stack, 'q' for queue: ";
     cin >> ch;
