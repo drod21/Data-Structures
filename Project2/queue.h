@@ -83,22 +83,15 @@ public:
     void display() {
         int i = iHead;
         cout << "Contents of the queue: " << endl;
+        
         bool atEnd = false;
+        // while loop to end of queue
         while (!atEnd) {
             atEnd = i % arraySize == iTail;
             cout << array[i] << endl;
             i++;
         }
-        
-        /* for (i = iHead, j = 0; j < count; i = (i + 1) % arraySize, j++) {
-         cout << array[i] << endl;
-         }
-         
-         i = iHead;
-         while (i != iTail) {
-         cout << array[i] << endl;
-         i = (i + 1) % arraySize;
-         }*/
+
         cout << endl;
     }
     
@@ -107,9 +100,8 @@ public:
     void enqueue(Type const &data) {
         int newSize = arraySize * 2;
         
+        // If list is full, resize
         if ((iTail + 1) % arraySize == iHead) {
-            
-            //iTail = count;
             Type *a = new Type[newSize];
             if (a == nullptr) {
                 cerr << "Memory allocation failed." << endl;
@@ -150,10 +142,14 @@ public:
         
         // resize array if neccessary
         if (count <= .25 * arraySize && arraySize > initialSize) {
+            
             int newSize = .5 * arraySize;
             Type* resizedArray= new Type[newSize];
+            
             bool atEnd = false;
             int i = iHead, j = 0;
+            
+            // Loop through list and copy elements over
             while (!atEnd) {
                 atEnd = i % arraySize == iTail;
                 resizedArray[j] = array[i % arraySize];
@@ -166,6 +162,7 @@ public:
             arraySize = newSize;
             iHead = 0;
             iTail = count;
+            
         }
         
         return removed;

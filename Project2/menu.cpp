@@ -28,7 +28,7 @@ int main() {
     
     // Default sizes of 15
     DynStack<Type> stack(15);
-    DynQueue<Type> queue(3);
+    DynQueue<Type> queue(15);
     
     cout << "Please enter 's' for stack, 'q' for queue: ";
     cin >> ch;
