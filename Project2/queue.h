@@ -37,22 +37,7 @@ public:
         // Allocate memory
         array = new Type[initialSize];
     }
-    // Copy Constructor
-    DynQueue(const DynQueue &queue):initialSize(queue.initialSize),
-    arraySize(queue.arraySize), count(queue.count),
-    iHead(queue.iHead), iTail(queue.iTail) {
-        
-        array = new (nothrow) Type[initialSize];
-        
-        if (array != 0) {
-            for (int i = 0; i < initialSize; i++) {
-                array[i] = queue.array[i];
-            }
-        } else {
-            cerr << "Cannot allocate memory";
-            exit(1);
-        }
-    }
+
     // Destructor
     ~DynQueue() {
         if (!empty())
@@ -96,39 +81,59 @@ public:
         
     }
     void display() {
-        int i, j;
-        int cap = capacity();
+        int i = iHead;
         cout << "Contents of the queue: " << endl;
-        for (i = iHead, j = 0; j < count; i = (i + 1) % cap, j++) {
+        bool atEnd = false;
+        while (!atEnd) {
+            atEnd = i % arraySize == iTail;
             cout << array[i] << endl;
+            i++;
         }
+        
+        /* for (i = iHead, j = 0; j < count; i = (i + 1) % arraySize, j++) {
+         cout << array[i] << endl;
+         }
+         
+         i = iHead;
+         while (i != iTail) {
+         cout << array[i] << endl;
+         i = (i + 1) % arraySize;
+         }*/
         cout << endl;
     }
     
     // Mutators
     
     void enqueue(Type const &data) {
-
-        if (size() == capacity()) {
+        int newSize = arraySize * 2;
+        
+        if ((iTail + 1) % arraySize == iHead) {
             
-            arraySize = arraySize * 2;
-            Type *a = new Type[arraySize];
-            
-            for (int i = iHead, j = 0; j < count; i = (i + 1) % arraySize, j++) {
-                a[i + 1] = array[i];
+            //iTail = count;
+            Type *a = new Type[newSize];
+            if (a == nullptr) {
+                cerr << "Memory allocation failed." << endl;
+                exit(1);
             }
             
+            for (int i = iHead; i != iTail; i = (i + 1) % arraySize) {
+                a[i] = array[i];
+            }
             
             delete [] array;
             array = a;
+            arraySize = newSize;
             
         }
-        
         array[iTail] = data;
-        iTail = (iTail + 1) % capacity();
-        
-        cout << iTail << endl;
+        if ((iTail + 1) % arraySize != iHead) {
+            iTail = (iTail + 1) % arraySize;
+        } else {
+            iTail++;
+        }
+        cout << iTail  << " is value of iTail." << endl;
         count++;
+        
         
     }
     
@@ -144,17 +149,25 @@ public:
         count--;
         
         // resize array if neccessary
-        if(count <= .25 * arraySize && arraySize > initialSize) {
-            arraySize = .5 * arraySize;
-            Type* resizedArray= new Type[arraySize];
-            
-            for(int i = iHead; i <= iTail; i++){
-                resizedArray[i] = array[i];
+        if (count <= .25 * arraySize && arraySize > initialSize) {
+            int newSize = .5 * arraySize;
+            Type* resizedArray= new Type[newSize];
+            bool atEnd = false;
+            int i = iHead, j = 0;
+            while (!atEnd) {
+                atEnd = i % arraySize == iTail;
+                resizedArray[j] = array[i % arraySize];
+                i++;
+                j++;
             }
+            
             delete [] array;
             array = resizedArray;
+            arraySize = newSize;
+            iHead = 0;
+            iTail = count;
         }
-
+        
         return removed;
     }
     
@@ -164,25 +177,7 @@ public:
         iHead = iTail = count = 0;
         arraySize = initialSize;
     }
-    
-    // Overload assignment operator
-    DynQueue &operator=(const DynQueue &queue) {
-        if (this != &queue) {
-            arraySize = queue.arraySize;
-            initialSize = queue.initialSize;
-            iHead = queue.iHead;
-            iTail = queue.iTail;
-            count = queue.count;
-            if (initialSize != queue.initialSize) {
-                delete [] array;
-                array = new(nothrow) Type[initialSize];
-            }
-            for (int i = 0; i < initialSize; i++) {
-                array[i] = queue.array[i];
-            }
-        }
-        return *this;
-    }
+
     
     
 };

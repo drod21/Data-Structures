@@ -39,19 +39,6 @@ public:
         
     }
     
-    // Copy Constructor
-    DynStack(const DynStack &stack):initialSize(stack.initialSize), arraySize(stack.arraySize), count(stack.count) {
-        array = new (nothrow) T[initialSize];
-        if (array != 0) {
-            for (int i = 0; i < initialSize; i++) {
-                array[i] = stack.array[i];
-            }
-        } else {
-            cerr << "Cannot allocate memory";
-            exit(1);
-        }
-    }
-    
     // Destructor
     ~DynStack() {
         if (!empty()) {
@@ -150,24 +137,7 @@ public:
         count = 0;
         arraySize = initialSize;
     }
-    
-    // Overload assignment operator
-    DynStack &operator=(const DynStack &stack) {
-        if (this != &stack) {
-            arraySize = stack.arraySize;
-            initialSize = stack.initialSize;
-            count = stack.count;
-            if (initialSize != stack.initialSize) {
-                delete [] array;
-                array = new(nothrow) T[initialSize];
-            }
-            for (int i = 0; i < initialSize; i++) {
-                array[i] = stack.array[i];
-            }
-        }
-        return *this;
-    }
-    
+        
 };
 
 #endif /* stack_h */
