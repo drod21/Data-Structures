@@ -26,7 +26,7 @@ private:
     
 public:
     // Constructor
-    DynStack(int n = 15):arraySize(n), count(-1)  {
+    DynStack(int n = 15) : count(-1), arraySize(n)  {
         // Test values to set initial size
         if (n <= 0) {
             initialSize = 1;

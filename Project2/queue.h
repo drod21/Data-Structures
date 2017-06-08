@@ -27,7 +27,7 @@ private:
     
 public:
     // Constructor
-    DynQueue(int n = 15) : arraySize(n), count(0), iHead(0), iTail(0) {
+    DynQueue(int n = 15) : iHead(0), iTail(0), count(0),  arraySize(n) {
         // Test values to set initial size
         if (n <= 0) {
             initialSize = 1;
