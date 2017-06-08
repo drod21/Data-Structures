@@ -91,7 +91,6 @@ public:
             cout << array[i] << endl;
             i++;
         }
-
         cout << endl;
     }
     
@@ -123,10 +122,7 @@ public:
         } else {
             iTail++;
         }
-        cout << iTail  << " is value of iTail." << endl;
         count++;
-        
-        
     }
     
     
@@ -162,9 +158,7 @@ public:
             arraySize = newSize;
             iHead = 0;
             iTail = count;
-            
         }
-        
         return removed;
     }
     
@@ -174,9 +168,6 @@ public:
         iHead = iTail = count = 0;
         arraySize = initialSize;
     }
-
-    
-    
 };
 
 
