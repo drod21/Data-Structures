@@ -15,13 +15,15 @@ template <class NodeType>;
 
 class TreeNode {
     
+    typedef TreeNode<NodeType> * Node;
+    
 private:
     int key;
     NodeType data;
     short int balanceFactor;
-    TreeNode <NodeType> *left;
-    TreeNode<NodeType> *parent;
-    TreeNode <NodeType> *right;
+    Node left;
+    Node parent;
+    Node right;
     
     
 public:
