@@ -34,6 +34,17 @@ public:
     // Destructor
     
     ~TreeNode(){}
+
+    // accessors
+    NodeType getData(void){
+	return data;
+    }
+    int getKey(void){
+	return key;
+    }
+    short int getBalanceFactor(void){
+	return balanceFactor;
+    }
     
 };
 

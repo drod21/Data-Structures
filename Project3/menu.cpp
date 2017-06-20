@@ -114,7 +114,7 @@ int main() {
             << "6. Print\n"
             << "7. Clear tree\n"
             << "8. Insert (key, data)\n"
-            << "9. Delet\n"
+            << "9. Delete\n"
             << "10. Exit\n";
          
          while (menu_number != 10) {
