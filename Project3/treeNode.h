@@ -35,6 +35,14 @@ public:
     
     ~TreeNode(){}
 
+    // mutators
+    void setData(NodeType d){
+	data = d;
+    )
+    void setKey(int k){
+	key = k;
+    }
+
     // accessors
     NodeType getData(void){
 	return data;
@@ -44,6 +52,16 @@ public:
     }
     short int getBalanceFactor(void){
 	return balanceFactor;
+    }
+
+    // overloaded assignment operator
+    TreeNode& operator=(const TreeNode& original){
+	key = original.key;
+	data = original.data;
+	balanceFactor = original.balanceFactor;
+	TreeNode<NodeType>* left = original->left;
+	TreeNode<NodeType>* right = original->right;
+	TreeNode<NodeType>* parent = original->parent;
     }
     
 };
