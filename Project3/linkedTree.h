@@ -14,9 +14,21 @@ using namespace std;
 template <class LTree>;
 
 class LinkedTree {
-    
+    typedef TreeNode<LTree>* NodePtr;
 private:
-    TreeNode <LTree> *node;
+    NodePtr root;
+    
+    // inorder helper function
+    void inorder(NodePtr node) {
+        
+    }
+    // postorder helper function
+    void postorder(NodePtr node) {
+        
+    }
+    void preorder(NodePtr node) {
+        
+    }
     
 public:
     // Constructor
@@ -50,11 +62,24 @@ public:
     // returns height of the tree
     int getHeight() {
         
+        NodePtr n = root;
+        if (n->left == nullptr && n->right == nullptr) {
+            return 0;
+        }
+        
+        return getHeight(n);
+        
     }
     // Returns heigh of the node in argument
     // (from the root)
-    int getHeight(TreeNode <LTree> *node) const {
+    int getHeight(NodePtr node) const {
+        int count = 0;
+        if (node == nullptr) {
+            return 0;
+        }
         
+        return 1 + max(getHeight(node->left), getHeight(node->right));
+    
     }
     
     // Returns true if empty, false otherwise
@@ -65,18 +90,31 @@ public:
     // Returns number of leaves in the tree
     int leaves() {
         
+        int count;
+        NodePtr node = root;
+        
+        if (node == NULL) {
+            count = 0;
+        } else if (node->left == NULL && node->right == NULL) {
+            count = 1;
+        } else {
+            // Maybe use siblings function here to help?
+        }
+        
     }
     
     // Returns the number of siblings
     // of the node in the argument
-    int siblings(TreeNode <LTree> *node) {
+    // Maybe use this to help leaves?
+    int siblings(NodePtr node) {
         
         
     }
     
     // Returns a pointer to a node that holds
     // the data in the argument
-    TreeNode <LTree> *findNode(const LTree &data) {
+    NodePtr findNode(const LTree &data) {
+        
         TreeNode<LTree> *temp = root;
         bool found = false;
         for (;;) {
@@ -103,8 +141,8 @@ public:
     // left->parent->right
     void inorder() {
 
-        TreeNode<LTree> *curr = root;
-        TreeNode<LTree> *prev = NULL;
+        NodePtr curr = root;
+        NodePtr prev = NULL;
         
         if (parent == NULL) {
             return;
@@ -141,7 +179,7 @@ public:
     }
     // Inserts data in the tree
     void insert(const LTree &data) {
-        TreeNode<LTree> *temp = root;
+        NodePtr temp = root;
         
         bool found = false;
         while (!found && temp != nullptr) {
@@ -213,7 +251,7 @@ public:
     // Removes data from the tree
     LTree del(const LTree &data) {
         bool found; // Signals if found
-        TreeNode<LTree> *x, *root;
+        NodePtr x, root;
         
     }
 
