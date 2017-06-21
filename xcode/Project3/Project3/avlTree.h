@@ -33,7 +33,7 @@ public:
     }
     
     AType getRoot() {
-        return *parent;
+        return *root;
     }
     
     // Returns the number of elements in the tree

@@ -35,7 +35,11 @@ public:
     
     // Destructor
     
-    ~TreeNode(){}
+    ~TreeNode() {
+        delete left;
+        delete right;
+        delete parent;
+    }
     
 };
 
