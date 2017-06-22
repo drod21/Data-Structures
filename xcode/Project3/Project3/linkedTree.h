@@ -21,18 +21,16 @@ private:
     
     int size;
     // recursive call to leaves
-    int leaves_helper(TreeNode<LTree>* node) {
-        int count = 0;
+    int leaves_helper(TreeNode<LTree> *node) {
+        
         if (node == NULL) {
-            count = 0;
-        } else if (node->left == NULL && node->right == NULL) {
-            count++;
-        } else {
-            return leaves_helper(node->left);
-            return leaves_helper(node->right);
+            return 0;
+        }
+        if (isLeaf(node)) {
+            return 1;
         }
         
-        return count;
+        return leaves_helper(node->left) + leaves_helper(node->right);
     }
     
     void insert_helper(LTree data, TreeNode<LTree> *node) {
@@ -42,6 +40,7 @@ private:
             } else {
                 node->left = new TreeNode<LTree>();
                 node->left->data = data;
+                node->left->parent = node;
                 node->left->left = nullptr;
                 node->left->right = nullptr;
             }
@@ -51,6 +50,7 @@ private:
             } else {
                 node->right = new TreeNode<LTree>();
                 node->right->data = data;
+                node->right->parent = node;
                 node->right->left = nullptr;
                 node->right->right = nullptr;
             }
@@ -59,31 +59,40 @@ private:
     
     // inorder helper function
     void inorder_helper(TreeNode<LTree>* node) {
-        if (root == nullptr) {
-            return;
-        } else {
-            inorder_helper(root->left);
-            cout << root->data << " ";
-            inorder_helper(root->right);
+        if (node->left != nullptr) {
+            inorder_helper(node->left);
         }
-    }
-    // postorder helper function
-    void postorder_helper(TreeNode<LTree>* node) {
-        if (root == nullptr) {
-            return;
-        } else {
-            postorder_helper(node->left);
-            postorder_helper(node->right);
-            cout << root->data << " ";
+        
+        cout << node->data << " ";
+        
+        if (node->right != nullptr) {
+            inorder_helper(node->right);
         }
         
     }
-    void preorder_helper(TreeNode<LTree>* node) {
-        if (root == nullptr) {
-            return;
-        } else {
-            cout << root->data << " ";
+    // postorder helper function
+    void postorder_helper(TreeNode<LTree>* node) {
+        
+        if (node->left != nullptr) {
             preorder_helper(node->left);
+        }
+        
+        if (node->right != nullptr) {
+            preorder_helper(node->right);
+        }
+        
+        cout << node->data << " ";
+    }
+    
+    void preorder_helper(TreeNode<LTree>* node) {
+
+        cout << node->data << " ";
+        
+        if (node->left != nullptr) {
+            preorder_helper(node->left);
+        }
+        
+        if (node->right != nullptr) {
             preorder_helper(node->right);
         }
         
@@ -95,11 +104,10 @@ public:
     LinkedTree() {
         root = nullptr;
         size = 0;
-        
     }
     // Accessors
     // returns root of the tree
-    TreeNode<LTree>* getRoot() const {
+    LTree getRoot() const {
         TreeNode<LTree> *node = root;
         bool isRoot = false;
         
@@ -125,7 +133,7 @@ public:
         }
         
         
-        return node;
+        return node->data;
     }
     
     // Returns the number of elements in the tree
@@ -154,7 +162,7 @@ public:
         if (empty()) {
             throw underflow_error("Tree is empty");
         }
-        int count = 0;
+        
         if (node == nullptr) {
             return 0;
         }
@@ -167,16 +175,19 @@ public:
         return (root == NULL);
     }
     
+    bool isLeaf(TreeNode<LTree> *n) {
+        return (n->left == nullptr && n->right == nullptr);
+    }
+    
     // Returns number of leaves in the tree
     int leaves() {
         if (empty()) {
             throw underflow_error("Tree is empty");
         }
-        int count;
         TreeNode<LTree>* node = root;
         
-        count = leaves_helper(node);
-        return count;
+    
+        return leaves_helper(node);
     }
     
     // Returns the number of siblings
@@ -225,11 +236,7 @@ public:
             throw underflow_error("Tree is empty");
         }
         TreeNode<LTree>* node = root;
-        if (node == nullptr) {
-            cout << "Tree is empty" << endl;
-        } else {
-            preorder_helper(node);
-        }
+        preorder_helper(node);
     }
     // postorder traversal
     // left->right->parent
@@ -276,6 +283,7 @@ public:
             new_node->right = nullptr;
             root = new_node;
         }
+        size++;
     }
     
     

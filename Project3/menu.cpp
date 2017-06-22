@@ -73,8 +73,7 @@ int main() {
                     break;
                 }
                 case 6: {
-                    cout << "Leaves: " << endl;
-                    myTree->leaves();
+                    cout << "Leaves: " << myTree->leaves() << endl;
                     break;
                 }
                 case 7: {
