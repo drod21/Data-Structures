@@ -11,61 +11,62 @@
 
 #include <cmath>
 
-using namespace std;
 
-template <class LTree>;
+template <class LTree>
 
 class LinkedTree {
-    typedef TreeNode<LTree>* NodePtr;
+    
 private:
-    NodePtr root;
+    TreeNode<LTree>* root;
     
     int size;
-    
     // recursive call to leaves
-    int leaves_helper(NodePtr node) {
+    int leaves_helper(TreeNode<LTree>* node) {
         int count = 0;
         if (node == NULL) {
             count = 0;
         } else if (node->left == NULL && node->right == NULL) {
             count++;
         } else {
-            return leaves(node->left);
-            return leaves(node->right);
+            return leaves_helper(node->left);
+            return leaves_helper(node->right);
         }
+        
+        return count;
     }
     
     // inorder helper function
-    void inorder_helper(NodePtr node) {
+    void inorder_helper(TreeNode<LTree>* node) {
         if (root == nullptr) {
             return;
         } else {
-            inorder(root->left);
-            cout << root->value << " ";
-            inorder(root->right);
+            inorder_helper(root->left);
+            cout << root->data << " ";
+            inorder_helper(root->right);
         }
     }
     // postorder helper function
-    void postorder_helper(NodePtr node) {
-        if (root = nullptr) {
-            return;
-        } else {
-            postorder(node->left);
-            postorder(node->right);
-            cout << root->value << " ";
-        }
-        
-    }
-    void preorder_helper(NodePtr node) {
+    void postorder_helper(TreeNode<LTree>* node) {
         if (root == nullptr) {
             return;
         } else {
-            cout << root->value << " ";
-            preorder(node->left);
-            preorder(node->right);
+            postorder_helper(node->left);
+            postorder_helper(node->right);
+            cout << root->data << " ";
         }
         
     }
+    void preorder_helper(TreeNode<LTree>* node) {
+        if (root == nullptr) {
+            return;
+        } else {
+            cout << root->data << " ";
+            preorder_helper(node->left);
+            preorder_helper(node->right);
+        }
+        
+    }
+    
     
 public:
     // Constructor
@@ -79,9 +80,9 @@ public:
     }
     // Accessors
     // returns root of the tree
-    NodePtr getRoot() const {
-        NodePtr node = root;
-        bool isRoot = false
+    TreeNode<LTree>* getRoot() const {
+        TreeNode<LTree> *node = root;
+        bool isRoot = false;
         
         // root at first node
         if (node->parent == nullptr && node != nullptr) {
@@ -92,7 +93,7 @@ public:
         
         // for some reason, node was placed elsewhere, so find the root
         if (!isRoot && node->parent != nullptr) {
-            while (node->parent != null) {
+            while (node->parent != nullptr) {
                 node = node->parent;
             }
             isRoot = true;
@@ -109,7 +110,7 @@ public:
     }
     // returns height of the tree
     int getHeight() {
-        NodePtr n = root;
+        TreeNode<LTree>* n = root;
         if (n->left == nullptr && n->right == nullptr) {
             return 0;
         }
@@ -118,7 +119,7 @@ public:
     
     // Returns height of the node in argument
     // (from the root)
-    int getHeight(NodePtr node) const {
+    int getHeight(TreeNode<LTree>* node) const {
         int count = 0;
         if (node == nullptr) {
             return 0;
@@ -136,7 +137,7 @@ public:
     int leaves() {
         
         int count;
-        NodePtr node = root;
+        TreeNode<LTree>* node = root;
         
         count = leaves_helper(node);
         return count;
@@ -144,7 +145,7 @@ public:
     
     // Returns the number of siblings
     // of the node in the argument
-    int siblings(NodePtr node) {
+    int siblings(TreeNode<LTree>* node) {
         
         int count = 0;
         if (node->left == nullptr && node->right == nullptr) {
@@ -159,50 +160,51 @@ public:
     
     // Returns a pointer to a node that holds
     // the data in the argument
-    NodePtr findNode(const LTree &data) {
+    TreeNode<LTree>* findNode(const LTree &data) {
         
         TreeNode<LTree> *temp = root;
         bool found = false;
         for (;;) {
             if (found || temp == nullptr) break;
             
-            if (data < temp->data)
+            if (data < temp->data) {
                 temp = temp->left;
-            else if (temp->data < data)
+            } else if (temp->data < data) {
                 temp = temp->right;
-            else
+            } else {
                 found = true;
+            }
         }
         return temp;
     }
     // preorder traversal
     // parent->left->right
     void preorder() {
-        NodePtr node = root;
+        TreeNode<LTree>* node = root;
         if (node == nullptr) {
             cout << "Tree is empty" << endl;
         } else {
-            preorder(node);
+            preorder_helper(node);
         }
     }
     // postorder traversal
     // left->right->parent
     void postorder() {
-        NodePtr node = root;
+        TreeNode<LTree>* node = root;
         if (node == nullptr) {
             cout << "Tree is empty" << endl;
         } else {
-            postorder(node);
+            postorder_helper(node);
         }
     }
     //inorder traversal
     // left->parent->right
     void inorder() {
-        NodePtr node = root;
+        TreeNode<LTree>* node = root;
         if (node == nullptr) {
             cout << "Tree is empty" << endl;
         } else {
-            inorder(node);
+            inorder_helper(node);
         }
     }
     // Mutators
@@ -212,7 +214,8 @@ public:
     }
     // Inserts data in the tree
     void insert(const LTree &data) {
-        NodePtr temp = root;
+        TreeNode<LTree>* temp = root;
+        TreeNode<LTree> *node = root;
         
         bool found = false;
         while (!found && temp != nullptr) {
@@ -227,7 +230,7 @@ public:
             
             // construct node containing data
             if (!found) {
-                temp = new TreeNode();
+                temp = new TreeNode<LTree>();
                 temp->data = data;
                 if (node == nullptr) { // empty tree
                     node = temp;
@@ -250,12 +253,16 @@ public:
     
     // Removes data from the tree
     LTree del(const LTree &data) {
-        bool found; // Signals if found
-        NodePtr x, root;
-        
+        bool found = false; // Signals if found
+        TreeNode<LTree> *x, *root;
+        LTree n = data;
         size--; //decrease size of tree
+        return n;
     }
     
 };
+
+
+
 
 #endif /* linkedTree_h */

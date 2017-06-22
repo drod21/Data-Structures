@@ -10,9 +10,8 @@
 #define avlTree_h
 
 #include "treeNode.h"
-using namespace std;
 
-template <class AType>;
+template <class AType>
 
 class AvlTree {
     
@@ -70,6 +69,9 @@ public:
     // Returns a pointer to a node that holds
     // the date in the argument
     TreeNode <AType> *find(AType data) {
+        TreeNode<AType> *node = root;
+        
+        return node;
         
     }
     // preorder traversal
