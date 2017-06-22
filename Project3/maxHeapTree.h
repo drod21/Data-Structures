@@ -34,7 +34,7 @@ public:
         delete [] array;
     }
     
-    HeapType getMax() {
+    HeapType getRoot() {
         return array[1]->getData;		// index 0 is empty
     }
     
@@ -114,7 +114,7 @@ public:
             if(size == 1){
                 size--;
                 cout << "Removed " << array[1]->getData() << " from heap." << endl;
-                return;
+                return; 
             }
             // if 2 or more elements in heap remove root and shift all else
             // one position left in array

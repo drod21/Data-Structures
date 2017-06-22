@@ -4,7 +4,7 @@
 //
 //  Created by Derek Rodriguez on 6/14/17.
 //  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
+
 
 #ifndef treeNode_h
 #define treeNode_h
@@ -15,15 +15,13 @@ template <class NodeType>;
 
 class TreeNode {
     
-    typedef TreeNode<NodeType> * Node;
-    
 private:
     int key;
     NodeType data;
     short int balanceFactor;
-    Node left;
-    Node parent;
-    Node right;
+    TreeNode <NodeType> *left;
+    TreeNode<NodeType> *parent;
+    TreeNode <NodeType> *right;
     
     
 public:
