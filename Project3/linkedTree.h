@@ -17,7 +17,7 @@ template <class LTree>
 class LinkedTree {
     
 private:
-    TreeNode<LTree>* root;
+    TreeNode<LTree> *root;
     
     int size;
     // recursive call to leaves
@@ -33,6 +33,28 @@ private:
         }
         
         return count;
+    }
+    
+    void insert_helper(LTree data, TreeNode<LTree> *node) {
+        if (data < node->data) {
+            if (node->left != NULL) {
+                insert_helper(data, node->left);
+            } else {
+                node->left = new TreeNode<LTree>();
+                node->left->data = data;
+                node->left->left = nullptr;
+                node->left->right = nullptr;
+            }
+        } else if (data >= node->data) {
+            if (node->right != NULL) {
+                insert_helper(data, node->right);
+            } else {
+                node->right = new TreeNode<LTree>();
+                node->right->data = data;
+                node->right->left = nullptr;
+                node->right->right = nullptr;
+            }
+        }
     }
     
     // inorder helper function
@@ -72,9 +94,6 @@ public:
     // Constructor
     LinkedTree() {
         root = nullptr;
-        root->parent = nullptr;
-        root->left = nullptr;
-        root->right = nullptr;
         size = 0;
         
     }
@@ -83,6 +102,10 @@ public:
     TreeNode<LTree>* getRoot() const {
         TreeNode<LTree> *node = root;
         bool isRoot = false;
+        
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         
         // root at first node
         if (node->parent == nullptr && node != nullptr) {
@@ -96,7 +119,9 @@ public:
             while (node->parent != nullptr) {
                 node = node->parent;
             }
-            isRoot = true;
+            if (node->parent == nullptr && node != nullptr) {
+                isRoot = true;
+            }
         }
         
         
@@ -105,11 +130,17 @@ public:
     
     // Returns the number of elements in the tree
     int getSize() {
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         return size;
         
     }
     // returns height of the tree
     int getHeight() {
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         TreeNode<LTree>* n = root;
         if (n->left == nullptr && n->right == nullptr) {
             return 0;
@@ -120,6 +151,9 @@ public:
     // Returns height of the node in argument
     // (from the root)
     int getHeight(TreeNode<LTree>* node) const {
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         int count = 0;
         if (node == nullptr) {
             return 0;
@@ -135,7 +169,9 @@ public:
     
     // Returns number of leaves in the tree
     int leaves() {
-        
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         int count;
         TreeNode<LTree>* node = root;
         
@@ -146,7 +182,9 @@ public:
     // Returns the number of siblings
     // of the node in the argument
     int siblings(TreeNode<LTree>* node) {
-        
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         int count = 0;
         if (node->left == nullptr && node->right == nullptr) {
             return 0;
@@ -161,6 +199,9 @@ public:
     // Returns a pointer to a node that holds
     // the data in the argument
     TreeNode<LTree>* findNode(const LTree &data) {
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         
         TreeNode<LTree> *temp = root;
         bool found = false;
@@ -180,6 +221,9 @@ public:
     // preorder traversal
     // parent->left->right
     void preorder() {
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         TreeNode<LTree>* node = root;
         if (node == nullptr) {
             cout << "Tree is empty" << endl;
@@ -190,6 +234,9 @@ public:
     // postorder traversal
     // left->right->parent
     void postorder() {
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         TreeNode<LTree>* node = root;
         if (node == nullptr) {
             cout << "Tree is empty" << endl;
@@ -200,6 +247,9 @@ public:
     //inorder traversal
     // left->parent->right
     void inorder() {
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
         TreeNode<LTree>* node = root;
         if (node == nullptr) {
             cout << "Tree is empty" << endl;
@@ -211,45 +261,23 @@ public:
     
     // Removes all elements in the tree
     void clear(){
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
     }
     // Inserts data in the tree
     void insert(const LTree &data) {
-        TreeNode<LTree>* temp = root;
-        TreeNode<LTree> *node = root;
-        
-        bool found = false;
-        while (!found && temp != nullptr) {
-            temp->parent = temp;
-            if (data < temp->data) {
-                temp = temp->left;
-            } else if (temp->data < data) {
-                temp = temp->right;
-            } else {
-                found = true;
-            }
-            
-            // construct node containing data
-            if (!found) {
-                temp = new TreeNode<LTree>();
-                temp->data = data;
-                if (node == nullptr) { // empty tree
-                    node = temp;
-                    node->parent = nullptr;
-                } else if (data < root->data) {
-                    // Insert to left of parent
-                    node->left = temp;
-                    node->left->parent = node;
-                } else {
-                    // Insert to right of parent
-                    node->right = temp;
-                    node->right->parent = node;
-                }
-            } else {
-                cout << "Item already in tree\n";
-            }
+        TreeNode<LTree> *new_node = new TreeNode<LTree>;
+        if (root != NULL) {
+            insert_helper(data, root);
+        } else {
+            new_node->data = data;
+            new_node->left = nullptr;
+            new_node->right = nullptr;
+            root = new_node;
         }
-        size++;
     }
+    
     
     // Removes data from the tree
     LTree del(const LTree &data) {

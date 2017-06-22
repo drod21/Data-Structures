@@ -14,6 +14,7 @@
 
 int main() {
     typedef double Node;
+    
     Node data;
     Node dataToInsert;
     Node *nodeToGetHeight;

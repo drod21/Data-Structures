@@ -26,7 +26,7 @@ public:
 
     
     // Constructor
-    TreeNode():key(0), data(0), balanceFactor(0), parent(NULL), left(NULL), right(NULL) {
+    TreeNode():key(0), data(0), balanceFactor(0), left(nullptr), parent(nullptr), right(nullptr) {
         
     }
     
