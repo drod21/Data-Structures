@@ -18,10 +18,12 @@ int main() {
     Node data;
     Node dataToInsert;
     Node *nodeToGetHeight;
+    int keyToInsert;
     char tree_type;
     int menu_number = 0;
     LinkedTree<Node> *myTree = new LinkedTree<Node>();
     MaxHeapTree<Node> *myHeap = new MaxHeapTree<Node>(15);
+    
     cout << "Please enter a tree type: " << endl;
     cin >> tree_type;
     if (tree_type == 'g') {
@@ -252,21 +254,19 @@ int main() {
             } // end switch*/
         } // end while
     } else if (tree_type == 'h') {
-	
-        cout << "Select an option:\n"
-        << "1. Return root\n"
-        <<  "2. Return size\n"
-        << "3. Return height\n"
-        << "4. Is tree empty?\n"
-        << "5. Return number of leaves\n"
-        << "6. Print\n"
-        << "7. Clear tree\n"
-        << "8. Insert (key, data)\n"
-        << "9. Delet\n"
-        << "10. Exit\n";
-        
-        while (menu_number != 10) {
-            cin >> menu_number;
+	  while (menu_number != 10) {
+        	cout << "Select an option:\n"
+        	<< "1. Return root\n"
+      	        <<  "2. Return size\n"
+        	<< "3. Return height\n"
+        	<< "4. Is tree empty?\n"
+       	        << "5. Return number of leaves\n"
+       	        << "6. Print\n"
+        	<< "7. Clear tree\n"
+        	<< "8. Insert (key, data)\n"
+        	<< "9. Delet\n"
+       	        << "10. Exit\n";
+           cin >> menu_number;
             
             switch (menu_number) {
                     
@@ -300,8 +300,6 @@ int main() {
                     break;
                     
                 case 8:
-                    int keyToInsert;
-                    Node dataToInsert;
                     cout << "Enter key for priority: ";
                     cin >> keyToInsert;
                     cout << "Enter data: ";

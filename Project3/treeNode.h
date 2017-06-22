@@ -35,10 +35,10 @@ public:
     ~TreeNode(){}
 
     // mutators
-    void setData(NodeType d){
+    void setData(const NodeType& d){
         data = d;
     }
-    void setKey(int k){
+    void setKey(const int k){
         key = k;
     }
 
