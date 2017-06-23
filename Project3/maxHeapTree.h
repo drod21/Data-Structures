@@ -91,8 +91,9 @@ public:
 	TreeNode<HeapType> myArray[15];
     }
     // Inserts data in the tree
-    void insert(int key, HeapType data) {
+    void insert(const int key, HeapType data) {
         // if emty, insert at index 1
+	/*
         if(size == 0){
             //myArray[1]->setKey(key);
 	    //myArray[1]->key = key;
@@ -103,6 +104,8 @@ public:
 	    size++;
             return;
         }
+	*/
+	size++;
         // if heap is full, double the size
         if(size == capacity){
             capacity *= 2;
@@ -126,7 +129,7 @@ public:
 	
             
             // insert element at end of heap
-        size++;
+        //size++;
         myArray[size].setData(data);
         myArray[size].setKey(key);
             //myArray[size+1].setData(data);
@@ -163,7 +166,7 @@ public:
                 myArray[i] = myArray[i+1];
             }
             // if heap is 1/4 full, cut size in half
-            if(size <= .25 * capacity){
+            if(size <= .25 * capacity ){
                 capacity /= 2;
                 TreeNode<HeapType> resizedArray[capacity];
                 for(int i = 1; i <= size+1; i++){

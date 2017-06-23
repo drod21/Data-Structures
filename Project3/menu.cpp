@@ -11,6 +11,7 @@
 #include "linkedTree.h"
 #include "avlTree.h"
 
+#define INITIAL_HEAP_SIZE 15
 
 int main() {
     typedef double Node;
@@ -21,7 +22,7 @@ int main() {
     char tree_type;
     int menu_number = 0;
     LinkedTree<Node> *myTree = new LinkedTree<Node>();
-    MaxHeapTree<Node> *myHeap = new MaxHeapTree<Node>(15);
+    MaxHeapTree<Node> *myHeap = new MaxHeapTree<Node>(INITIAL_HEAP_SIZE);
     cout << "Please enter a tree type: " << endl;
     cin >> tree_type;
     if (tree_type == 'g') {
@@ -295,7 +296,7 @@ int main() {
              break;
              } // end switch*/
         } // end while
-    } else if (tree_type == 'h') {        
+    } else if (tree_type == 'h') {  
         while (menu_number != 10) {        
             cout << "Select an option:\n"
             << "1. Return root\n"
