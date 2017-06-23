@@ -295,23 +295,20 @@ int main() {
              break;
              } // end switch*/
         } // end while
-    } else if (tree_type == 'h') {
-        
-        cout << "Select an option:\n"
-        << "1. Return root\n"
-        <<  "2. Return size\n"
-        << "3. Return height\n"
-        << "4. Is tree empty?\n"
-        << "5. Return number of leaves\n"
-        << "6. Print\n"
-        << "7. Clear tree\n"
-        << "8. Insert (key, data)\n"
-        << "9. Delet\n"
-        << "10. Exit\n";
-        
-        while (menu_number != 10) {
+    } else if (tree_type == 'h') {        
+        while (menu_number != 10) {        
+            cout << "Select an option:\n"
+            << "1. Return root\n"
+            <<  "2. Return size\n"
+            << "3. Return height\n"
+            << "4. Is tree empty?\n"
+            << "5. Return number of leaves\n"
+            << "6. Print\n"
+            << "7. Clear tree\n"
+            << "8. Insert (key, data)\n"
+            << "9. Delete\n"
+            << "10. Exit\n";
             cin >> menu_number;
-            
             switch (menu_number) {
                     
                 case 1:

@@ -35,7 +35,8 @@ public:
         capacity = n;
 	*/
 	capacity = n;
-	size++;
+	size = 0;
+	//size++;
 	/*
 	myArray[0].data = 0;
 	myArray[0].key = 0;
@@ -74,8 +75,9 @@ public:
     
     // Prints the heap
     void print() {
+	cout << "Heap [data/key]: ";
         for(int i = 1; i <= size; i++){		// start at 1 because indez 0 is empty
-            cout << myArray[i].getData() << " ";
+            cout << myArray[i].getData() << "/" << myArray[i].getKey() << " ";
         }
 	cout << endl;
     }
@@ -117,17 +119,19 @@ public:
 		//myArray = resizedArray;
 		//delete [] resizedArray;
             }
-	    for(int i = 0; i < capacity; i++){
+	    for(int i = 1; i < capacity; i++){
 		myArray[i] = resizedArray[i];
 	    }
 	}
 	
             
             // insert element at end of heap
-            size++;
-            myArray[size].setData(data);
-            myArray[size].setKey(key);
-            // compare key to parents key, bubble up if needed
+        size++;
+        myArray[size].setData(data);
+        myArray[size].setKey(key);
+            //myArray[size+1].setData(data);
+	    //myArray[size+1].setKey(key);
+	    // compare key to parents key, bubble up if needed
 	/*
             int currentIndex = size;
             int newIndex = ceil((currentIndex - 1) / 2);
