@@ -66,7 +66,9 @@ public:
     
     // Returns true if empty, false otherwise
     bool empty() {
-        return (myArray == NULL);
+        //return (myArray == NULL);
+	if(size == 0) return true;
+	else return false;
     }
     
     // Returns number of leaves in the tree
