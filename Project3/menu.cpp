@@ -356,8 +356,10 @@ int main() {
                     int keyToInsert;
                     Node dataToInsert;
                     cout << "Enter key for priority: ";
+		    cin.ignore();
                     cin >> keyToInsert;
                     cout << "Enter data: ";
+		    cin.ignore();
                     cin >> dataToInsert;
                     myHeap->insert(keyToInsert, dataToInsert);
                     cout << endl;
