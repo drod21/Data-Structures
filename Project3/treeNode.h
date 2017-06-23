@@ -23,25 +23,37 @@ public:
     TreeNode <NodeType> *left;
     TreeNode<NodeType> *parent;
     TreeNode <NodeType> *right;
-
+    
     
     // Constructor
     TreeNode():key(0), data(0), balanceFactor(0), left(nullptr), parent(nullptr), right(nullptr) {
         
     }
     
+    TreeNode(const TreeNode &obj) {
+        parent = new TreeNode<NodeType>;
+        right = new TreeNode<NodeType>;
+        left = new TreeNode<NodeType>;
+        parent = obj.parent;
+        left = obj.left;
+        right = obj.right;
+        key = obj.key;
+        balanceFactor = obj.balanceFactor;
+        data = obj.data;
+    }
+    
     // Destructor
     
     ~TreeNode(){}
-
+    
     // mutators
-    void setData(const NodeType& d){
+    void setData(NodeType d){
         data = d;
     }
-    void setKey(const int k){
+    void setKey(int k){
         key = k;
     }
-
+    
     // accessors
     NodeType getData(void){
         return data;
@@ -52,15 +64,15 @@ public:
     short int getBalanceFactor(void){
         return balanceFactor;
     }
-
+    
     // overloaded assignment operator
     TreeNode& operator=(const TreeNode& original){
         key = original.key;
         data = original.data;
         balanceFactor = original.balanceFactor;
-        TreeNode<NodeType>* left = original.left;
-        TreeNode<NodeType>* right = original.right;
-        TreeNode<NodeType>* parent = original.parent;
+        left = original.left;
+        right = original.right;
+        parent = original.parent;
         
         return *this;
     }
