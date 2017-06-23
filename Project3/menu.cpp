@@ -364,7 +364,9 @@ int main() {
                     break;
                     
                 case 9:
-                    cout << "Deleted: " << myHeap->delMax() << endl;
+                    //cout << "Deleted" << myHeap->delMax() << endl;
+		    cout << "Deleting " << myHeap->getRoot() << " from list" << endl;
+		    myHeap->delMax();
                     break;
                     
                 case 10:

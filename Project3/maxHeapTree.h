@@ -159,26 +159,29 @@ public:
     }
     
         // Removes data from the tree
-        HeapType delMax(void) {
+        void delMax(void) {
             // if heap is empty
             if(size == 0){
                 cout << "Error: The heap is empty" << endl;
+		return;
             }
             // if only one element
             if(size == 1){
                 size--;
                 cout << "Removed " << myArray[1].getData() << " from heap." << endl;
-                return myArray[1].getData();
+                //return myArray[1].getData();
+		return;
             }
             // if 2 or more elements in heap remove root and shift all else
             // one position left in array
             size--;
-            cout << "Removed " << myArray[1].getData() << " from heap." << endl;
+           // cout << "Removed " << myArray[1].getData() << " from heap." << endl;
+            cout << "Removed " << myArray[1].data << " from heap." << endl;
             for(int i = size; i >= 1; i--){
                 myArray[i] = myArray[i+1];
             }
             // if heap is 1/4 full, cut size in half
-            if(size <= .25 * capacity ){
+            if(size <= .25 * capacity && capacity/2 > INITIAL_HEAP_SIZE){
                 capacity /= 2;
                 TreeNode<HeapType> resizedArray[capacity];
                 for(int i = 1; i <= size+1; i++){
@@ -196,7 +199,8 @@ public:
 			myArray[i] = resizedArray[i];
 		}
             }
-            return myArray[1].getData();
+            //return myArray[1].getData();
+	    return;
         }
         
         
