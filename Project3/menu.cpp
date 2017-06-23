@@ -348,7 +348,8 @@ int main() {
                     break;
                     
                 case 7:
-                    
+                    myHeap->clear();
+		    cout << "Heap cleared" << endl;
                     break;
                     
                 case 8:

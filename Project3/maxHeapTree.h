@@ -89,9 +89,16 @@ public:
     
     // Removes all elements in the tree
     void clear(){
-        delete [] myArray;
+       // delete [] myArray;
        // myArray = TreeNode<HeapType>[15];
-	TreeNode<HeapType> myArray[INITIAL_HEAP_SIZE];
+	//TreeNode<HeapType> myArray[INITIAL_HEAP_SIZE];
+
+	size = 0;
+	capacity = INITIAL_HEAP_SIZE;
+	for (int i = 0; i < capacity; i++){
+		myArray[i].data = myArray[i].key = 0;
+	}
+	
     }
     // Inserts data in the tree
     void insert(const int key, HeapType data) {
