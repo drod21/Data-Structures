@@ -23,7 +23,7 @@ private:
     //TreeNode<HeapType> *array;
     //TreeNode<HeapType> 
    // array<TreeNode, 15> myArray;
-    int size, capacity;
+    int capacity, size;
     TreeNode<HeapType> myArray[];
     
 public:
@@ -35,7 +35,7 @@ public:
         capacity = n;
 	*/
 	capacity = n;
-	size = 0;
+	size++;
 	/*
 	myArray[0].data = 0;
 	myArray[0].key = 0;
@@ -77,6 +77,7 @@ public:
         for(int i = 1; i <= size; i++){		// start at 1 because indez 0 is empty
             cout << myArray[i].getData() << " ";
         }
+	cout << endl;
     }
     
     // Mutators
@@ -119,6 +120,7 @@ public:
 	    for(int i = 0; i < capacity; i++){
 		myArray[i] = resizedArray[i];
 	    }
+	}
 	
             
             // insert element at end of heap
@@ -126,6 +128,7 @@ public:
             myArray[size].setData(data);
             myArray[size].setKey(key);
             // compare key to parents key, bubble up if needed
+	/*
             int currentIndex = size;
             int newIndex = ceil((currentIndex - 1) / 2);
             while(myArray[newIndex].getKey() > myArray[currentIndex].getKey()){
@@ -133,7 +136,7 @@ public:
                 myArray[currentIndex] = myArray[newIndex];
                 myArray[currentIndex] = temp;
             }
-        }
+	*/
     }
     
         // Removes data from the tree
@@ -179,6 +182,7 @@ public:
         
         
     };
-    
+
+
     
 #endif /* maxHeapTree_h */
