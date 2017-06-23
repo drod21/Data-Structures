@@ -14,6 +14,7 @@
 //#import "treeNode.h"
 #include "treeNode.h"
 using namespace std;
+#define INITIAL_HEAP_SIZE 15
 
 template <class HeapType>
 
@@ -76,7 +77,7 @@ public:
     // Prints the heap
     void print() {
 	cout << "Heap [data/key]: ";
-        for(int i = 1; i <= size; i++){		// start at 1 because indez 0 is empty
+        for(int i = 1; i <= size; i++){		// start at 1 because index 0 is empty
             cout << myArray[i].getData() << "/" << myArray[i].getKey() << " ";
         }
 	cout << endl;
@@ -88,7 +89,7 @@ public:
     void clear(){
         delete [] myArray;
        // myArray = TreeNode<HeapType>[15];
-	TreeNode<HeapType> myArray[15];
+	TreeNode<HeapType> myArray[INITIAL_HEAP_SIZE];
     }
     // Inserts data in the tree
     void insert(const int key, HeapType data) {
@@ -130,8 +131,10 @@ public:
             
             // insert element at end of heap
         //size++;
-        myArray[size].setData(data);
-        myArray[size].setKey(key);
+        //myArray[size].setData(data);
+        //myArray[size].setKey(key);
+	myArray[size].data = data;
+	myArray[size].key = key;
             //myArray[size+1].setData(data);
 	    //myArray[size+1].setKey(key);
 	    // compare key to parents key, bubble up if needed

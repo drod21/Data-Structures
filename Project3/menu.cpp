@@ -11,8 +11,6 @@
 #include "linkedTree.h"
 #include "avlTree.h"
 
-#define INITIAL_HEAP_SIZE 15
-
 int main() {
     typedef double Node;
     
