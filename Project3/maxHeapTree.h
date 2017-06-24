@@ -147,16 +147,35 @@ public:
 	myArray[size].key = key;
             //myArray[size+1].setData(data);
 	    //myArray[size+1].setKey(key);
-	    // compare key to parents key, bubble up if needed
-	/*
+	   
+	 // compare key to parents key, bubble up if needed
             int currentIndex = size;
-            int newIndex = ceil((currentIndex - 1) / 2);
-            while(myArray[newIndex].getKey() > myArray[currentIndex].getKey()){
-                TreeNode<HeapType> temp = myArray[currentIndex];
-                myArray[currentIndex] = myArray[newIndex];
-                myArray[currentIndex] = temp;
+	    cout << "current index: " << currentIndex << endl;	// DEBUGGING
+            int newIndex = ceil((static_cast<double>(currentIndex) - 1) / 2);
+	    cout << "parents index: " << newIndex << endl;	//DEBUGGING
+            while(myArray[currentIndex].key > myArray[newIndex].key && currentIndex >= 1){
+		swapHeapNodes(myArray[currentIndex], myArray[newIndex]);
+		currentIndex = ceil((static_cast<double>(currentIndex) - 1) / 2);
+		newIndex = ceil((static_cast<double>(newIndex) - 1) / 2);
+
+                //TreeNode<HeapType> temp = myArray[currentIndex];
+                //myArray[currentIndex] = myArray[newIndex];
+                //myArray[newIndex] = temp;
+
+		/*
+                TreeNode<HeapType> temp;
+		// temp = myArray[currentIndex]
+		temp.data = myArray[currentIndex].data;
+		temp.key = myArray[currentIndex].key;
+		// myArray[currentIndex] = myArray[newIndex]
+		myArray[currentIndex].data = myArray[newIndex].data;
+		myArray[currentIndex].key = myArray[newIndex].key;
+                //myArray[newIndex] = temp;
+		myArray[newIndex].data = temp.data;
+		myArray[newIndex].key = temp.key;
+		*/
             }
-	*/
+	
     }
     
         // Removes data from the tree
@@ -203,6 +222,17 @@ public:
             //return myArray[1].getData();
 	    return;
         }
+
+	// function to swap 2 heap nodes
+	void swapHeapNodes(TreeNode<HeapType> a, TreeNode<HeapType> b){
+                TreeNode<HeapType> temp;
+		temp.data = a.data;
+		temp.key = a.key;
+		a.data = b.data;
+		a.key = b.key;
+		b.data = temp.data;
+		b.key = temp.key;
+	}
         
         
     };

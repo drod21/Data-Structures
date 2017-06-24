@@ -298,7 +298,7 @@ int main() {
         while (menu_number != 10) {        
             cout << "Select an option:\n"
             << "1. Return root\n"
-            <<  "2. Return size\n"
+            << "2. Return size\n"
             << "3. Return height\n"
             << "4. Is tree empty?\n"
             << "5. Return number of leaves\n"
