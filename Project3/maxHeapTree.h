@@ -80,7 +80,7 @@ public:
     void print() {
         cout << "Heap [data/key]: ";
         for(int i = 1; i <= size; i++){		// start at 1 because index 0 is empty
-            cout << "[" << myArray[i].getData() << "/" << myArray[i].getKey() << "] ";
+            cout << "[" << myArray[i].data << "/" << myArray[i].key << "] ";
         }
         cout << endl;
     }
@@ -193,19 +193,34 @@ public:
         // if only one element
         if(size == 1){
             size--;
-            cout << "Removed " << myArray[1].getData() << " from heap." << endl;
+            cout << "Removed " << myArray[1].data << " from heap." << endl;
             //return myArray[1].getData();
             return;
         }
         // if 2 or more elements in heap remove root and shift all else
         // one position left in array
-        size--;
+        //size--;
         // cout << "Removed " << myArray[1].getData() << " from heap." << endl;
+	TreeNode<HeapType> temp;
         cout << "Removed " << myArray[1].getData() << " from heap." << endl;
-        for(int i = size; i >= 1; i--){
-            myArray[i] = myArray[i+1];
+	/*        
+	for(int i = size; i >= 1; i--){
+            myArray[i] = temp;
+            temp = myArray[i-1];
+	    myArray[i-1] = myArray[i];
         }
+	*/
+
+	TreeNode<HeapType> tempArr[capacity];
+	for(int i = 2; i < size+1; i++){
+		tempArr[i-1] = myArray[i];
+	}
+	for(int i = 1; i < size; i++){
+		myArray[i] = tempArr[i];
+	}
+	size--;
         // if heap is 1/4 full, cut size in half
+	
         if(size <= .25 * capacity && capacity/2 > INITIAL_HEAP_SIZE){
             capacity /= 2;
             TreeNode<HeapType> resizedArray[capacity];
@@ -225,7 +240,7 @@ public:
             }
         }
         //return myArray[1].getData();
-        return;
+        //return;
     }
     
     // function to swap 2 heap nodes
