@@ -53,6 +53,29 @@ private:
                 node->right->right = nullptr;
             }
         }
+        node->balanceFactor = getBalance(node);
+        // Left Left Case
+        if (node->balanceFactor > 1 && data < node->left->data) {
+            // rotate right
+        }
+        
+        // Right Right Case
+        if (node->balanceFactor < -1 && data > node->right->data) {
+            // left rotate
+        }
+        
+        // Left Right Case
+        if (node->balanceFactor > 1 && data > node->left->data) {
+            // node->left left rotate
+            //return right rotate
+        }
+        
+        // Right Left Case
+        if (node->balanceFactor < -1 && data < node->right->data) {
+            // node->right right rotate
+            // return left rotate
+        }
+        
     }
     
     // inorder helper function
@@ -139,6 +162,10 @@ public:
         return getHeight(n);
         
     }
+    // helper function for maximum of two ints
+    int max(int a, int b) {
+        return (a > b)? a : b;
+    }
     // Returns height of the node in argument
     // (from the root)
     int getHeight(TreeNode <AType> *node) {
@@ -159,6 +186,15 @@ public:
     
     bool isLeaf(TreeNode<AType> *n) {
         return (n->left == nullptr && n->right == nullptr);
+    }
+    
+
+    
+    int getBalance(TreeNode<AType> *node) {
+        if (empty()) {
+            throw underflow_error("Tree is empty");
+        }
+        return (getHeight(node->left) - getHeight(node->right));
     }
     
     // Returns number of leaves in the tree
@@ -266,7 +302,18 @@ public:
         root = new TreeNode<AType>;
     }
     // Inserts data in the tree
-    void insert(AType data) {
+    void insert(const AType &data) {
+        TreeNode<AType> *new_node = new TreeNode<AType>;
+        if (root != NULL) {
+            insert_helper(data, root);
+        } else {
+            new_node->data = data;
+            new_node->left = nullptr;
+            new_node->right = nullptr;
+            new_node->balanceFactor = 0;
+            root = new_node;
+        }
+        size++;
     }
     
     // Removes data from the tree

@@ -57,7 +57,7 @@ private:
         }
     }
     
-    // inorder helper function
+       // inorder helper function
     void inorder_helper(TreeNode<LTree>* node) {
         if (node->left != nullptr) {
             inorder_helper(node->left);
@@ -105,6 +105,15 @@ public:
         root = nullptr;
         size = 0;
     }
+    
+    // copy constructor
+
+    
+    // Destructor
+    ~LinkedTree() {
+        delete root;
+    }
+    
     // Accessors
     // returns root of the tree
     LTree getRoot() const {
@@ -154,6 +163,11 @@ public:
             return 0;
         }
         return getHeight(n);
+    }
+    
+    // helper function for max of two ints
+    int max(int a, int b) const {
+        return (a > b)? a : b;
     }
     
     // Returns height of the node in argument
@@ -209,7 +223,7 @@ public:
     
     // Returns a pointer to a node that holds
     // the data in the argument
-    TreeNode<LTree>* findNode(const LTree &data) {
+    TreeNode<LTree> *findNode(const LTree &data) {
         if (empty()) {
             throw underflow_error("Tree is empty");
         }
@@ -236,7 +250,13 @@ public:
             throw underflow_error("Tree is empty");
         }
         TreeNode<LTree>* node = root;
-        preorder_helper(node);
+        if (node == nullptr) {
+            cout << "Tree is empty" << endl;
+        } else {
+            preorder_helper(node);
+        }
+        
+        cout << endl;
     }
     // postorder traversal
     // left->right->parent
@@ -250,6 +270,7 @@ public:
         } else {
             postorder_helper(node);
         }
+        cout << endl;
     }
     //inorder traversal
     // left->parent->right
@@ -263,6 +284,7 @@ public:
         } else {
             inorder_helper(node);
         }
+        cout << endl;
     }
     // Mutators
     
@@ -288,12 +310,46 @@ public:
     
     
     // Removes data from the tree
-    LTree del(const LTree &data) {
-        bool found = false; // Signals if found
-        TreeNode<LTree> *x, *root;
-        LTree n = data;
+    void del(const LTree &data) {
+        TreeNode<LTree> *x, *parent;
+        x = findNode(data);
+        parent = x->parent;
+        cout << x->data << endl;
+        if (x == nullptr) {
+            throw underflow_error("Item not in tree\n");
+            return;
+        }
+        
+        // Case for 2 children, find inorder successor
+        if (x->left != nullptr && x->right != nullptr) {
+            TreeNode<LTree> *successor = x->right;
+            parent = x;
+            while (successor->left != nullptr) {
+                parent = successor;
+                successor = successor->left;
+            }
+            // Move contents of successor to x and change
+            // x to point to successor
+            x->data = successor->data;
+            x = successor;
+        }
+        
+        // 0 children or 1 child
+        TreeNode<LTree> *subtree = x->left;
+        if (subtree == nullptr) {
+            subtree = x->right;
+        }
+        
+        if (parent == nullptr) {    // root being removed
+            root = subtree;
+        } else if (parent->left == x) { // left child of parent
+            parent->left = subtree;
+        } else {    // right child of parent
+            parent->right = subtree;
+        }
+        delete x;
+        
         size--; //decrease size of tree
-        return n;
     }
     
 };

@@ -25,7 +25,7 @@ private:
     //TreeNode<HeapType> 
    // array<TreeNode, 15> myArray;
     int capacity, size;
-    TreeNode<HeapType> myArray[];
+    TreeNode<HeapType> *myArray;
     
 public:
     // constructor
@@ -35,8 +35,9 @@ public:
         size = 0;
         capacity = n;
 	*/
-	capacity = n;
-	size = 0;
+        myArray = new TreeNode<HeapType>[n];
+        capacity = n;
+        size = 0;
 	//size++;
 	/*
 	myArray[0].data = 0;

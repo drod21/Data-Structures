@@ -10,32 +10,50 @@
 #define maxHeapTree_h
 
 #include <cmath>	// for ceiling, log2 and power functions
-
-#import "treeNode.h"
+#include <array>
+//#import "treeNode.h"
+#include "treeNode.h"
+using namespace std;
+#define INITIAL_HEAP_SIZE 15
 
 template <class HeapType>
 
 class MaxHeapTree {
     
 private:
-    TreeNode<HeapType> *array;
-    int size, capacity;
+    //TreeNode<HeapType> *array;
+    //TreeNode<HeapType> 
+   // array<TreeNode, 15> myArray;
+    int capacity, size;
+    TreeNode<HeapType> *myArray;
     
 public:
     // constructor
     MaxHeapTree(int n){
-        array = new TreeNode<HeapType>[n];
+       /*
+        myArray = new TreeNode<HeapType>[n];
         size = 0;
         capacity = n;
+	*/
+        myArray = new TreeNode<HeapType>[n];
+        capacity = n;
+        size = 0;
+	//size++;
+	/*
+	myArray[0].data = 0;
+	myArray[0].key = 0;
+	myArray[0].balanceFactor = 0;
+	myArray[0].left = myArray[0].right = myArray[0].parent = nullptr;
+	*/
     }
     
     // destructor
     ~MaxHeapTree(void){
-        delete [] array;
+        delete [] myArray;
     }
     
     HeapType getRoot() {
-        return array[1].getData();		// index 0 is empty
+        return myArray[1].getData();		// index 0 is empty
     }
     
     // Returns the number of elements in the tree
@@ -49,7 +67,9 @@ public:
     
     // Returns true if empty, false otherwise
     bool empty() {
-        return (array == NULL);
+        //return (myArray == NULL);
+	if(size == 0) return true;
+	else return false;
     }
     
     // Returns number of leaves in the tree
@@ -59,87 +79,134 @@ public:
     
     // Prints the heap
     void print() {
-        for(int i = 1; i <= size; i++){		// start at 1 because indez 0 is empty
-            cout << array[i].getData() << " ";
+	cout << "Heap [data/key]: ";
+        for(int i = 1; i <= size; i++){		// start at 1 because index 0 is empty
+            cout << myArray[i].getData() << "/" << myArray[i].getKey() << " ";
         }
+	cout << endl;
     }
     
     // Mutators
     
     // Removes all elements in the tree
     void clear(){
-        delete [] array;
-        array = new TreeNode<HeapType>[15];
+       // delete [] myArray;
+       // myArray = TreeNode<HeapType>[15];
+	//TreeNode<HeapType> myArray[INITIAL_HEAP_SIZE];
+
+	size = 0;
+	capacity = INITIAL_HEAP_SIZE;
+	for (int i = 0; i < capacity; i++){
+		myArray[i].data = myArray[i].key = 0;
+	}
+	
     }
     // Inserts data in the tree
-    void insert(int key, HeapType data) {
+    void insert(const int key, HeapType data) {
         // if emty, insert at index 1
+	/*
         if(size == 0){
-            array[1].setKey(key);
-            array[1].setData(data);
-            size++;
+            //myArray[1]->setKey(key);
+	    //myArray[1]->key = key;
+	    myArray[1].setKey(key);
+            //myArray[1]->setData(data);
+            //myArray[1]->data = data;
+ 	    myArray[1].setData(data);
+	    size++;
             return;
         }
+	*/
+	size++;
         // if heap is full, double the size
         if(size == capacity){
             capacity *= 2;
-            TreeNode<HeapType> *resizedArray = new TreeNode<HeapType>[capacity];
-            for(int i = 0; i <= size; i++){
-                resizedArray[i] = array[i];
+            TreeNode<HeapType> resizedArray[capacity];
+            for(int i = 1; i <= size; i++){
+                resizedArray[i] = myArray[i];
                 
-                delete [] array;
-                array = resizedArray;
+                //delete [] myArray;
+                //myArray = resizedArray;
+		/*
+		myArray = resizedArray;
+		delete [] resizedArray;
+		*/
+		//myArray = resizedArray;
+		//delete [] resizedArray;
             }
+	    for(int i = 1; i < capacity; i++){
+		myArray[i] = resizedArray[i];
+	    }
+	}
+	
             
             // insert element at end of heap
-            size++;
-            array[size].setData(data);
-            array[size].setKey(key);
-            // compare key to parents key, bubble up if needed
+        //size++;
+        //myArray[size].setData(data);
+        //myArray[size].setKey(key);
+        myArray[size].data = data;
+        myArray[size].key = key;
+            //myArray[size+1].setData(data);
+	    //myArray[size+1].setKey(key);
+	    // compare key to parents key, bubble up if needed
+	/*
             int currentIndex = size;
             int newIndex = ceil((currentIndex - 1) / 2);
-            while(array[newIndex].getKey() > array[currentIndex].getKey()){
-                TreeNode<HeapType> temp = array[newIndex];
-                array[currentIndex] = array[newIndex];
-                array[currentIndex] = temp;
+            while(myArray[newIndex].getKey() > myArray[currentIndex].getKey()){
+                TreeNode<HeapType> temp = myArray[currentIndex];
+                myArray[currentIndex] = myArray[newIndex];
+                myArray[currentIndex] = temp;
             }
-        }
+	*/
     }
     
         // Removes data from the tree
-        HeapType delMax(void) {
+        void delMax(void) {
             // if heap is empty
             if(size == 0){
                 cout << "Error: The heap is empty" << endl;
+		return;
             }
             // if only one element
             if(size == 1){
                 size--;
-                cout << "Removed " << array[1].getData() << " from heap." << endl;
-                return array[1].getData();
+                cout << "Removed " << myArray[1].getData() << " from heap." << endl;
+                //return myArray[1].getData();
+		return;
             }
             // if 2 or more elements in heap remove root and shift all else
             // one position left in array
             size--;
-            cout << "Removed " << array[1].getData() << " from heap." << endl;
+           // cout << "Removed " << myArray[1].getData() << " from heap." << endl;
+            cout << "Removed " << myArray[1].data << " from heap." << endl;
             for(int i = size; i >= 1; i--){
-                array[i] = array[i+1];
+                myArray[i] = myArray[i+1];
             }
             // if heap is 1/4 full, cut size in half
-            if(size <= .25 * capacity){
+            if(size <= .25 * capacity && capacity/2 > INITIAL_HEAP_SIZE){
                 capacity /= 2;
-                TreeNode<HeapType> *resizedArray = new TreeNode<HeapType>[capacity];
-                for(int i = 0; i <= size; i++){
-                    resizedArray[i] = array[i];
+                TreeNode<HeapType> resizedArray[capacity];
+                for(int i = 1; i <= size+1; i++){
+                    resizedArray[i] = myArray[i];
                 }
-                delete [] array;
-                array = resizedArray;
+				
+               // delete [] myArray;
+                //myArray = resizedArray;
+		//TreeNode<HeapType> myArray = resizedArray;
+		
+		//myArray = resizedArray;
+		//delete [] resizedArray;
+		
+		for(int i = 0; i < capacity; i++){
+			myArray[i] = resizedArray[i];
+		}
             }
-            return array[1].getData();
+            //return myArray[1].getData();
+	    return;
         }
         
         
     };
-    
+
+
     
 #endif /* maxHeapTree_h */
