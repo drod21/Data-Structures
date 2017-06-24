@@ -156,7 +156,7 @@ public:
         
         cout << "key at new index " << myArray[newIndex].key << endl;
         cout << "parents index: " << newIndex << endl;	//DEBUGGING
-        while(myArray[currentIndex].key > myArray[newIndex].key && currentIndex >= 1){
+        while(myArray[currentIndex].key > myArray[newIndex].key && currentIndex > 1){
             swapHeapNodes(currentIndex, newIndex);
             currentIndex = ceil((static_cast<double>(currentIndex) - 1) / 2);
             newIndex = ceil((static_cast<double>(newIndex) - 1) / 2);
