@@ -317,7 +317,47 @@ public:
     }
     
     // Removes data from the tree
-    AType del(AType data){
+    AType del(AType data) {
+        TreeNode<AType> *x, *parent;
+        x = findNode(data);
+        parent = x->parent;
+        cout << x->data << endl;
+        if (x == nullptr) {
+            throw underflow_error("Item not in tree\n");
+            return;
+        }
+        
+        // Case for 2 children, find inorder successor
+        if (x->left != nullptr && x->right != nullptr) {
+            TreeNode<AType> *successor = x->right;
+            parent = x;
+            while (successor->left != nullptr) {
+                parent = successor;
+                successor = successor->left;
+            }
+            // Move contents of successor to x and change
+            // x to point to successor
+            x->data = successor->data;
+            x = successor;
+        }
+        
+        // 0 children or 1 child
+        TreeNode<AType> *subtree = x->left;
+        if (subtree == nullptr) {
+            subtree = x->right;
+        }
+        
+        if (parent == nullptr) {    // root being removed
+            root = subtree;
+        } else if (parent->left == x) { // left child of parent
+            parent->left = subtree;
+        } else {    // right child of parent
+            parent->right = subtree;
+        }
+        delete x;
+        
+        size--; //decrease size of tree
+
     }
 
     
