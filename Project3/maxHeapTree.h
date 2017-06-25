@@ -1,8 +1,8 @@
 /************************************************************
-Derek Rodriguez, Derek Caprio
-COP 4530 Project 3
-maxHeapTree.h
-************************************************************/
+ Derek Rodriguez, Derek Caprio
+ COP 4530 Project 3
+ maxHeapTree.h
+ ************************************************************/
 
 //include guard
 #ifndef maxHeapTree_h
@@ -15,7 +15,7 @@ maxHeapTree.h
 using namespace std;
 
 // macros
-#define INITIAL_HEAP_SIZE 5
+#define INITIAL_HEAP_SIZE 3
 
 // class template
 template <class HeapType>
@@ -85,26 +85,29 @@ public:
         }
         
     }
-
+    
     // Inserts data in the tree
     void insert(const int key, const HeapType data) {
         TreeNode<HeapType> node;
         node.data = data;
         node.key = key;
+        int newSize = capacity * 2;
+        
         // if heap is full, double the size
         if(size == capacity){
-            capacity *= 2;
-            TreeNode<HeapType> resizedArray[capacity];
-            for(int i = 1; i <= size; i++){
+            
+            TreeNode<HeapType> *resizedArray = new TreeNode<HeapType>[newSize];
+            for(int i = 1; i <= size; i++) {
                 resizedArray[i] = myArray[i];
             }
-            for(int i = 1; i <= size; i++){
-                myArray[i] = resizedArray[i];
-            }
-	    cout << " Heap capacity has been doubled " << endl;
+            
+            delete [] myArray;
+            myArray = resizedArray;
+            capacity = newSize;
+            cout << " Heap capacity has been doubled " << endl;
         }
-	// insert node at end of array
-	size++;
+        // insert node at end of array
+        size++;
         myArray[size] = node;
         // compare key to parents key, bubble up if needed
         int currentIndex = size;
@@ -115,7 +118,7 @@ public:
             newIndex = ceil((static_cast<double>(newIndex) - 1) / 2);
             if (newIndex == 0) newIndex = newIndex + 1;
             if (currentIndex == 0) currentIndex = currentIndex + 1;
-        }  
+        }
     }
     
     // Removes data from the tree
@@ -133,17 +136,17 @@ public:
             return;
         }
         // if 2 or more elements in heap remove root and shift all else
-	TreeNode<HeapType> temp;
+        TreeNode<HeapType> temp;
         cout << "Removed " << myArray[1].data << " from heap." << endl;
-	TreeNode<HeapType> tempArr[capacity];
-	for(int i = 2; i < size+1; i++){
-		tempArr[i-1] = myArray[i];
-	}
-	for(int i = 1; i < size; i++){
-		myArray[i] = tempArr[i];
-	}
-	size--;
-        // if heap is 1/4 full, cut size in half	
+        TreeNode<HeapType> tempArr[capacity];
+        for(int i = 2; i < size+1; i++){
+            tempArr[i-1] = myArray[i];
+        }
+        for(int i = 1; i < size; i++){
+            myArray[i] = tempArr[i];
+        }
+        size--;
+        // if heap is 1/4 full, cut size in half
         if(size <= .25 * capacity && capacity/2 > INITIAL_HEAP_SIZE){
             capacity /= 2;
             TreeNode<HeapType> resizedArray[capacity];
@@ -154,7 +157,7 @@ public:
                 myArray[i] = resizedArray[i];
             }
         }
-	cout << " Heap size halved " << endl;
+        cout << " Heap size halved " << endl;
     }
     
     // function to swap 2 heap nodes
