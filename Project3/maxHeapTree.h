@@ -102,6 +102,7 @@ public:
             }
             
             delete [] myArray;
+            myArray = new TreeNode<HeapType>[newSize];
             myArray = resizedArray;
             capacity = newSize;
             cout << " Heap capacity has been doubled " << endl;
