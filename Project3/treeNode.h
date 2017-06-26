@@ -31,15 +31,13 @@ public:
     }
     
     TreeNode(const TreeNode &obj) {
-        parent = new TreeNode<NodeType>;
-        right = new TreeNode<NodeType>;
-        left = new TreeNode<NodeType>;
-        parent = obj.parent;
-        left = obj.left;
-        right = obj.right;
-        key = obj.key;
-        balanceFactor = obj.balanceFactor;
-        data = obj.data;
+        TreeNode<NodeType> *myArray = new TreeNode<NodeType>;
+        myArray->parent = obj.parent;
+        myArray->left = obj.left;
+        myArray->right = obj.right;
+        myArray->key = obj.key;
+        myArray->balanceFactor = obj.balanceFactor;
+        myArray->data = obj.data;
     }
     
     // Destructor

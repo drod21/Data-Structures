@@ -99,7 +99,8 @@ public:
             for(int i = 1; i <= size; i++) {
                 resizedArray[i] = myArray[i];
             }
-            delete [] myArray;
+
+            delete [] myArray; 
             myArray = resizedArray;
             capacity = newSize;
             cout << " Heap capacity has been doubled " << endl;
@@ -165,7 +166,7 @@ public:
         temp = myArray[a];
         myArray[a] = myArray[b];
         myArray[b] = temp;
-    } 
+    }
 };
 
-#endif // maxHeapTree_h 
+#endif // maxHeapTree_h

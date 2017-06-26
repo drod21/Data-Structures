@@ -16,10 +16,11 @@ int main() {
     typedef string Node;
     
     Node data;
-    Node dataToDelete;
+
     int keyToInsert;
     Node dataToInsert;
     Node *nodeToGetHeight;
+    Node dataToDelete;
     char tree_type;
     int menu_number = 0;
     LinkedTree<Node> *myTree = new LinkedTree<Node>();
@@ -153,7 +154,6 @@ int main() {
                     break;
                     
                 case 13:
-                    Node dataToInsert;
                     cout << "Enter data to insert: ";
                     cin >> dataToInsert;
                     myTree->insert(dataToInsert);
@@ -162,7 +162,11 @@ int main() {
                     
                 case 14:
                     try {
+<<<<<<< HEAD
                         //Node dataToDelete;
+=======
+                        
+>>>>>>> a3613491a3f75200da3083f0dc617c44e7b2236b
                         cout << "Enter data to delete: ";
                         cin >> dataToDelete;
                         myTree->del(dataToDelete);
@@ -297,8 +301,8 @@ int main() {
              break;
              } // end switch*/
         } // end while
-    } else if (tree_type == 'h') {  
-        while (menu_number != 10) {        
+    } else if (tree_type == 'h') {
+        while (menu_number != 10) {
             cout << "Select an option:\n"
             << "1. Return root\n"
             << "2. Return size\n"
@@ -352,17 +356,15 @@ int main() {
                     
                 case 7:
                     myHeap->clear();
-		    cout << "Heap cleared" << endl;
+                    cout << "Heap cleared" << endl;
                     break;
                     
                 case 8:
-                   // int keyToInsert;
-                   // Node dataToInsert;
                     cout << "Enter key for priority: ";
-		    cin.ignore();
+                    cin.ignore();
                     cin >> keyToInsert;
                     cout << "Enter data: ";
-		    cin.ignore();
+                    cin.ignore();
                     cin >> dataToInsert;
                     myHeap->insert(keyToInsert, dataToInsert);
                     cout << endl;
@@ -370,8 +372,8 @@ int main() {
                     
                 case 9:
                     //cout << "Deleted" << myHeap->delMax() << endl;
-		    cout << "Deleting " << myHeap->getRoot() << " from list" << endl;
-		    myHeap->delMax();
+                    cout << "Deleting " << myHeap->getRoot() << " from list" << endl;
+                    myHeap->delMax();
                     break;
                     
                 case 10:
