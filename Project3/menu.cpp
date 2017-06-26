@@ -7,14 +7,17 @@
 //
 
 #include <iostream>
+#include <string>
 #include "maxHeapTree.h"
 #include "linkedTree.h"
 #include "avlTree.h"
 
 int main() {
-    typedef double Node;
+    typedef string Node;
     
     Node data;
+    Node dataToDelete;
+    int keyToInsert;
     Node dataToInsert;
     Node *nodeToGetHeight;
     char tree_type;
@@ -159,7 +162,7 @@ int main() {
                     
                 case 14:
                     try {
-                        Node dataToDelete;
+                        //Node dataToDelete;
                         cout << "Enter data to delete: ";
                         cin >> dataToDelete;
                         myTree->del(dataToDelete);
@@ -353,8 +356,8 @@ int main() {
                     break;
                     
                 case 8:
-                    int keyToInsert;
-                    Node dataToInsert;
+                   // int keyToInsert;
+                   // Node dataToInsert;
                     cout << "Enter key for priority: ";
 		    cin.ignore();
                     cin >> keyToInsert;

@@ -67,9 +67,9 @@ public:
     
     // Prints the heap
     void print() {
-        cout << "Heap [data/key]: ";
+        cout << "Heap [key/data]: ";
         for(int i = 1; i <= size; i++){		// start at 1 because index 0 is empty
-            cout << "[" << myArray[i].data << "/" << myArray[i].key << "] ";
+            cout << "[" << myArray[i].key << "/" << myArray[i].data << "] ";
         }
         cout << endl;
     }
@@ -94,19 +94,17 @@ public:
         int newSize = capacity * 2;
         
         // if heap is full, double the size
-        if(size == capacity){
-            
+        if(size == capacity-1){
             TreeNode<HeapType> *resizedArray = new TreeNode<HeapType>[newSize];
             for(int i = 1; i <= size; i++) {
                 resizedArray[i] = myArray[i];
             }
-            
             delete [] myArray;
-            myArray = new TreeNode<HeapType>[newSize];
             myArray = resizedArray;
             capacity = newSize;
             cout << " Heap capacity has been doubled " << endl;
         }
+	
         // insert node at end of array
         size++;
         myArray[size] = node;
