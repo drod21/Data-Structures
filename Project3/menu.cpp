@@ -162,11 +162,7 @@ int main() {
                     
                 case 14:
                     try {
-<<<<<<< HEAD
-                        //Node dataToDelete;
-=======
-                        
->>>>>>> a3613491a3f75200da3083f0dc617c44e7b2236b
+
                         cout << "Enter data to delete: ";
                         cin >> dataToDelete;
                         myTree->del(dataToDelete);

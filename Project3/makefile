@@ -3,7 +3,7 @@
 # Paramaters for cross-compiler, warning flags, and gdb flags
 
 CC = g++
-CFLAGS = -std=c++11 -Wall
+CFLAGS = -std=c++11 -Wall -g
 
 # *******************************
 # Entries for executables
