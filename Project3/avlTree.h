@@ -382,13 +382,13 @@ public:
         
         if (node->balanceFactor > 1 && data < node->left->data) {
             // rotate right
-            return rightRotate(node);
+            node = rightRotate(node);
         }
         
         // Right Right Case
         if (node->balanceFactor < -1 && data > node->right->data) {
             // left rotate
-            return leftRotate(node);
+            node = leftRotate(node);
         }
         
         // Left Right Case
@@ -396,7 +396,7 @@ public:
             // node->left left rotate
             node->left = leftRotate(node->left);
             //return right rotate
-            return rightRotate(node);
+            node = rightRotate(node);
         }
         
         // Right Left Case
@@ -404,7 +404,7 @@ public:
             // node->right right rotate
             node->right = rightRotate(node->right);
             // return left rotate
-            return leftRotate(node);
+            node = leftRotate(node);
         }
         
         
