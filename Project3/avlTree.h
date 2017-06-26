@@ -1,11 +1,10 @@
-//
-//  avlTree.h
-//  Project3
-//
-//  Created by Derek Rodriguez on 6/14/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
+/************************************************************
+ Derek Rodriguez, Derek Caprio
+ COP 4530 Project 3
+ maxHeapTree.h
+ ************************************************************/
 
+//include guard
 #ifndef avlTree_h
 #define avlTree_h
 
@@ -31,7 +30,7 @@ private:
         return leaves_helper(node->left) + leaves_helper(node->right);
     }
     
-    void insert_helper(AType data, TreeNode<AType> *node) {
+    TreeNode<AType> *insert_helper(AType data, TreeNode<AType> *node) {
         if (data < node->data) {
             if (node->left != NULL) {
                 insert_helper(data, node->left);
@@ -57,25 +56,31 @@ private:
         // Left Left Case
         if (node->balanceFactor > 1 && data < node->left->data) {
             // rotate right
+            return rightRotate(node);
         }
         
         // Right Right Case
         if (node->balanceFactor < -1 && data > node->right->data) {
             // left rotate
+            return leftRotate(node);
         }
         
         // Left Right Case
         if (node->balanceFactor > 1 && data > node->left->data) {
             // node->left left rotate
+            node->left = leftRotate(node->left);
             //return right rotate
+            return rightRotate(node);
         }
         
         // Right Left Case
         if (node->balanceFactor < -1 && data < node->right->data) {
             // node->right right rotate
+            node->right = rightRotate(node->right);
             // return left rotate
+            return leftRotate(node);
         }
-        
+        return node;
     }
     
     // inorder helper function
@@ -119,7 +124,25 @@ private:
         
     }
     
+    TreeNode<AType> *leftRotate(TreeNode<AType> *node) {
+        TreeNode<AType> *temp = node->right;
+        TreeNode<AType> *temp2 = temp->left;
+        
+        temp->left = node;
+        node->right = temp2;
+        
+        return temp;
+    }
     
+    
+    TreeNode<AType> *rightRotate(TreeNode<AType> *node) {
+        TreeNode<AType> *temp = node->left;
+        TreeNode<AType> *temp2 = temp->right;
+        
+        temp->right = node;
+        node->left = temp2;
+        return temp;
+    }
     
 public:
     
@@ -305,7 +328,7 @@ public:
     void insert(const AType &data) {
         TreeNode<AType> *new_node = new TreeNode<AType>;
         if (root != NULL) {
-            insert_helper(data, root);
+            root = insert_helper(data, root);
         } else {
             new_node->data = data;
             new_node->left = nullptr;
@@ -317,14 +340,14 @@ public:
     }
     
     // Removes data from the tree
-    AType del(AType data) {
+    void del(AType data) {
         TreeNode<AType> *x, *parent;
-        x = findNode(data);
+        x = find(data);
         parent = x->parent;
         cout << x->data << endl;
         if (x == nullptr) {
             throw underflow_error("Item not in tree\n");
-            return;
+            
         }
         
         // Case for 2 children, find inorder successor
