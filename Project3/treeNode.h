@@ -45,6 +45,7 @@ public:
     ~TreeNode(){}
     
     // mutators
+
     void setData(NodeType d){
         data = d;
     }
@@ -59,6 +60,7 @@ public:
     int getKey(void){
         return key;
     }
+
     short int getBalanceFactor(void){
         return balanceFactor;
     }

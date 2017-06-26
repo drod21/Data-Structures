@@ -42,7 +42,7 @@ public:
     }
     
     HeapType getRoot() {
-        return myArray[1].getData();		// index 0 is empty
+        return myArray[1].data;		// index 0 is empty
     }
     
     // Returns the number of elements in the tree
@@ -132,7 +132,6 @@ public:
         if(size == 1){
             size--;
             cout << "Removed " << myArray[1].data << " from heap." << endl;
-            //return myArray[1].getData();
             return;
         }
         // if 2 or more elements in heap remove root and shift all else
