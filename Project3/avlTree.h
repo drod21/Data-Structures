@@ -347,7 +347,6 @@ public:
         cout << x->data << endl;
         if (x == nullptr) {
             throw underflow_error("Item not in tree\n");
-            
         }
         
         // Case for 2 children, find inorder successor
@@ -378,6 +377,36 @@ public:
             parent->right = subtree;
         }
         delete x;
+        
+        TreeNode<AType> *node = root;
+        
+        if (node->balanceFactor > 1 && data < node->left->data) {
+            // rotate right
+            return rightRotate(node);
+        }
+        
+        // Right Right Case
+        if (node->balanceFactor < -1 && data > node->right->data) {
+            // left rotate
+            return leftRotate(node);
+        }
+        
+        // Left Right Case
+        if (node->balanceFactor > 1 && data > node->left->data) {
+            // node->left left rotate
+            node->left = leftRotate(node->left);
+            //return right rotate
+            return rightRotate(node);
+        }
+        
+        // Right Left Case
+        if (node->balanceFactor < -1 && data < node->right->data) {
+            // node->right right rotate
+            node->right = rightRotate(node->right);
+            // return left rotate
+            return leftRotate(node);
+        }
+        
         
         size--; //decrease size of tree
     }
