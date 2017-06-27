@@ -235,6 +235,12 @@ public:
     
     // Destructor
     ~AvlTree() {
+	if (this->left)
+		delete this->left;
+	if (this->right)
+		delete this->right;
+	if (this->key)
+		delete this->data;
         delete root;
     }
     
@@ -400,7 +406,6 @@ public:
         if (empty()) {
             throw underflow_error("Tree is empty");
         }
-        delete root;
         root = new TreeNode<AType>;
     }
     // Inserts data in the tree

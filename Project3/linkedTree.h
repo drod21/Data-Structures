@@ -143,6 +143,14 @@ public:
     
     // Destructor
     ~LinkedTree() {
+
+	if (this->left)
+		delete this->left;
+	if (this->right)
+		delete this->right;
+	if (this->key)
+		delete this->data;
+
         delete root;
     }
     
@@ -330,9 +338,9 @@ public:
         if (empty()) {
             throw underflow_error("Tree is empty");
         }
-        delete root;
         root = new TreeNode<LTree>;
     }
+
     // Inserts data in the tree
     void insert(const LTree &data) {
         root = insert_helper(data, root);
