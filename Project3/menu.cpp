@@ -1,10 +1,9 @@
-//
-//  main.cpp
-//  Project3
-//
-//  Created by Derek Rodriguez on 6/14/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
+/************************************************************
+ Derek Rodriguez, Derek Caprio
+ COP 4530 Project 3
+ maxHeapTree.h
+ ************************************************************/
+
 
 #include <iostream>
 #include <string>
