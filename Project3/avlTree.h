@@ -17,41 +17,107 @@ class AvlTree {
 private:
     TreeNode <AType> *root;
     int size;
-    
+    // Begin helper/auxiliary functions for recursion.
     int leaves_helper(TreeNode<AType> *node) {
-        
         if (node == NULL) {
             return 0;
         }
         if (isLeaf(node)) {
             return 1;
         }
-        
         return leaves_helper(node->left) + leaves_helper(node->right);
     }
     
-    TreeNode<AType> *insert_helper(AType data, TreeNode<AType> *node) {
+    TreeNode<AType> *delete_helper(const AType &data, TreeNode<AType> *node) {
+        if (node == nullptr)
+            return node;
+        // if data to be deleted is smaller than roots data
         if (data < node->data) {
-            if (node->left != NULL) {
-                insert_helper(data, node->left);
+            node->left = delete_helper(data, node->left);
+        } else if (data > node->data) {
+            node->right = delete_helper(data, node->right);
+        } else {
+            // node with 1 or 0 children
+            if ((node->left == NULL) || (node->right == NULL)) {
+                TreeNode<AType> *temp;
+                if (node->left != nullptr) {
+                    temp = node->left;
+                } else {
+                    temp = node->right;
+                }
+                //no children
+                if (temp == nullptr) {
+                    temp = node;
+                    node = nullptr;
+                } else {
+                    // copy contents of non-empty child
+                    node->data = temp->data;
+                    node->left = temp->left;
+                    node->right = temp->right;
+                    node->height = temp->height;
+                }
             } else {
-                node->left = new TreeNode<AType>();
-                node->left->data = data;
-                node->left->parent = node;
-                node->left->left = nullptr;
-                node->left->right = nullptr;
-            }
-        } else if (data >= node->data) {
-            if (node->right != NULL) {
-                insert_helper(data, node->right);
-            } else {
-                node->right = new TreeNode<AType>();
-                node->right->data = data;
-                node->right->parent = node;
-                node->right->left = nullptr;
-                node->right->right = nullptr;
+                // node with two children
+                // get inorder successor (smallest in right tree)
+                TreeNode<AType> *temp2 = minValue(node->right);
+                node->data = temp2->data;
+                node->right = delete_helper(temp2->data,node->right);
             }
         }
+        // one node
+        if (node == nullptr) {
+            return node;
+        }
+        node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+        node->balanceFactor = getBalance(node);
+        
+        
+        // Left Left Case
+        if (node->balanceFactor > 1 && getBalance(node->left) >= 0)
+            return rightRotate(node);
+        
+        // Left Right Case
+        if (node->balanceFactor > 1 && getBalance(node->left) < 0) {
+            node->left =  leftRotate(node->left);
+            return rightRotate(node);
+        }
+        
+        // Right Right Case
+        if (node->balanceFactor < -1 && getBalance(node->right) <= 0)
+            return leftRotate(node);
+        
+        // Right Left Case
+        if (node->balanceFactor < -1 && getBalance(node->right) > 0) {
+            node->right = rightRotate(node->right);
+            return leftRotate(node);
+        }
+        
+        return node;
+    }
+    
+    TreeNode<AType> *insert_helper(AType data, TreeNode<AType> *node) {
+        TreeNode<AType> *temp;
+        if (node == nullptr) {
+            node = new TreeNode<AType>;
+            node->data = data;
+            return node;
+        }
+        
+        if (data < node->data) {
+            temp = node->left;
+            temp = insert_helper(data, node->left);
+            temp->parent = node;
+            node->left = temp;
+        } else if (data > node->data) {
+            temp = node->right;
+            temp = insert_helper(data, node->right);
+            temp->parent = node;
+            node->right = temp;
+        } else {
+            return node;
+        }
+        
+        node->height = getHeight(node);
         node->balanceFactor = getBalance(node);
         // Left Left Case
         if (node->balanceFactor > 1 && data < node->left->data) {
@@ -81,6 +147,13 @@ private:
             return leftRotate(node);
         }
         return node;
+    }
+    
+    TreeNode<AType> *minValue(TreeNode<AType> *node) {
+        TreeNode<AType> *curr = node;
+        while (curr->left != nullptr)
+            curr = curr->left;
+        return curr;
     }
     
     // inorder helper function
@@ -130,22 +203,26 @@ private:
         
         temp->left = node;
         node->right = temp2;
-        
+        node->height = max(getHeight(node->left), getHeight(node->right)) + 1;
+        temp->height = max(getHeight(temp->left), getHeight(temp->right)) + 1;
         return temp;
     }
     
-    
     TreeNode<AType> *rightRotate(TreeNode<AType> *node) {
+        
         TreeNode<AType> *temp = node->left;
         TreeNode<AType> *temp2 = temp->right;
         
         temp->right = node;
         node->left = temp2;
+        
+        node->height = max(getHeight(node->left), getHeight(node->right)) + 1;
+        temp->height = max(getHeight(temp->left), getHeight(temp->right)) + 1;
+        
         return temp;
     }
     
 public:
-    
     // Constructor
     AvlTree() {
         root = nullptr;
@@ -169,10 +246,9 @@ public:
         if (empty()) {
             throw underflow_error("Tree is empty");
         }
-        
         return size;
-        
     }
+    
     // returns height of the tree
     int getHeight() {
         if (empty()) {
@@ -183,8 +259,8 @@ public:
             return 0;
         }
         return getHeight(n);
-        
     }
+    
     // helper function for maximum of two ints
     int max(int a, int b) {
         return (a > b)? a : b;
@@ -211,8 +287,6 @@ public:
         return (n->left == nullptr && n->right == nullptr);
     }
     
-    
-    
     int getBalance(TreeNode<AType> *node) {
         if (empty()) {
             throw underflow_error("Tree is empty");
@@ -226,8 +300,6 @@ public:
             throw underflow_error("Tree is empty");
         }
         TreeNode<AType>* node = root;
-        
-        
         return leaves_helper(node);
     }
     
@@ -259,7 +331,6 @@ public:
         bool found = false;
         for (;;) {
             if (found || temp == nullptr) break;
-            
             if (data < temp->data) {
                 temp = temp->left;
             } else if (temp->data < data) {
@@ -314,6 +385,7 @@ public:
         }
         cout << endl;
     }
+    
     // Mutators
     
     // Removes all elements in the tree
@@ -326,88 +398,13 @@ public:
     }
     // Inserts data in the tree
     void insert(const AType &data) {
-        TreeNode<AType> *new_node = new TreeNode<AType>;
-        if (root != NULL) {
-            root = insert_helper(data, root);
-        } else {
-            new_node->data = data;
-            new_node->left = nullptr;
-            new_node->right = nullptr;
-            new_node->balanceFactor = 0;
-            root = new_node;
-        }
+        root = insert_helper(data, root);
         size++;
     }
     
     // Removes data from the tree
     void del(AType data) {
-        TreeNode<AType> *x, *parent;
-        x = find(data);
-        parent = x->parent;
-        cout << x->data << endl;
-        if (x == nullptr) {
-            throw underflow_error("Item not in tree\n");
-        }
-        
-        // Case for 2 children, find inorder successor
-        if (x->left != nullptr && x->right != nullptr) {
-            TreeNode<AType> *successor = x->right;
-            parent = x;
-            while (successor->left != nullptr) {
-                parent = successor;
-                successor = successor->left;
-            }
-            // Move contents of successor to x and change
-            // x to point to successor
-            x->data = successor->data;
-            x = successor;
-        }
-        
-        // 0 children or 1 child
-        TreeNode<AType> *subtree = x->left;
-        if (subtree == nullptr) {
-            subtree = x->right;
-        }
-        
-        if (parent == nullptr) {    // root being removed
-            root = subtree;
-        } else if (parent->left == x) { // left child of parent
-            parent->left = subtree;
-        } else {    // right child of parent
-            parent->right = subtree;
-        }
-        delete x;
-        
-        TreeNode<AType> *node = root;
-        
-        if (node->balanceFactor > 1 && data < node->left->data) {
-            // rotate right
-            node = rightRotate(node);
-        }
-        
-        // Right Right Case
-        if (node->balanceFactor < -1 && data > node->right->data) {
-            // left rotate
-            node = leftRotate(node);
-        }
-        
-        // Left Right Case
-        if (node->balanceFactor > 1 && data > node->left->data) {
-            // node->left left rotate
-            node->left = leftRotate(node->left);
-            //return right rotate
-            node = rightRotate(node);
-        }
-        
-        // Right Left Case
-        if (node->balanceFactor < -1 && data < node->right->data) {
-            // node->right right rotate
-            node->right = rightRotate(node->right);
-            // return left rotate
-            node = leftRotate(node);
-        }
-        
-        
+        root = delete_helper(data, root);
         size--; //decrease size of tree
     }
     
