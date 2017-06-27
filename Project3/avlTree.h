@@ -1,7 +1,7 @@
 /************************************************************
  Derek Rodriguez, Derek Caprio
  COP 4530 Project 3
- maxHeapTree.h
+ AvlTree.h
  ************************************************************/
 
 //include guard
@@ -342,6 +342,9 @@ public:
             } else {
                 found = true;
             }
+        }
+        if (!found) {
+            throw underflow_error("Item not in tree.");
         }
         return temp;
         

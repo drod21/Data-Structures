@@ -1,7 +1,7 @@
 /************************************************************
  Derek Rodriguez, Derek Caprio
  COP 4530 Project 3
- maxHeapTree.h
+ LinkedTree.h
  ************************************************************/
 
 #ifndef linkedTree_h

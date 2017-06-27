@@ -1,7 +1,7 @@
 /************************************************************
  Derek Rodriguez, Derek Caprio
  COP 4530 Project 3
- maxHeapTree.h
+ menu.cpp
  ************************************************************/
 
 
@@ -23,6 +23,7 @@ int main() {
     char tree_type;
     int menu_number = 0;
     LinkedTree<Node> *myTree = new LinkedTree<Node>();
+    AvlTree<Node> *avlTree = new AvlTree<Node>();
     MaxHeapTree<Node> *myHeap = new MaxHeapTree<Node>(INITIAL_HEAP_SIZE);
     cout << "Please enter a tree type: " << endl;
     cin >> tree_type;
