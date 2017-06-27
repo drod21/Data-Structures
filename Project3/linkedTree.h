@@ -1,10 +1,8 @@
-//
-//  linkedTree.h
-//  Project3
-//
-//  Created by Derek Rodriguez on 6/14/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
+/************************************************************
+ Derek Rodriguez, Derek Caprio
+ COP 4530 Project 3
+ maxHeapTree.h
+ ************************************************************/
 
 #ifndef linkedTree_h
 #define linkedTree_h
@@ -29,32 +27,64 @@ private:
         if (isLeaf(node)) {
             return 1;
         }
-        
         return leaves_helper(node->left) + leaves_helper(node->right);
     }
     
-    void insert_helper(LTree data, TreeNode<LTree> *node) {
+    
+    TreeNode<LTree> *delete_helper(const LTree &data, TreeNode<LTree> *node) {
+        if (node == nullptr)
+            return node;
+        // if data to be deleted is smaller than roots data
         if (data < node->data) {
-            if (node->left != NULL) {
-                insert_helper(data, node->left);
+            node->left = delete_helper(data, node->left);
+        } else if (data > node->data) {
+            node->right = delete_helper(data, node->right);
+        } else {
+            // node with 1 or 0 children
+            if ((node->left == NULL) || (node->right == NULL)) {
+                TreeNode<LTree> *temp = node->left ? node->left : node->right;
+                //no children
+                if (temp == nullptr) {
+                    temp = node;
+                    node = nullptr;
+                } else {
+                    // copy contents of non-empty child
+                    node->data = temp->data;
+                    delete temp;
+                }
             } else {
-                node->left = new TreeNode<LTree>();
-                node->left->data = data;
-                node->left->parent = node;
-                node->left->left = nullptr;
-                node->left->right = nullptr;
-            }
-        } else if (data >= node->data) {
-            if (node->right != NULL) {
-                insert_helper(data, node->right);
-            } else {
-                node->right = new TreeNode<LTree>();
-                node->right->data = data;
-                node->right->parent = node;
-                node->right->left = nullptr;
-                node->right->right = nullptr;
+                // node with two children
+                // get inorder successor (smallest in right tree)
+                TreeNode<LTree> *temp = minValue(node->right);
+                node->data = temp->data;
+                node->right = delete_helper(temp->data,node->right);
             }
         }
+        // one node
+        if (node == nullptr) {
+            return node;
+        }
+        return node;
+    }
+    
+    
+    TreeNode<LTree> *insert_helper(LTree data, TreeNode<LTree> *node) {
+        if (node == nullptr) {
+            node = new TreeNode<LTree>;
+            node->data = data;
+            node->parent = nullptr;
+            return node;
+        }
+        
+        if (data < node->data) {
+            node->left = insert_helper(data, node->left);
+        } else if (data > node->data) {
+            node->right = insert_helper(data, node->right);
+        } else {
+            return node;
+        }
+        
+        return node;
     }
     
     // inorder helper function
@@ -72,32 +102,24 @@ private:
     }
     // postorder helper function
     void postorder_helper(TreeNode<LTree>* node) {
-        
         if (node->left != nullptr) {
             preorder_helper(node->left);
         }
-        
         if (node->right != nullptr) {
             preorder_helper(node->right);
         }
-        
         cout << node->data << " ";
     }
     
     void preorder_helper(TreeNode<LTree>* node) {
-        
         cout << node->data << " ";
-        
         if (node->left != nullptr) {
             preorder_helper(node->left);
         }
-        
         if (node->right != nullptr) {
             preorder_helper(node->right);
         }
-        
     }
-    
     
 public:
     // Constructor
@@ -199,21 +221,27 @@ public:
         return leaves_helper(node);
     }
     
+    TreeNode<LTree> *minValue(TreeNode<LTree> *node) {
+        TreeNode<LTree> *curr = node;
+        while (curr->left != nullptr)
+            curr = curr->left;
+        return curr;
+    }
+    
     // Returns the number of siblings
     // of the node in the argument
     int siblings(TreeNode<LTree>* node) {
         if (empty()) {
             throw underflow_error("Tree is empty");
         }
-        int count = 0;
-        if (node->left == nullptr && node->right == nullptr) {
+        if (root == nullptr) {
             return 0;
-        } else if (node->left != nullptr && node->right != nullptr) {
-            count++;
-            return siblings(node->left);
-            return siblings(node->right);
         }
-        return count;
+        TreeNode<LTree> *temp = node->parent;
+        if (temp->left && temp->right) {
+            return 1;
+        }
+        return 1;
     }
     
     // Returns a pointer to a node that holds
@@ -235,6 +263,10 @@ public:
             } else {
                 found = true;
             }
+        }
+        
+        if (!found) {
+            throw underflow_error("Item not in tree.");
         }
         return temp;
     }
@@ -293,65 +325,16 @@ public:
     }
     // Inserts data in the tree
     void insert(const LTree &data) {
-        TreeNode<LTree> *new_node = new TreeNode<LTree>;
-        if (root != NULL) {
-            insert_helper(data, root);
-        } else {
-            new_node->data = data;
-            new_node->left = nullptr;
-            new_node->right = nullptr;
-            root = new_node;
-        }
+        root = insert_helper(data, root);
         size++;
     }
     
-    
     // Removes data from the tree
     void del(const LTree &data) {
-        TreeNode<LTree> *x, *parent;
-        x = findNode(data);
-        parent = x->parent;
-        cout << x->data << endl;
-        if (x == nullptr) {
-            throw underflow_error("Item not in tree\n");
-            return;
-        }
-        
-        // Case for 2 children, find inorder successor
-        if (x->left != nullptr && x->right != nullptr) {
-            TreeNode<LTree> *successor = x->right;
-            parent = x;
-            while (successor->left != nullptr) {
-                parent = successor;
-                successor = successor->left;
-            }
-            // Move contents of successor to x and change
-            // x to point to successor
-            x->data = successor->data;
-            x = successor;
-        }
-        
-        // 0 children or 1 child
-        TreeNode<LTree> *subtree = x->left;
-        if (subtree == nullptr) {
-            subtree = x->right;
-        }
-        
-        if (parent == nullptr) {    // root being removed
-            root = subtree;
-        } else if (parent->left == x) { // left child of parent
-            parent->left = subtree;
-        } else {    // right child of parent
-            parent->right = subtree;
-        }
-        delete x;
-        
+        root = delete_helper(data, root);
         size--; //decrease size of tree
     }
     
 };
-
-
-
 
 #endif /* linkedTree_h */
