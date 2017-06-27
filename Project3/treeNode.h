@@ -1,9 +1,8 @@
-//
-//  treeNode.h
-//  Project3
-//
-//  Created by Derek Rodriguez on 6/14/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
+/************************************************************
+ Derek Rodriguez, Derek Caprio
+ COP 4530 Project 3
+ maxHeapTree.h
+ ************************************************************/
 
 
 #ifndef treeNode_h
@@ -23,10 +22,11 @@ public:
     TreeNode <NodeType> *left;
     TreeNode<NodeType> *parent;
     TreeNode <NodeType> *right;
+    int height;
     
     
     // Constructor
-    TreeNode():key(0), balanceFactor(0), left(nullptr), parent(nullptr), right(nullptr) {
+    TreeNode():key(0), balanceFactor(0), left(nullptr), parent(nullptr), right(nullptr), height(0) {
         
     }
     
@@ -42,7 +42,14 @@ public:
     
     // Destructor
     
-    ~TreeNode(){}
+    ~TreeNode(){
+        if (parent != nullptr)
+            delete parent;
+        if (right != nullptr)
+            delete right;
+        if (left != nullptr)
+            delete left;
+    }
     
     // mutators
 
