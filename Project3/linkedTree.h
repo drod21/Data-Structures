@@ -69,6 +69,7 @@ private:
     
     
     TreeNode<LTree> *insert_helper(LTree data, TreeNode<LTree> *node) {
+        TreeNode<AType> *temp;
         if (node == nullptr) {
             node = new TreeNode<LTree>;
             node->data = data;
@@ -77,10 +78,19 @@ private:
         }
         
         if (data < node->data) {
-            node->left = insert_helper(data, node->left);
+            // Use temp to add new node, set node to be parent.
+            temp = node->left;
+            temp = insert_helper(data, temp);
+            temp->parent = node;
+            node->left = temp;
         } else if (data > node->data) {
-            node->right = insert_helper(data, node->right);
+            // Use temp to add new node, set node to be parent.
+            temp = node->right;
+            temp = insert_helper(data, temp);
+            temp->parent = node;
+            node->right = temp;
         } else {
+            cout << "Item already in tree." << endl;
             return node;
         }
         

@@ -104,16 +104,20 @@ private:
         }
         
         if (data < node->data) {
+            // Use temp to add new node, set node to be parent.
             temp = node->left;
-            temp = insert_helper(data, node->left);
+            temp = insert_helper(data, temp);
             temp->parent = node;
             node->left = temp;
+            // else go to right side of tree
         } else if (data > node->data) {
+            // Use temp to add new node, set node to be parent.
             temp = node->right;
-            temp = insert_helper(data, node->right);
+            temp = insert_helper(data, temp);
             temp->parent = node;
             node->right = temp;
         } else {
+            cout << "Item already in tree." << endl;
             return node;
         }
         
