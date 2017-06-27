@@ -42,7 +42,7 @@ public:
     }
     
     HeapType getRoot() {
-        return myArray[1].getData();		// index 0 is empty
+        return myArray[1].data;		// index 0 is empty
     }
     
     // Returns the number of elements in the tree
@@ -92,6 +92,13 @@ public:
         node.data = data;
         node.key = key;
         int newSize = capacity * 2;
+	// check if value already in list, discard if it is
+	for(int i = 1; i <= size; i++){
+		if(data == myArray[i].data){
+			cout << data << " is already in the heap" << endl;
+			return;
+		}
+	}
         
         // if heap is full, double the size
         if(size == capacity-1){
@@ -132,7 +139,6 @@ public:
         if(size == 1){
             size--;
             cout << "Removed " << myArray[1].data << " from heap." << endl;
-            //return myArray[1].getData();
             return;
         }
         // if 2 or more elements in heap remove root and shift all else
