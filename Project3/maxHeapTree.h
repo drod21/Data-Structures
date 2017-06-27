@@ -92,6 +92,13 @@ public:
         node.data = data;
         node.key = key;
         int newSize = capacity * 2;
+	// check if value already in list, discard if it is
+	for(int i = 1; i <= size; i++){
+		if(data == myArray[i].data){
+			cout << data << " is already in the heap" << endl;
+			return;
+		}
+	}
         
         // if heap is full, double the size
         if(size == capacity-1){
