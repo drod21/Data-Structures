@@ -15,7 +15,7 @@
 using namespace std;
 
 // macros
-#define INITIAL_HEAP_SIZE 3
+#define INITIAL_HEAP_SIZE 4
 
 // class template
 template <class HeapType>
