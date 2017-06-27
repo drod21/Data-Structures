@@ -50,7 +50,9 @@ private:
                 } else {
                     // copy contents of non-empty child
                     node->data = temp->data;
-                    delete temp;
+                    node->left = temp->left;
+                    node->right = temp->right;
+                    node->height = temp->height;
                 }
             } else {
                 // node with two children
