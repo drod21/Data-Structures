@@ -17,17 +17,28 @@ public:
 	void setVertexName(string n){
 		vertexName = n;
 	}
+	void color(void){
+		colored = true;
+	}
+	void uncolor(void){
+		colored == false;
+	}
 
 	
 	// accessors
 	string getVertexName(void){
 		return vertexName;
 	}
+	bool isColored(void){
+		if(colored == true) return true;
+		else return false;
+	}
     
     
 private:
     	// data members
     	string vertexName;
+	bool colored;
 };
 
 #endif /* vertex_h */
