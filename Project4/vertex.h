@@ -7,38 +7,39 @@
 #define vertex_h
 
 #include <string>
+#include <list>
 
 using namespace std;
 
 class Vertex {
     
-public:
-	// mutators
-	void setVertexName(string n){
-		vertexName = n;
-	}
-	void color(void){
-		colored = true;
-	}
-	void uncolor(void){
-		colored == false;
-	}
-
-	
-	// accessors
-	string getVertexName(void){
-		return vertexName;
-	}
-	bool isColored(void){
-		if(colored == true) return true;
-		else return false;
-	}
-    
-    
 private:
-    	// data members
-    	string vertexName;
-	bool colored;
+    // data members
+    string vertexName;
+    bool colored;
+    list<string> adjList;
+    
+public:
+    // mutators
+    void setVertexName(string n){
+        vertexName = n;
+    }
+    void color(void){
+        colored = true;
+    }
+    void uncolor(void){
+        colored = false;
+    }
+    
+    
+    // accessors
+    string getVertexName(void){
+        return vertexName;
+    }
+    bool isColored(void){
+        if(colored == true) return true;
+        else return false;
+    }
 };
 
 #endif /* vertex_h */

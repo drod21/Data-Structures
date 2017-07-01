@@ -7,47 +7,52 @@
 #ifndef edge_h
 #define edge_h
 
-#include <string>
-
-using namespace std;
+#include "vertex.h"
 
 class Edge {
     
-public:
-	// mutators
-    	void setWeight(double w){
-		weight = w;
-	}
-
-	void setSource(string v){
-		sourceVertex = v;
-	}
-	
-	void setTarget(string v){
-		targetVertex = v;
-	}
-
-
-	// accessors
-	double getWeight(void){
-		return weight;
-	}
-
-	string getSource(void){
-		return sourceVertex;
-	}
-
-	string getTarget(void){
-		return targetVertex;
-	}
-    
 private:
-	// data members
-    	double weight;
-	string sourceVertex;
-	string targetVertex;
+    // Maybe we can use Vertex members instead of string?
+    string sourceVertex;
+    string targetVertex;
+    double weight;
+public:
+    
+    Edge() {
+        weight = 0.0;
+    }
+    
+    Edge(string s, string t) {
+        sourceVertex = s;
+        targetVertex = t;
+    }
+    
+    // mutators
+    void setWeight(double w) {
+        weight = w;
+    }
+    
+    void setSource(string v) {
+        sourceVertex = v;
+    }
+    
+    void setTarget(string v) {
+        targetVertex = v;
+    }
     
     
+    // accessors
+    double getWeight(void) {
+        return weight;
+    }
+    
+    string getSource(void) {
+        return sourceVertex;
+    }
+    
+    string getTarget(void) {
+        return targetVertex;
+    }
     
 };
 
