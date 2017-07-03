@@ -11,6 +11,8 @@
 #include <queue>
 #include <stack>
 #include <vector>
+#include <array>
+#include <fstream>
 
 #include "HashTable.h"
 #include "vertex.h"
@@ -27,8 +29,12 @@ struct adjacencyList{
 class Graph {
     
 private:
+    int numberOfVertices; //number of vertices
+    int numberOfEdges = 0; //number of edges
+    HashTable map;
     HashEntry **table;
     Vertex v;
+	Vertex p;
     Edge e;
     vector<adjacencyList*> adjListVector;
     
@@ -155,6 +161,66 @@ public:
     // builds undirected, weighted graph from data provided in text file
     void buildGraph() {
         
+        ifstream infile;
+        
+        //data of file
+        
+        
+        string name; //name of vertex
+        string from, to; //for edge
+        
+        double weight;
+        
+        array<char, 20> ch;
+        
+        vector<Vertex> mVertex;
+        
+        string fname = "graph.txt";
+        
+        //open file for reading
+        infile.open(fname);
+        
+        //check input file
+        if(infile.fail()) {
+            //cerr << "Could not open the file " << filename here << endl;
+            return;
+        }
+        int i = 0;
+        // read the first line, count for number of vertices
+        while (infile >> ch[i] && cin.peek() != '\n') {
+            i++;
+        }
+        
+        numberOfVertices = i;
+        
+        // put the vertex names in the vertex vector, then in hash map.
+        for (i = 0; i < ch.size(); i++) {
+            name = ch[i];
+            p.vertexName = name;
+            mVertex.push_back(p);
+        }
+        
+        for (Vertex vert : mVertex) {
+            map.put(vert.getVertexName(), vert);
+        }
+        
+        
+        //read the edges
+        for (int i = 0; i < MAX_GRAPH_SIZE; i++)
+        {
+            infile >> from;
+            infile >> to;
+            infile >> weight;
+            numberOfEdges++;
+            try{
+                insert(from, to, weight);
+            } catch(invalid_argument &e) {
+                cout << e.what() << endl;
+            }
+        }//end  for
+        
+        //close input file
+        infile.close();
     }
     
     // removes all vertices from graph
@@ -177,13 +243,22 @@ public:
     // inserts an edge with weight w between vertices u and v
     // if edge already exists, update weight with new w
     void insert(string u, string v, double w) {
-        Edge newEdge;
-        Vertex a, b;
-        a.setVertexName(u);
-        b.setVertexName(v);
-        newEdge.setSource(a);
-        newEdge.setTarget(b);
-        newEdge.setWeight(w);
+        if (w <= 0) {
+            throw invalid_argument("invalid arg");
+        }
+        Vertex pu = map.get(u);
+        Vertex pv = map.get(v);
+        
+        //If the vertices do not exist or are equal, throw an illegal
+        //argument exception.
+        if (pv.vertexName.empty()|| pu.vertexName.empty() || pv.vertexName == pu.vertexName) {
+            throw invalid_argument("invalid arg");
+        }
+        
+        Vertex m;
+        m.setVertexName(u);
+        Vertex n;
+        n.vertexName = v;
     }
     
     
