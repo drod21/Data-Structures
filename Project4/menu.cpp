@@ -15,8 +15,9 @@ int main(void) {
     char graphType;
     string fileName;
     int menuSelection = 0;
-	string vertexToGetDegree;
-	string tempStr1, tempStr2;
+    string vertexToGetDegree;
+    string tempStr1, tempStr2;
+    double weight;
     
     // get graph type and text file name from user
     cout << "Enter graph type [d: directed; u: undirected]: ";
@@ -27,7 +28,7 @@ int main(void) {
     
     // menu for undirected graph
     if (graphType == 'u') {
-		Graph myGraph;
+        Graph myGraph;
         while(menuSelection != 11){
             cout << "Selection a menu option: \n"
             << "1: Empty?\n"
@@ -46,18 +47,18 @@ int main(void) {
             
             switch(menuSelection) {
                 case 1:
-					if(myGraph.empty() == true)
-						cout << "Graph is empty" << endl;
-					else
-						cout << "Graph is not empty" << endl;
+                    if(myGraph.empty() == true)
+                        cout << "Graph is empty" << endl;
+                    else
+                        cout << "Graph is not empty" << endl;
                     break;
                     
                 case 2:
-					cout << "Enter vertex name to get degree of:";
-					cin.ignore();
-					getline(cin, vertexToGetDegree);
-					cout << "Degree of vertex " << vertexToGetDegree << " is "
-						 << myGraph.degree(vertexToGetDegree) << endl;
+                    cout << "Enter vertex name to get degree of:";
+                    cin.ignore();
+                    getline(cin, vertexToGetDegree);
+                    cout << "Degree of vertex " << vertexToGetDegree << " is "
+                    << myGraph.degree(vertexToGetDegree) << endl;
                     break;
                     
                 case 3:
@@ -65,43 +66,48 @@ int main(void) {
                     break;
                     
                 case 4:
-                    if(myGraph.isConnected() == true)
-						cout << "The graph is connected" << endl;
-					else
-						cout << "The graph is not connected" << endl;
+                    cout << "Enter first vertex to check connection or not" << endl;
+                    getline(cin, tempStr1);
+                    cout << "Enter second vertex: ";
+                    getline(cin, tempStr2);
+                    cout << endl;
+                    if(myGraph.isConnected(tempStr1, tempStr2) == true)
+                        cout << "The graph is connected" << endl;
+                    else
+                        cout << "The graph is not connected" << endl;
                     break;
                     
                 case 5:
                     cout << "Enter name of first vertex: ";
-					cin.ignore();
-					getline(cin, tempStr1);
-					cout << "Enter name of second vertex: ";
-					cin.ignore();
-					getline(cin, tempStr2);
-					cout << "The weight of the edge connecting " << tempStr1
-						 << " with " << tempStr2 << " is "
-						 << myGraph.adjacent(tempStr1, tempStr2); 
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    cout << "Enter name of second vertex: ";
+                    cin.ignore();
+                    getline(cin, tempStr2);
+                    cout << "The weight of the edge connecting " << tempStr1
+                    << " with " << tempStr2 << " is "
+                    << myGraph.adjacent(tempStr1, tempStr2);
                     break;
                     
                 case 6:
                     cout << "Enter vertex to start DFS search at: ";
-					cin.ignore();
-					getline(cin, tempStr1);
-					myGraph.DFS(tempStr1);
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    myGraph.DFS(tempStr1);
                     break;
                     
                 case 7:
                     cout << "Enter vertex to start BFS search at: ";
-					cin.ignore();
-					getline(cin, tempStr1);
-					myGraph.BFS(tempStr1);                    
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    myGraph.BFS(tempStr1);
                     break;
                     
                 case 8:
                     cout << "Enter vertex to get minimum spanning tree of: ";
-					cin.ignore();
-					getline(cin, tempStr1);
-					myGraph.MST(tempStr1);
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    myGraph.MST(tempStr1);
                     break;
                     
                 case 9:
@@ -123,14 +129,14 @@ int main(void) {
             } // end switch
         } // end while
         // end if, begin else
-    // menu for directed graph
+        // menu for directed graph
     } else if (graphType == 'd'){
-		DirGraph myGraph;
+        DirGraph myGraph(fileName);
         while(menuSelection != 11){
             cout << "Selection a menu option: \n"
             << "1: Empty?\n"
             << "2: InDegree (v)\n"
-            << "3: OutDegree\n" 
+            << "3: OutDegree\n"
             << "4: Edge Count?\n"
             << "5: Adjacent (u, v)? \n"
             << "6: DFS (v)\n"
@@ -144,26 +150,26 @@ int main(void) {
             
             switch(menuSelection) {
                 case 1:
-                    if(myGraph.empty() == true) 
-						cout << "Graph is empty" << endl;
-					else
-						cout << "Graph is not empty" << endl;
+                    if(myGraph.empty() == true)
+                        cout << "Graph is empty" << endl;
+                    else
+                        cout << "Graph is not empty" << endl;
                     break;
                     
                 case 2:
-					cout << "Enter vertex name to get inDegree of:";
-					cin.ignore();
-					getline(cin, vertexToGetDegree);
-					cout << "InDegree of vertex " << vertexToGetDegree << " is "
-						 << myGraph.inDegree(vertexToGetDegree) << endl;
+                    cout << "Enter vertex name to get inDegree of:";
+                    cin.ignore();
+                    getline(cin, vertexToGetDegree);
+                    cout << "InDegree of vertex " << vertexToGetDegree << " is "
+                    << myGraph.inDegree(vertexToGetDegree) << endl;
                     break;
                     
                 case 3:
-					cout << "Enter vertex name to get outDegree of:";
-					cin.ignore();
-					getline(cin, vertexToGetDegree);
-					cout << "OutDegree of vertex " << vertexToGetDegree << " is "
-						 << myGraph.outDegree(vertexToGetDegree) << endl;
+                    cout << "Enter vertex name to get outDegree of:";
+                    cin.ignore();
+                    getline(cin, vertexToGetDegree);
+                    cout << "OutDegree of vertex " << vertexToGetDegree << " is "
+                    << myGraph.outDegree(vertexToGetDegree) << endl;
                     break;
                     
                 case 4:
@@ -172,47 +178,61 @@ int main(void) {
                     
                 case 5:
                     cout << "Enter name of first vertex: ";
-					cin.ignore();
-					getline(cin, tempStr1);
-					cout << "Enter name of second vertex: ";
-					cin.ignore();
-					getline(cin, tempStr2);
-					cout << "The weight of the edge connecting " << tempStr1
-						 << " with " << tempStr2 << " is "
-						 << myGraph.adjacent(tempStr1, tempStr2);                    
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    cout << "Enter name of second vertex: ";
+                    cin.ignore();
+                    getline(cin, tempStr2);
+                    cout << "The weight of the edge connecting " << tempStr1
+                    << " with " << tempStr2 << " is "
+                    << myGraph.adjacent(tempStr1, tempStr2);
                     break;
                     
                 case 6:
                     cout << "Enter vertex to start DFS search at: ";
-					cin.ignore();
-					getline(cin, tempStr1);
-					myGraph.DFS(tempStr1);                    
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    myGraph.DFS(tempStr1);
                     break;
                     
                 case 7:
                     cout << "Enter vertex to start BFS search at: ";
-					cin.ignore();
-					getline(cin, tempStr1);
-					myGraph.BFS(tempStr1);                    
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    myGraph.BFS(tempStr1);
                     break;
                     
                 case 8:
                     cout << "Enter name of first vertex";
-					cin.ignore();
-					getline(cin, tempStr1);
-					cout << "Enter name of second vertex: ";
-					cin.ignore();
-					cout << "The shortest path between " << tempStr1 << " and "
-						 << tempStr2 << " is: \n";
-					myGraph.shortPath(tempStr1, tempStr2);
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    cout << "Enter name of second vertex: ";
+                    cin.ignore();
+                    cout << "The shortest path between " << tempStr1 << " and "
+                    << tempStr2 << " is: \n";
+                    myGraph.shortPath(tempStr1, tempStr2);
                     break;
                     
                 case 9:
-                    
+                    myGraph.clearGraph();
+                    if (myGraph.empty())
+                        cout << "Graph cleared" << endl;
                     break;
                     
                 case 10:
-                    
+                    cout << "Enter name of first vertex";
+                    cin.ignore();
+                    getline(cin, tempStr1);
+                    cout << "Enter name of second vertex: ";
+                    cin.ignore();
+                    cout << "Enter a weight: ";
+                    cin >> weight;
+                    cout << endl;
+                    try {
+                        myGraph.insert(tempStr1, tempStr2, weight);
+                    } catch (invalid_argument &e) {
+                        cerr << e.what();
+                    }
                     break;
                 case 11:
                     

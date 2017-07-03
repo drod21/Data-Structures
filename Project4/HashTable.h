@@ -17,7 +17,7 @@ using namespace std;
 
 
 class HashEntry {
-    
+
 public:
     
     bool dataHere;
@@ -55,7 +55,7 @@ public:
     HashEntry *table;
     Edge e;
     
-    
+
     HashTable() {
         table = new HashEntry[SIZE];
         for (int i = 0; i < SIZE; i++) {
@@ -69,19 +69,9 @@ public:
     
     int hash_fun(string key) const {
         int hash;
-        // Generalized string hash function
-        // if length > 1, take first and last letter of the string
-        // if not, take the character at 0th position
+        char ch = key[0];
+        hash = ch % SIZE;
         
-        if (key.length() > 1) {
-            string::iterator it, it2;
-            it = key.begin();
-            it = key.end();
-            hash = (*it + *it2) % SIZE;
-        } else {
-            char ch = key.at(0);
-            hash = ch % SIZE;
-        }
         
         return hash;
     }
@@ -94,7 +84,7 @@ public:
         }
         // Return the vertex associated with the key
         return table[hash].getVertex();
-        
+
     }
     
     void put(string key, Vertex value) {

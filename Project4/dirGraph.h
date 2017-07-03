@@ -27,6 +27,7 @@ private:
     HashTable map;
     vector<Vertex *> vertList;
     Vertex p;
+    string fileName;
     int numberOfVertices; //number of vertices
     int numberOfEdges; //number of edges
     
@@ -40,11 +41,22 @@ public:
         numberOfEdges = 0;
     }
     
+    DirGraph(string file_name) {
+        for (Vertex *v : vertList) {
+            v = nullptr;
+        }
+        numberOfVertices = 0;
+        numberOfEdges = 0;
+        fileName = file_name;
+        buildGraph();
+    }
+    
     // destructor
     ~DirGraph() {
         delete[] map.table;
         numberOfEdges = 0;
         numberOfVertices = 0;
+        fileName = "";
     }
     
     // returns true iff graph is empty
@@ -127,7 +139,8 @@ public:
             }
             it++;
         }
-    
+        
+        
         return w;
     }
     
@@ -157,7 +170,7 @@ public:
         return dis;
     }
     // builds directed, weighted graph from data provided in text file
-    void buildGraph(void) {
+    void buildGraph() {
         
         ifstream infile;
         
@@ -170,14 +183,12 @@ public:
         
         vector<Vertex> mVertex;
         
-        string fname = "graph.txt";
-        
         //open file for reading
-        infile.open(fname);
+        infile.open(fileName);
         
         //check input file
         if(infile.fail()) {
-            cerr << "Could not open the file " << fname << endl;
+            cerr << "Could not open the file " << fileName << endl;
             return;
         }
         int i = 0;
