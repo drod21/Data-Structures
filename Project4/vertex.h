@@ -66,6 +66,12 @@ public:
         if(colored == true) return true;
         else return false;
     }
+
+	// overloaded assignment operator
+	Vertex& operator=(const Vertex& original){
+		vertexName = original.vertexName;
+		colored = original.colored;
+	}
 };
 
 #endif /* vertex_h */

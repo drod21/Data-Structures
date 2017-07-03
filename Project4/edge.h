@@ -15,12 +15,10 @@ using namespace std;
 
 class Edge {
     
-private:
-    // Maybe we can use Vertex members instead of string?
+public:
     Vertex sourceVertex;
     Vertex targetVertex;
     double weight;
-public:
     
     Edge() {
         weight = 0.0;
@@ -57,6 +55,13 @@ public:
     Vertex getTarget(void) {
         return targetVertex;
     }
+
+	// overloaded assignment operator
+	Edge& operator=(const Edge& original){
+		sourceVertex = original.sourceVertex;
+		targetVertex = original.targetVertex;
+		weight = original.weight;
+	}
     
 };
 

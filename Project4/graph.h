@@ -81,16 +81,7 @@ public:
     
     // returns number of edges in graph
     int edgeCount(void) {
-        
-        int count = 0;
-        /* PSEUDO-CODE
-         for each vertex in adjListVector
-         while adjacency list at adjListVector[i] is not null
-         count++
-         move to next item in adjacency list
-         */
-        
-        return count;
+        return numberOfEdges;
     }
     
     // returns true if graph is connected
@@ -259,6 +250,10 @@ public:
         m.setVertexName(u);
         Vertex n;
         n.vertexName = v;
+		Edge e;
+		e.weight = w;
+		e.sourceVertex = pu;
+		e.targetVertex = pv;
     }
     
     
