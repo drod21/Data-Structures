@@ -125,8 +125,6 @@ public:
         table[hash].edgeList.push_back(e);
         
     }
-
 };
-
 
 #endif /* HashTable_h */

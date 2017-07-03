@@ -25,8 +25,7 @@ class DirGraph {
     
 private:
     HashTable map;
-    HashEntry **table;
-    vector<Vertex *> adjList;
+    vector<Vertex *> vertList;
     Vertex p;
     int numberOfVertices; //number of vertices
     int numberOfEdges = 0; //number of edges
@@ -50,43 +49,70 @@ private:
 public:
     
     DirGraph() {
-        table = new HashEntry *[DIR_GRAPH_SIZE];
-        for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-            table[i] = NULL;
+        for (Vertex *v : vertList) {
+            v = nullptr;
         }
-        for (Vertex *v : adjList) {
-            
-        }
-        
     }
     
     // destructor
     ~DirGraph() {
-        for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-            if (table[i] != NULL) {
-                delete table[i];
-            }
-        }
-        delete[] table;
+        delete[] map.table;
     }
     
     // returns true iff graph is empty
     bool empty(void) {
-        bool isEmpty = false;
+        /*bool notEmpty = false;
+         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
+         if (map.table[i].dataHere)
+         notEmpty = true;
+         }
+         
+         return notEmpty;*/
         
-        return isEmpty;
+        if (numberOfVertices > 0) {
+            return false;
+        }
+        return true;
     }
     
     // returns in degree of vertex v
     int inDegree(string v) {
         int deg = 0;
+        /*Vertex a = map.get(v);
+         
+         list<Edge>::iterator it;
+         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
+         it = map.table[i].edgeList.begin();
+         while (it != map.table[i].edgeList.end()) {
+         if (it->getTarget().vertexName == a.vertexName) {
+         deg++;
+         }
+         }
+         }
+         */
+        int i = map.hash_fun(v);
+        list<Edge>::iterator it = map.table[i].edgeList.begin();
         
+        while (it != map.table[i].edgeList.end()) {
+            if (it->targetVertex.vertexName == v) {
+                deg++;
+            }
+        }
         return deg;
     }
     
     // returns out degree of vertex v
     int outDegree(string v) {
         int deg = 0;
+        
+        int i = map.hash_fun(v);
+        list<Edge>::iterator it = map.table[i].edgeList.begin();
+        
+        while (it != map.table[i].edgeList.end()) {
+            if (it->sourceVertex.vertexName == v) {
+                deg++;
+            }
+        }
         
         return deg;
     }
@@ -119,7 +145,7 @@ public:
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
     void shortPath(string u, string v) {
-       
+        
     }
     
     // returns shortest distance between vertices u and v
@@ -130,16 +156,16 @@ public:
     }
     
     /*int minDistance(int dist[], bool sptSet[]) {
-        int min = INT_MAX, min_index = 0;
-    
-        for (int v = 0; v < numberOfVertices; v++) {
-            if (sptSet) {
-                min = dist[v];
-                min_index = v;
-            }
-        }
-        return min_index;
-    }*/
+     int min = INT_MAX, min_index = 0;
+     
+     for (int v = 0; v < numberOfVertices; v++) {
+     if (sptSet) {
+     min = dist[v];
+     min_index = v;
+     }
+     }
+     return min_index;
+     }*/
     // builds directed, weighted graph from data provided in text file
     void buildGraph(void) {
         
@@ -186,7 +212,6 @@ public:
             map.put(vert.getVertexName(), vert);
         }
         
-        
         //read the edges
         for (int i = 0; i < DIR_GRAPH_SIZE; i++)
         {
@@ -213,7 +238,8 @@ public:
     
     // marks all vertices as unvisited
     void reset(void) {
-        
+        for (Vertex *v : vertList)
+            v->uncolor();
     }
     
     // makes an edge between vertices u and v with weight w
@@ -222,21 +248,29 @@ public:
         if (w <= 0) {
             throw invalid_argument("invalid arg");
         }
-        Vertex pu = map.get(u);
-        Vertex pv = map.get(v);
+        
+        Vertex p = map.get(u);
+        Vertex q = map.get(v);
         
         //If the vertices do not exist or are equal, throw an illegal
         //argument exception.
-        if (pv.vertexName.empty()|| pu.vertexName.empty() || pv.vertexName == pu.vertexName) {
+        if (p.vertexName.empty()|| q.vertexName.empty() || p.vertexName == q.vertexName) {
             throw invalid_argument("invalid arg");
         }
         
         Vertex m;
         m.setVertexName(u);
         Vertex n;
-        n.vertexName = v;
+        n.setVertexName(v);
         
+        Edge e(m, n, w);
         
+        int hash1 = map.hash_fun(m.getVertexName());
+        int hash2 = map.hash_fun(n.getVertexName());
+        
+        // insert the edge at both locations, u and v
+        map.table[hash1].edgeList.push_back(e);
+        map.table[hash2].edgeList.push_back(e);
         
         /*e.setWeight(w);
          vector<list<Edge>>::iterator beg;

@@ -29,6 +29,12 @@ public:
         targetVertex = t;
     }
     
+    Edge(Vertex s, Vertex t, double w) {
+        sourceVertex = s;
+        targetVertex = t;
+        weight = w;
+    }
+    
     // mutators
     void setWeight(double w) {
         weight = w;
@@ -55,13 +61,17 @@ public:
     Vertex getTarget(void) {
         return targetVertex;
     }
-
-	// overloaded assignment operator
-	Edge& operator=(const Edge& original){
-		sourceVertex = original.sourceVertex;
-		targetVertex = original.targetVertex;
-		weight = original.weight;
-	}
+    
+    // overloaded assignment operator
+    Edge& operator=(const Edge& original) {
+        Edge *m = new Edge;
+        
+        m->sourceVertex = original.sourceVertex;
+        m->targetVertex = original.targetVertex;
+        m->weight = original.weight;
+        
+        return *m;
+    }
     
 };
 
