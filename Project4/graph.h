@@ -62,9 +62,8 @@ public:
     
     // returns true iff graph is empty
     bool empty(void) {
-        bool isEmpty = false;
-        if(adjListVector.empty()) isEmpty = true;
-        return isEmpty;
+		if(numberOfVertices == 0) return true;
+		else return false;
     }
     
     // returns degree of vertex v
@@ -85,7 +84,7 @@ public:
     }
     
     // returns true if graph is connected
-    bool isConnected(string u, string v) {
+    bool isConnected(void) {
         bool connected = false;
         
         
