@@ -37,7 +37,7 @@ public:
             v = nullptr;
         }
         numberOfVertices = 0;
-        numberOfEdges = 0
+        numberOfEdges = 0;
     }
     
     // destructor
