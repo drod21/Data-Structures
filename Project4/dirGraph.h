@@ -180,6 +180,7 @@ public:
         double weight;
         
         array<char, 20> ch;
+        ifstream input(fileName);
         
         vector<Vertex> mVertex;
         
@@ -190,15 +191,19 @@ public:
         if(infile.fail()) {
             cerr << "Could not open the file " << fileName << endl;
             return;
-        }
+        } else {
         int i = 0;
         // read the first line, count for number of vertices
-        while (infile >> ch[i] && cin.peek() != '\n') {
+            char sing_char;
+        while (input.good()) {
+            input.get(sing_char);
+            if (sing_char != ' ')
+                ch[i] = sing_char;
             i++;
         }
         
         numberOfVertices = i;
-        
+        /*
         // put the vertex names in the vertex vector, then in hash map.
         for (i = 0; i < ch.size(); i++) {
             name = ch[i];
@@ -223,9 +228,10 @@ public:
                 cout << e.what() << endl;
             }
         }//end  for
-        
+        }*/
         //close input file
         infile.close();
+        }
         
     }
     
