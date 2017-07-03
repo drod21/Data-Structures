@@ -79,7 +79,7 @@ public:
         }
         
         return table[hash]->getVertex();
-        
+
     }
     
     void put(string key, Vertex value) {
@@ -97,7 +97,7 @@ public:
         table[hash] = new HashEntry(key, value);
     }
     
-};
+    };
 
 
 #endif /* HashTable_h */

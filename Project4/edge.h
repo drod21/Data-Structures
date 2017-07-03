@@ -7,8 +7,9 @@
 #ifndef edge_h
 #define edge_h
 
-#include "vertex.h"
+
 #include <string>
+#include "vertex.h"
 
 using namespace std;
 
@@ -16,8 +17,8 @@ class Edge {
     
 private:
     // Maybe we can use Vertex members instead of string?
-    string sourceVertex;
-    string targetVertex;
+    Vertex sourceVertex;
+    Vertex targetVertex;
     double weight;
 public:
     
@@ -25,7 +26,7 @@ public:
         weight = 0.0;
     }
     
-    Edge(string s, string t) {
+    Edge(Vertex s, Vertex t) {
         sourceVertex = s;
         targetVertex = t;
     }
@@ -35,11 +36,11 @@ public:
         weight = w;
     }
     
-    void setSource(string v) {
+    void setSource(Vertex v) {
         sourceVertex = v;
     }
     
-    void setTarget(string v) {
+    void setTarget(Vertex v) {
         targetVertex = v;
     }
     
@@ -49,11 +50,11 @@ public:
         return weight;
     }
     
-    string getSource(void) {
+    Vertex getSource(void) {
         return sourceVertex;
     }
     
-    string getTarget(void) {
+    Vertex getTarget(void) {
         return targetVertex;
     }
     

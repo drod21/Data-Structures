@@ -93,13 +93,13 @@ int main(void) {
             } // end switch
         } // end while
         // end if, begin else
-        // menu for directed graph
+    // menu for directed graph
     } else if (graphType == 'd'){
         while(menuSelection != 11){
             cout << "Selection a menu option: \n"
             << "1: Empty?\n"
             << "2: InDegree (v)\n"
-            << "3: OutDegree\n"
+            << "3: OutDegree\n" 
             << "4: Edge Count?\n"
             << "5: Adjacent (u, v)? \n"
             << "6: DFS (v)\n"
@@ -155,7 +155,7 @@ int main(void) {
                     
                     break;
                     
-                default:
+                default: 
                     cout << "Invalid entry. Selection an option [1-11]: ";
                     cin >> menuSelection;
                     cout << endl;
@@ -165,6 +165,6 @@ int main(void) {
         // end if, begin else
     } else {
         cout << "Invalid graph type" << endl;
-    }
+    } 
     return 0;
 }

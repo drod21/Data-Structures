@@ -45,8 +45,8 @@ public:
         
         u.vertexName = "";
         v.vertexName = "";
-        e.setSource(u.vertexName);
-        e.setTarget(v.vertexName);
+        e.setSource(u);
+        e.setTarget(v);
     }
     
     // destructor
@@ -117,15 +117,14 @@ public:
          reset graph so all vertices are uncolored
          label v as visited
          for all edges in v
-            if edge is unvisited
-                temp = vertex on other side of edge
-            if temp is uncolored
-                label edge as discovery edge
-                print vertex
-                recursively call DFS(temp)
-            else label edge as back edge
+         if edge is unvisited
+         temp = vertex on other side of edge
+         if temp is uncolored
+         label edge as discovery edge
+         print vertex
+         recursively call DFS(temp)
+         else label edge as back edge
          */
-
     }
     
     // performs breadth first search of graph starting at vertex v
@@ -135,15 +134,15 @@ public:
         	initialize collectionn L0 to contain vertex v
          int i = 0
          for all vertices in Li
-            for all edges on vertex
-                if edge is unexplored
-                    tempVertex = vertex on opposite side of edge
-                if tempVertex is unexplored
-                    label edge as discovery edge
-                    insert tempVertex into Li+1
-                else label edge as cross edge
-            print tempVertex
-        i++
+         for all edges on vertex
+         if edge is unexplored
+         tempVertex = vertex on opposite side of edge
+         if tempVertex is unexplored
+         label edge as discovery edge
+         insert tempVertex into Li+1
+         else label edge as cross edge
+         print tempVertex
+         i++
          */
     }
     
@@ -167,11 +166,11 @@ public:
     void reset(void) {
         /* PSEUDO-CODE
          for each vertex in adjListVector
-            uncolor vertex
-            while currentVertex->next != null
-                currentVertex = currentVertex->next
-            uncolor vertex
-        print graph colring reset
+         uncolor vertex
+         while currentVertex->next != null
+         currentVertex = currentVertex->next
+         uncolor vertex
+         print graph colring reset
          */
     }
     
@@ -179,8 +178,11 @@ public:
     // if edge already exists, update weight with new w
     void insert(string u, string v, double w) {
         Edge newEdge;
-        newEdge.setSource(u);
-        newEdge.setTarget(v);
+        Vertex a, b;
+        a.setVertexName(u);
+        b.setVertexName(v);
+        newEdge.setSource(a);
+        newEdge.setTarget(b);
         newEdge.setWeight(w);
     }
     

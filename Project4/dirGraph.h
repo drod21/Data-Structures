@@ -11,6 +11,9 @@
 #include <array>
 #include <queue>
 #include <stack>
+#include <limits>
+
+
 #include "HashTable.h"
 #include "vertex.h"
 #include "edge.h"
@@ -25,6 +28,8 @@ private:
     HashEntry **table;
     vector<Vertex *> adjList;
     Vertex p;
+    int numberOfVertices; //number of vertices
+    int numberOfEdges = 0; //number of edges
     
     
     int hash_fun(string key) const {
@@ -48,6 +53,9 @@ public:
         table = new HashEntry *[DIR_GRAPH_SIZE];
         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
             table[i] = NULL;
+        }
+        for (Vertex *v : adjList) {
+            
         }
         
     }
@@ -85,15 +93,7 @@ public:
     
     // returns number of edges in graph
     int edgeCount(void) {
-        
-        int count = 0;
-        
-        for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-            count += adjList[i]->adjList->size();
-        }
-        
-        
-        return count / 2;
+        return numberOfEdges;
     }
     
     // returns weight of edge connecting adjacent vertices u and v
@@ -119,7 +119,7 @@ public:
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
     void shortPath(string u, string v) {
-        
+       
     }
     
     // returns shortest distance between vertices u and v
@@ -129,14 +129,24 @@ public:
         return dis;
     }
     
+    /*int minDistance(int dist[], bool sptSet[]) {
+        int min = INT_MAX, min_index = 0;
+    
+        for (int v = 0; v < numberOfVertices; v++) {
+            if (sptSet) {
+                min = dist[v];
+                min_index = v;
+            }
+        }
+        return min_index;
+    }*/
     // builds directed, weighted graph from data provided in text file
     void buildGraph(void) {
         
         ifstream infile;
         
         //data of file
-        int numberOfVertices; //number of vertices
-        int numberOfEdges = 0; //number of edges
+        
         
         string name; //name of vertex
         string from, to; //for edge
@@ -172,6 +182,10 @@ public:
             mVertex.push_back(p);
         }
         
+        for (Vertex vert : mVertex) {
+            map.put(vert.getVertexName(), vert);
+        }
+        
         
         //read the edges
         for (int i = 0; i < DIR_GRAPH_SIZE; i++)
@@ -201,23 +215,6 @@ public:
     void reset(void) {
         
     }
-    /*    string get(string key) {
-     int hash = hash_fun(key);
-     
-     while (table[hash] != NULL && table[hash]->getKey() != key){
-     hash = (hash + 1) % SIZE;
-     }
-     
-     if (table[hash] == nullptr) {
-     return nullptr;
-     } else {
-     return table[hash]->getValue();
-     }
-     }*/
-    
-    void put(string key, string value) {
-        
-    }
     
     // makes an edge between vertices u and v with weight w
     // if an edge already exists, replace its weight with the new w
@@ -239,11 +236,8 @@ public:
         Vertex n;
         n.vertexName = v;
         
-        if (pu.vertexName.empty()) {
-            pu.e.setWeight(w);
-        } else {
-            pu.setEdge(m, n, w);
-        }
+        
+        
         /*e.setWeight(w);
          vector<list<Edge>>::iterator beg;
          beg = adjList.begin();
