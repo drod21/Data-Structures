@@ -78,15 +78,24 @@ public:
     // returns in degree of vertex v
     int inDegree(string v) {
         int deg = 0;
-        Vertex a = map.get(v);
+        /*Vertex a = map.get(v);
+         
+         list<Edge>::iterator it;
+         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
+         it = map.table[i].edgeList.begin();
+         while (it != map.table[i].edgeList.end()) {
+         if (it->getTarget().vertexName == a.vertexName) {
+         deg++;
+         }
+         }
+         }
+         */
+        int i = map.hash_fun(v);
+        list<Edge>::iterator it = map.table[i].edgeList.begin();
         
-        list<Edge>::iterator it;
-        for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-            it = map.table[i].edgeList.begin();
-            while (it != map.table[i].edgeList.end()) {
-                if (it->getTarget().vertexName == a.vertexName) {
-                    deg++;
-                }
+        while (it != map.table[i].edgeList.end()) {
+            if (it->targetVertex.vertexName == v) {
+                deg++;
             }
         }
         return deg;
@@ -100,7 +109,9 @@ public:
         list<Edge>::iterator it = map.table[i].edgeList.begin();
         
         while (it != map.table[i].edgeList.end()) {
-            deg++;
+            if (it->sourceVertex.vertexName == v) {
+                deg++;
+            }
         }
         
         return deg;
@@ -201,7 +212,6 @@ public:
             map.put(vert.getVertexName(), vert);
         }
         
-        
         //read the edges
         for (int i = 0; i < DIR_GRAPH_SIZE; i++)
         {
@@ -253,12 +263,14 @@ public:
         Vertex n;
         n.setVertexName(v);
         
-        Edge e;
-        e.setSource(m);
-        e.setTarget(n);
+        Edge e(m, n, w);
         
+        int hash1 = map.hash_fun(m.getVertexName());
+        int hash2 = map.hash_fun(n.getVertexName());
         
-        
+        // insert the edge at both locations, u and v
+        map.table[hash1].edgeList.push_back(e);
+        map.table[hash2].edgeList.push_back(e);
         
         /*e.setWeight(w);
          vector<list<Edge>>::iterator beg;
