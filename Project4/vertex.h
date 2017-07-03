@@ -22,6 +22,10 @@ public:
         
         
     }
+    
+    Vertex(string name) {
+        vertexName = name;
+    }
     // mutators
     
     void setVertexName(string n){
@@ -43,6 +47,10 @@ public:
     bool isColored(void){
         if(colored == true) return true;
         else return false;
+    }
+    
+    bool operator==(Vertex &orig) {
+        return (vertexName == orig.getVertexName());
     }
 };
 

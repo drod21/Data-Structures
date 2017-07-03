@@ -72,6 +72,10 @@ public:
         
         return *m;
     }
+    // overload equality operator to compare two edges
+    bool operator==(Edge &orig) {
+        return ((sourceVertex == orig.sourceVertex) && (targetVertex == orig.targetVertex));
+    }
     
 };
 

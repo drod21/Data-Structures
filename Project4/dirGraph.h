@@ -28,23 +28,7 @@ private:
     vector<Vertex *> vertList;
     Vertex p;
     int numberOfVertices; //number of vertices
-    int numberOfEdges = 0; //number of edges
-    
-    
-    int hash_fun(string key) const {
-        int hash;
-        if (key.length() > 1) {
-            string::iterator it, it2;
-            it = key.begin();
-            it = key.end();
-            hash = (*it + *it2) % SIZE;
-        } else {
-            char ch = key.at(0);
-            hash = ch % SIZE;
-        }
-        
-        return hash;
-    }
+    int numberOfEdges; //number of edges
     
 public:
     
@@ -52,11 +36,15 @@ public:
         for (Vertex *v : vertList) {
             v = nullptr;
         }
+        numberOfVertices = 0;
+        numberOfEdges = 0
     }
     
     // destructor
     ~DirGraph() {
         delete[] map.table;
+        numberOfEdges = 0;
+        numberOfVertices = 0;
     }
     
     // returns true iff graph is empty
@@ -97,6 +85,7 @@ public:
             if (it->targetVertex.vertexName == v) {
                 deg++;
             }
+            it++;
         }
         return deg;
     }
@@ -112,6 +101,7 @@ public:
             if (it->sourceVertex.vertexName == v) {
                 deg++;
             }
+            it++;
         }
         
         return deg;
@@ -125,7 +115,19 @@ public:
     // returns weight of edge connecting adjacent vertices u and v
     double adjacent(string u, string v) {
         double w = 0.0;
+        Vertex a(u);
+        Vertex b(v);
+        Edge e(a, b);
         
+        int hash = map.hash_fun(u);
+        list<Edge>::iterator it = map.table[hash].edgeList.begin();
+        while (it != map.table[hash].edgeList.end()) {
+            if (*it == e) {
+                w = e.weight;
+            }
+            it++;
+        }
+    
         return w;
     }
     
@@ -154,25 +156,10 @@ public:
         
         return dis;
     }
-    
-    /*int minDistance(int dist[], bool sptSet[]) {
-     int min = INT_MAX, min_index = 0;
-     
-     for (int v = 0; v < numberOfVertices; v++) {
-     if (sptSet) {
-     min = dist[v];
-     min_index = v;
-     }
-     }
-     return min_index;
-     }*/
     // builds directed, weighted graph from data provided in text file
     void buildGraph(void) {
         
         ifstream infile;
-        
-        //data of file
-        
         
         string name; //name of vertex
         string from, to; //for edge
@@ -190,7 +177,7 @@ public:
         
         //check input file
         if(infile.fail()) {
-            //cerr << "Could not open the file " << filename here << endl;
+            cerr << "Could not open the file " << fname << endl;
             return;
         }
         int i = 0;
@@ -238,8 +225,11 @@ public:
     
     // marks all vertices as unvisited
     void reset(void) {
-        for (Vertex *v : vertList)
-            v->uncolor();
+        for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
+            if (map.table[i].dataHere) {
+                map.table[i].getVertex().uncolor();
+            }
+        }
     }
     
     // makes an edge between vertices u and v with weight w
@@ -265,12 +255,9 @@ public:
         
         Edge e(m, n, w);
         
-        int hash1 = map.hash_fun(m.getVertexName());
-        int hash2 = map.hash_fun(n.getVertexName());
-        
         // insert the edge at both locations, u and v
-        map.table[hash1].edgeList.push_back(e);
-        map.table[hash2].edgeList.push_back(e);
+        map.putEdge(u, e);
+        map.putEdge(v, e);
         
         /*e.setWeight(w);
          vector<list<Edge>>::iterator beg;
