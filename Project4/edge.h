@@ -8,6 +8,9 @@
 #define edge_h
 
 #include "vertex.h"
+#include <string>
+
+using namespace std;
 
 class Edge {
     
