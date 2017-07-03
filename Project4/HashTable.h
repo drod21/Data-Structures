@@ -8,7 +8,7 @@
 
 #ifndef HashTable_h
 #define HashTable_h
-
+#include "vertex.h"
 #include <string>
 using namespace std;
 
@@ -18,18 +18,19 @@ using namespace std;
 class HashEntry {
 private:
     string key;
-    string value;
+    Vertex v;
     
 public:
-    HashEntry(string key, string value) {
-        this->key = key;
-        this->value = value;
+    HashEntry(string key, Vertex v) {
+        key = v.vertexName;
+        this->v = v;
     }
+    
     string getKey() {
         return key;
     }
-    string getValue() {
-        return value;
+    Vertex getVertex() {
+        return v;
     }
 };
 
@@ -55,37 +56,48 @@ public:
         delete[] table;
     }
     
-    string get (string key) {
-        string::iterator it, it2;
-        it = key.begin();
-        it = key.end();
+    int hash_fun(string key) const {
         int hash;
-        hash = (*it + *it2) % SIZE;
-        
-        while (table[hash] != NULL && table[hash]->getKey() != key)
-            hash = (hash + 1) % SIZE;
-        
-        if (table[hash] == nullptr) {
-            return nullptr;
+        if (key.length() > 1) {
+            string::iterator it, it2;
+            it = key.begin();
+            it = key.end();
+            hash = (*it + *it2) % SIZE;
         } else {
-            return table[hash]->getValue();
+            char ch = key.at(0);
+            hash = ch % SIZE;
         }
+        
+        return hash;
     }
     
-    void put(string key, string value) {
-        string::iterator it, it2;
-        it = key.begin();
-        it = key.end();
-        int hash;
-        hash = (*it + *it2) % SIZE;
-        while (table[hash] != NULL && table[hash]->getKey() != key)
+    Vertex get(string key) {
+        int hash = hash_fun(key);
+        
+        while (table[hash] != NULL && table[hash]->getKey() != key){
             hash = (hash + 1) % SIZE;
-        if (table[hash] != NULL)
-            delete table[hash];
+        }
+        
+        return table[hash]->getVertex();
+        
+    }
+    
+    void put(string key, Vertex value) {
+        int hash = hash_fun(key);
+        
+        while (table[hash] != NULL && table[hash]->getKey() != key) {
+            hash = (hash + 1) % SIZE;
+        }
+        
+        if (table[hash] != NULL) {
+            while (table[hash] != nullptr) {
+                hash = (hash + 1) % SIZE;
+            }
+        }
         table[hash] = new HashEntry(key, value);
     }
     
-    };
+};
 
 
 #endif /* HashTable_h */
