@@ -18,10 +18,7 @@ public:
     string vertexName;
     bool colored;
     
-    Vertex() : vertexName(""), colored(false) {
-        
-        
-    }
+    Vertex() : vertexName(""), colored(false) {}
     
     Vertex(string name) {
         vertexName = name;
@@ -49,8 +46,8 @@ public:
         else return false;
     }
     
-    bool operator==(Vertex &orig) {
-        return (vertexName == orig.getVertexName());
+    bool operator==(const Vertex &orig) const {
+        return (vertexName == orig.vertexName);
     }
 };
 

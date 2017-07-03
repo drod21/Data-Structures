@@ -73,7 +73,7 @@ public:
         return *m;
     }
     // overload equality operator to compare two edges
-    bool operator==(Edge &orig) {
+    bool operator==(const Edge &orig) const {
         return ((sourceVertex == orig.sourceVertex) && (targetVertex == orig.targetVertex));
     }
     
