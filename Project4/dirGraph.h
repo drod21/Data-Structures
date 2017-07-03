@@ -6,9 +6,9 @@
 
 #ifndef dirGraph_h
 #define dirGraph_h
-// includes. total includes may get cut down, but lets bring in stack and queue for now
 #include <list>
 #include <fstream>
+#include <array>
 #include <queue>
 #include <stack>
 #include "HashTable.h"
@@ -21,10 +21,26 @@
 class DirGraph {
     
 private:
-    //HashTable map();
+    HashTable map;
     HashEntry **table;
-    Vertex u, v;
-    Edge e;
+    vector<Vertex *> adjList;
+    Vertex p;
+    
+    
+    int hash_fun(string key) const {
+        int hash;
+        if (key.length() > 1) {
+            string::iterator it, it2;
+            it = key.begin();
+            it = key.end();
+            hash = (*it + *it2) % SIZE;
+        } else {
+            char ch = key.at(0);
+            hash = ch % SIZE;
+        }
+        
+        return hash;
+    }
     
 public:
     
@@ -34,15 +50,16 @@ public:
             table[i] = NULL;
         }
         
-        u.setVertexName("");
-        v.setVertexName("");
-        e.setSource(u.getVertexName());
-        e.setTarget(v.getVertexName());
     }
     
     // destructor
-    ~DirGraph(){
-        
+    ~DirGraph() {
+        for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
+            if (table[i] != NULL) {
+                delete table[i];
+            }
+        }
+        delete[] table;
     }
     
     // returns true iff graph is empty
@@ -71,8 +88,12 @@ public:
         
         int count = 0;
         
+        for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
+            count += adjList[i]->adjList->size();
+        }
         
-        return count;
+        
+        return count / 2;
     }
     
     // returns weight of edge connecting adjacent vertices u and v
@@ -89,6 +110,10 @@ public:
     
     // performs a breadth first search of graph starting at vertex v
     void BFS(string v) {
+        queue<string> q;
+        
+        q.push(v);
+        
         
     }
     
@@ -104,8 +129,66 @@ public:
         return dis;
     }
     
-    // builds driected, weighted graph from data provided in text file
+    // builds directed, weighted graph from data provided in text file
     void buildGraph(void) {
+        
+        ifstream infile;
+        
+        //data of file
+        int numberOfVertices; //number of vertices
+        int numberOfEdges = 0; //number of edges
+        
+        string name; //name of vertex
+        string from, to; //for edge
+        
+        double weight;
+        
+        array<char, 20> ch;
+        
+        vector<Vertex> mVertex;
+        
+        string fname = "graph.txt";
+        
+        //open file for reading
+        infile.open(fname);
+        
+        //check input file
+        if(infile.fail()) {
+            //cerr << "Could not open the file " << filename here << endl;
+            return;
+        }
+        int i = 0;
+        // read the first line, count for number of vertices
+        while (infile >> ch[i] && cin.peek() != '\n') {
+            i++;
+        }
+        
+        numberOfVertices = i;
+        
+        // put the vertex names in the vertex vector, then in hash map.
+        for (i = 0; i < ch.size(); i++) {
+            name = ch[i];
+            p.vertexName = name;
+            mVertex.push_back(p);
+        }
+        
+        
+        //read the edges
+        for (int i = 0; i < DIR_GRAPH_SIZE; i++)
+        {
+            infile >> from;
+            infile >> to;
+            infile >> weight;
+            numberOfEdges++;
+            try{
+                insert(from, to, weight);
+            } catch(invalid_argument &e) {
+                cout << e.what() << endl;
+            }
+        }//end  for
+        
+        //close input file
+        infile.close();
         
     }
     
@@ -118,11 +201,95 @@ public:
     void reset(void) {
         
     }
+    /*    string get(string key) {
+     int hash = hash_fun(key);
+     
+     while (table[hash] != NULL && table[hash]->getKey() != key){
+     hash = (hash + 1) % SIZE;
+     }
+     
+     if (table[hash] == nullptr) {
+     return nullptr;
+     } else {
+     return table[hash]->getValue();
+     }
+     }*/
+    
+    void put(string key, string value) {
+        
+    }
     
     // makes an edge between vertices u and v with weight w
     // if an edge already exists, replace its weight with the new w
     void insert(string u, string v, double w) {
+        if (w <= 0) {
+            throw invalid_argument("invalid arg");
+        }
+        Vertex pu = map.get(u);
+        Vertex pv = map.get(v);
         
+        //If the vertices do not exist or are equal, throw an illegal
+        //argument exception.
+        if (pv.vertexName.empty()|| pu.vertexName.empty() || pv.vertexName == pu.vertexName) {
+            throw invalid_argument("invalid arg");
+        }
+        
+        Vertex m;
+        m.setVertexName(u);
+        Vertex n;
+        n.vertexName = v;
+        
+        if (pu.vertexName.empty()) {
+            pu.e.setWeight(w);
+        } else {
+            pu.setEdge(m, n, w);
+        }
+        /*e.setWeight(w);
+         vector<list<Edge>>::iterator beg;
+         beg = adjList.begin();
+         
+         list<Edge>::iterator it = adjList[hash].begin(), end;
+         for (int i = hash; i < adjList.size(); i = ((i + 1) % DIR_GRAPH_SIZE)) {
+         while (it != adjList[i].end()) {
+         if (it->getSource() == e.getSource() && it->getTarget() == e.getTarget()) {
+         it->setWeight(w);
+         } else {
+         it->setSource(e.getSource());
+         it->setTarget(e.getTarget());
+         it->setWeight(e.getWeight());
+         }
+         it++;
+         }
+         }
+         
+         if (table[hash] != NULL) {
+         while (table[hash] != nullptr) {
+         hash = (hash + 1) % SIZE;
+         }
+         }
+         
+         adjList[hash].push_back(e);
+         */
+        
+        /*if (w < 0 || w == 1) {
+         throw invalid_argument("invalid arg");
+         }
+         Vertex *pu;
+         *pu = map.get(u);
+         Vertex *pv;
+         *pv = map.get(v);
+         
+         //If the vertices do not exist or are equal, throw an illegal
+         //argument exception.
+         if (pv == NULL || pu == NULL || pv == pu) {
+         throw invalid_argument("invalid arg");
+         }
+         if (w == 0)//remove edge {
+         pu->getEdges().remove(Edge(pu, pv, 0));
+         }else{
+         //add edge
+         pu->getEdges().add(Edge(pu, pv, w));
+         }*/
     }
     
 };
