@@ -26,11 +26,9 @@ int main(void) {
     cin.ignore();
     getline(cin, fileName);
     
-    DirGraph myGraph(fileName);
-    
     // menu for undirected graph
     if (graphType == 'u') {
-        Graph myGraph;
+        Graph myGraph(fileName);
         while(menuSelection != 11){
             cout << "Selection a menu option: \n"
             << "1: Empty?\n"
@@ -113,11 +111,24 @@ int main(void) {
                     break;
                     
                 case 9:
-                    
+                    myGraph.clear();
+					cout << "Graph cleared" << endl;
                     break;
                     
                 case 10:
-                    
+                    cout << "Enter first vertex: ";
+					cin.ignore();
+					getline(cin, tempStr1);
+					cout << "Enter second vertex: ";
+					cin.ignore();
+					getline(cin, tempStr2);
+					cout << "Enter weight: ";
+					cin >> weight;
+                    try {
+                        myGraph.insert(tempStr1, tempStr2, weight);
+                    } catch (invalid_argument &e) {
+                        cerr << e.what();
+                    }					
                     break;
                 case 11:
                     return 0;
@@ -133,7 +144,7 @@ int main(void) {
         // end if, begin else
         // menu for directed graph
     } else if (graphType == 'd'){
-        
+        DirGraph myGraph(fileName);
         while(menuSelection != 11){
             cout << "Selection a menu option: \n"
             << "1: Empty?\n"

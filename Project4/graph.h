@@ -19,23 +19,35 @@
 #define MAX_GRAPH_SIZE 20
 
 // adjacency list structure
+/*
 struct adjacencyList{
     string vertexName;
     string* next;
 };
+*/
 
 class Graph {
     
 private:
+	/*
     HashEntry **table;
     Vertex v;
     Edge e;
     vector<adjacencyList*> adjListVector;
-    
+    */
+
+    HashTable map;
+    vector<Vertex *> vertList;
+    Vertex p;
+    string fileName;
+    int numberOfVertices; //number of vertices
+    int numberOfEdges; //number of edges
+
 public:
     
     // constructor
     Graph() {
+		/*
         table = new HashEntry *[MAX_GRAPH_SIZE];
         for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
             table[i] = NULL;
@@ -47,6 +59,23 @@ public:
         v.vertexName = "";
         e.setSource(u);
         e.setTarget(v);
+		*/
+
+        for (Vertex *v : vertList) {
+            v = nullptr;
+        }
+        numberOfVertices = 0;
+        numberOfEdges = 0;
+    }
+	// constructor
+    Graph(string file_name) {
+        for (Vertex *v : vertList) {
+            v = nullptr;
+        }
+        numberOfVertices = 0;
+        numberOfEdges = 0;
+        fileName = file_name;
+        buildGraph();
     }
     
     // destructor
@@ -56,9 +85,8 @@ public:
     
     // returns true iff graph is empty
     bool empty(void) {
-        bool isEmpty = false;
-        if(adjListVector.empty()) isEmpty = true;
-        return isEmpty;
+		if(numberOfVertices == 0) return true;
+		else return false;
     }
     
     // returns degree of vertex v
