@@ -154,6 +154,12 @@ public:
          recursively call DFS(temp)
          else label edge as back edge
          */
+
+		reset();
+		Vertex startVertex, currentVertex, nextVertex;
+		startVertex = currentVertex = map.get(v);
+		cout << startVertex.vertexName;
+		startVertex.color();
     }
     
     // performs breadth first search of graph starting at vertex v
@@ -212,26 +218,23 @@ public:
 		}
 		cout << "number of vertices: " << numberOfVertices << endl;	// DEBUGGING
 
-		// use remaining lines to 
+		// use remaining lines to insert vertices and edges
 
         
     }
     
     // removes all vertices from graph
     void clear(void) {
-        
+      
     }
     
     // marks all vertices as unvisited
     void reset(void) {
-        /* PSEUDO-CODE
-         for each vertex in adjListVector
-         uncolor vertex
-         while currentVertex->next != null
-         currentVertex = currentVertex->next
-         uncolor vertex
-         print graph colring reset
-         */
+        for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
+            if (map.table[i] != nullptr) {
+                map.table[i]->getVertex().uncolor();
+            }
+        }  
     }
     
     // inserts an edge with weight w between vertices u and v
