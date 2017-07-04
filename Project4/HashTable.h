@@ -30,7 +30,8 @@ public:
     }
     
     HashEntry(string key, Vertex v) {
-        key = v.vertexName;
+        //key = v.vertexName;
+		this->key = key;
         this->v = v;
     }
     /*HashEntry(string key, Vertex v, bool here) {

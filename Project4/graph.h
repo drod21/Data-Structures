@@ -205,13 +205,29 @@ public:
     // inserts an edge with weight w between vertices u and v
     // if edge already exists, update weight with new w
     void insert(string u, string v, double w) {
-        Edge newEdge;
-        Vertex a, b;
-        a.setVertexName(u);
-        b.setVertexName(v);
-        newEdge.setSource(a);
-        newEdge.setTarget(b);
-        newEdge.setWeight(w);
+        if (w <= 0) {
+            throw invalid_argument("invalid arg");
+        }
+        
+        Vertex p = map.get(u);
+        Vertex q = map.get(v);
+        
+        //If the vertices do not exist or are equal, throw an illegal
+        //argument exception.
+        if (p.vertexName.empty()|| q.vertexName.empty() || p.vertexName == q.vertexName) {
+            throw invalid_argument("invalid arg");
+        }
+        
+        Vertex m;
+        m.setVertexName(u);
+        Vertex n;
+        n.setVertexName(v);
+        
+        Edge e(m, n, w);
+        
+        // insert the edge at both locations, u and v
+        map.putEdge(u, e);
+        map.putEdge(v, e);
     }
     
     

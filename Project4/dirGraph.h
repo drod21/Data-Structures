@@ -210,7 +210,7 @@ public:
                 input.get(sing_char);
                 if ((isalpha(sing_char) && sing_char!= '\n') || (isalpha(sing_char) && sing_char != '\0')) {
                     ch[i] = sing_char;
-                } else if (isnumber(sing_char)) {
+                } else if (isdigit(sing_char)) {
                     weight[j++] = sing_char;
                 }
                 i++;
@@ -233,7 +233,7 @@ public:
                 to = ch[i+1];
                 w = weight[j++];
                 try {
-                    insert(from, to, w);
+                  //  insert(from, to, w);
                 } catch(invalid_argument &e) {
                     cout << e.what() << endl;
                 }
