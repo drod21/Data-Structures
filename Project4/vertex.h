@@ -22,6 +22,7 @@ public:
     
     Vertex(string name) {
         vertexName = name;
+		colored = false;
     }
     // mutators
     

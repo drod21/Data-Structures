@@ -126,7 +126,13 @@ public:
     
     // returns weight of edge connecting adjacent vertices u and v
     double adjacent(string u, string v) {
-        double w = 0.0;
+		// will return -1 (infinity) if vertices do not share an edge
+        double w = -1;
+        // if same vertex, return 0
+        if(u == v){
+			w = 0.0;
+			return w;
+		}
         Vertex a(u);
         Vertex b(v);
         Edge e(a, b);
@@ -233,7 +239,7 @@ public:
                 to = ch[i+1];
                 w = weight[j++];
                 try {
-                  //  insert(from, to, w);
+                 // insert(from, to, w);
                 } catch(invalid_argument &e) {
                     cout << e.what() << endl;
                 }

@@ -1,11 +1,8 @@
-//
-//  HashTable.h
-//  Proj4
-//
-//  Created by Derek Rodriguez on 6/30/17.
-//  Copyright © 2017 Derek Rodriguez. All rights reserved.
-//
-
+/************************************************************
+ Derek Rodriguez, Derek Caprio
+ COP 4530 Project 4
+ HashTable.h
+ ************************************************************/
 #ifndef HashTable_h
 #define HashTable_h
 #include "vertex.h"

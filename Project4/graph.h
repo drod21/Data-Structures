@@ -11,6 +11,8 @@
 #include <queue>
 #include <stack>
 #include <vector>
+#include <fstream>
+#include <array>
 
 #include "HashTable.h"
 #include "vertex.h"
@@ -92,27 +94,18 @@ public:
     // returns degree of vertex v
     int degree(string v) {
         int deg = 0;
-        /* PSEUDO-CODE
-         while adjacency list at vector element v is not null
-         deg++
-         move to next item in adjacency list
-         */
-        
+		int i = map.hash_fun(v);
+	    list<Edge>::iterator it = map.table[i]->edgeList.begin(); 
+        while (it != map.table[i]->edgeList.end()) {
+			deg++;
+            it++;
+        }
         return deg;
     }
     
     // returns number of edges in graph
     int edgeCount(void) {
-        
-        int count = 0;
-        /* PSEUDO-CODE
-         for each vertex in adjListVector
-         while adjacency list at adjListVector[i] is not null
-         count++
-         move to next item in adjacency list
-         */
-        
-        return count;
+        return numberOfEdges;
     }
     
     // returns true if graph is connected
@@ -125,16 +118,24 @@ public:
     
     // returns weight of edge connecting vertices u and v
     double adjacent(string u, string v) {
-        double w = 0.0;
+		// will return -1 (infinity) if vertices do not share an edge
+        double w = -1;
         // if same vertex, return 0
-        if(u == v) return w;
-        /* PSEUDO-CODE
-         temp = u's position in adjListVector
-         while vertex at adjancyList[u]->next != v
-         tempVertex = currentVertex->next
-         if get to end of adjancyList return -1
-         return getEdge between u and currentVertex
-         */
+        if(u == v){
+			w = 0.0;
+			return w;
+		}
+        Vertex a(u);
+        Vertex b(v);
+        Edge e(a, b);       
+        int hash = map.hash_fun(u);
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+        while (it != map.table[hash]->edgeList.end()) {
+            if (*it == e) {
+                w = e.weight;
+            }
+            it++;
+        }
         return w;
     }
     
@@ -182,6 +183,37 @@ public:
     
     // builds undirected, weighted graph from data provided in text file
     void buildGraph() {
+		ifstream infile;
+		// open file for reading
+		infile.open(fileName, ios::in);
+		if(!infile){
+			cerr << "Error. file could not be opened" << endl;
+			exit(EXIT_FAILURE);
+		}
+		string from, to, temp;
+		double weight;
+
+		// DEBUGGING: output contetns of file
+		getline(infile, temp);
+		cout << "contents of file: " << endl;
+		cout << temp << endl;
+		while(infile >> from >> to >> weight){
+			cout << from << " " << to << " " << weight << endl;
+		}
+		cout << endl;
+		infile.clear();
+		infile.seekg(0, ios::beg);
+		// END DEBUGGING
+
+		// use first line of file to get number of vertices
+		getline(infile, temp);
+		for(int i = 0; i < temp.length(); i++){
+			if(isalpha(temp[i])) numberOfVertices++;
+		}
+		cout << "number of vertices: " << numberOfVertices << endl;	// DEBUGGING
+
+		// use remaining lines to 
+
         
     }
     
