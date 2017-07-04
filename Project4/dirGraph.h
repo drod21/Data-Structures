@@ -53,7 +53,7 @@ public:
     
     // destructor
     ~DirGraph() {
-        delete[] map.table;
+        //delete[] map.table;
         numberOfEdges = 0;
         numberOfVertices = 0;
         fileName = "";
@@ -208,15 +208,27 @@ public:
             //numberOfVertices = i;
             while (input.good()) {
                 input.get(sing_char);
-                if (isalpha(sing_char)) {
+                if ((isalpha(sing_char) && sing_char!= '\n') || (isalpha(sing_char) && sing_char != '\0')) {
                     ch[i] = sing_char;
-                } else if (isdigit(sing_char)) {
+                } else if (isnumber(sing_char)) {
                     weight[j++] = sing_char;
                 }
                 i++;
             }
+            
+            // put the vertex names in the vertex vector, then in hash map.
+            for (i = 0; i < numberOfVertices; i++) {
+                name = ch[i];
+                p.vertexName = name;
+                mVertex.push_back(p);
+            }
+            
+            for (Vertex vert : mVertex) {
+                map.put(vert.vertexName, vert);
+            }
+            i = numberOfVertices;
             j = 0;
-            while (i < numberOfVertices) {
+            while (i < DIR_GRAPH_SIZE) {
                 from = ch[i];
                 to = ch[i+1];
                 w = weight[j++];
@@ -231,15 +243,7 @@ public:
         
         //numberOfVertices = i;
         
-        // put the vertex names in the vertex vector, then in hash map.
-        for (i = 0; i < numberOfVertices; i++) {
-            p.vertexName = ch[i];
-            mVertex.push_back(p);
-        }
         
-        for (Vertex vert : mVertex) {
-            map.put(vert.vertexName, vert);
-        }
         
        /* //read the edges
         for (int i = 0; i < numberOfVertices; i++) {

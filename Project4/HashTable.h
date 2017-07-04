@@ -25,9 +25,9 @@ public:
     Vertex v;
     list<Edge> edgeList;
     
-   /* HashEntry() : dataHere(false), key("") {
+    HashEntry() {
         
-    }*/
+    }
     
     HashEntry(string key, Vertex v) {
         key = v.vertexName;
@@ -52,12 +52,12 @@ class HashTable {
     
 public:
     
-    HashEntry **table;
+    HashEntry *table[SIZE];
     Edge e;
     
 
     HashTable() {
-        table = new HashEntry*[SIZE];
+        
         for (int i = 0; i < SIZE; i++) {
             table[i] = nullptr;
         }
@@ -68,7 +68,6 @@ public:
             if (table[i] != nullptr)
                 delete table[i];
         }
-        delete[] table;
     }
     
     int hash_fun(string key) const {
@@ -87,7 +86,7 @@ public:
             hash = (hash + 1) % SIZE;
         }
         // Return the vertex associated with the key
-        return table[hash]->getVertex();
+        return table[hash]->v;
 
     }
     
@@ -104,6 +103,8 @@ public:
             }
         }
         // create new HashEntry and add it to the table
+        //HashEntry hashEnt(key, value);
+        
         table[hash] = new HashEntry(key, value);
         
     }
@@ -115,7 +116,11 @@ public:
             hash = (hash + 1) % SIZE;
         }
         // Push the edge to the edge list at the hash position
-        table[hash]->edgeList.push_back(e);
+        if (table[hash]->edgeList.empty()) {
+            table[hash]->edgeList.push_front(e);
+        } else {
+            table[hash]->edgeList.push_back(e);
+        }
         
     }
 };
