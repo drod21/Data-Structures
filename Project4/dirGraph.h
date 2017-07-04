@@ -91,9 +91,9 @@ public:
          }
          */
         int i = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[i].edgeList.begin();
+        list<Edge>::iterator it = map.table[i]->edgeList.begin();
         
-        while (it != map.table[i].edgeList.end()) {
+        while (it != map.table[i]->edgeList.end()) {
             if (it->targetVertex.vertexName == v) {
                 deg++;
             }
@@ -107,9 +107,9 @@ public:
         int deg = 0;
         
         int i = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[i].edgeList.begin();
+        list<Edge>::iterator it = map.table[i]->edgeList.begin();
         
-        while (it != map.table[i].edgeList.end()) {
+        while (it != map.table[i]->edgeList.end()) {
             if (it->sourceVertex.vertexName == v) {
                 deg++;
             }
@@ -132,8 +132,8 @@ public:
         Edge e(a, b);
         
         int hash = map.hash_fun(u);
-        list<Edge>::iterator it = map.table[hash].edgeList.begin();
-        while (it != map.table[hash].edgeList.end()) {
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+        while (it != map.table[hash]->edgeList.end()) {
             if (*it == e) {
                 w = e.weight;
             }
@@ -173,11 +173,12 @@ public:
     void buildGraph() {
         
         ifstream infile;
-        
+        string line;
         string name; //name of vertex
         string from, to; //for edge
         
-        double weight;
+        double weight[20];
+        double w;
         
         array<char, 20> ch;
         ifstream input(fileName);
@@ -192,46 +193,69 @@ public:
             cerr << "Could not open the file " << fileName << endl;
             return;
         } else {
-        int i = 0;
-        // read the first line, count for number of vertices
+            int i = 0;
+            // read the first line, count for number of vertices
             char sing_char;
-        while (input.good()) {
-            input.get(sing_char);
-            if (sing_char != ' ')
-                ch[i] = sing_char;
-            i++;
-        }
+            getline(input, line);
+            int j;
+            for (i = 0, j = 0; i < line.length(); i++) {
+                if (isalpha(line[i])) {
+                    numberOfVertices++;
+                    ch[j++] = line[i];
+                }
+            }
+            j = 0;
+            //numberOfVertices = i;
+            while (input.good()) {
+                input.get(sing_char);
+                if (isalpha(sing_char)) {
+                    ch[i] = sing_char;
+                } else if (isdigit(sing_char)) {
+                    weight[j++] = sing_char;
+                }
+                i++;
+            }
+            j = 0;
+            while (i < numberOfVertices) {
+                from = ch[i];
+                to = ch[i+1];
+                w = weight[j++];
+                try {
+                    insert(from, to, w);
+                } catch(invalid_argument &e) {
+                    cout << e.what() << endl;
+                }
+                i++;
+                numberOfEdges++;
+            }
         
-        numberOfVertices = i;
-        /*
+        //numberOfVertices = i;
+        
         // put the vertex names in the vertex vector, then in hash map.
-        for (i = 0; i < ch.size(); i++) {
-            name = ch[i];
-            p.vertexName = name;
+        for (i = 0; i < numberOfVertices; i++) {
+            p.vertexName = ch[i];
             mVertex.push_back(p);
         }
         
         for (Vertex vert : mVertex) {
-            map.put(vert.getVertexName(), vert);
+            map.put(vert.vertexName, vert);
         }
         
-        //read the edges
-        for (int i = 0; i < DIR_GRAPH_SIZE; i++)
-        {
+       /* //read the edges
+        for (int i = 0; i < numberOfVertices; i++) {
             infile >> from;
             infile >> to;
-            infile >> weight;
+            infile >> w;
             numberOfEdges++;
-            try{
-                insert(from, to, weight);
+            try {
+                insert(from, to, w);
             } catch(invalid_argument &e) {
                 cout << e.what() << endl;
             }
-        }//end  for
-        }*/
+        }//end  for*/
+        }
         //close input file
         infile.close();
-        }
         
     }
     
@@ -243,8 +267,8 @@ public:
     // marks all vertices as unvisited
     void reset(void) {
         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-            if (map.table[i].dataHere) {
-                map.table[i].getVertex().uncolor();
+            if (map.table[i] != nullptr) {
+                map.table[i]->getVertex().uncolor();
             }
         }
     }

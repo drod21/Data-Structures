@@ -26,6 +26,8 @@ int main(void) {
     cin.ignore();
     getline(cin, fileName);
     
+    DirGraph myGraph(fileName);
+    
     // menu for undirected graph
     if (graphType == 'u') {
         Graph myGraph;
@@ -118,7 +120,7 @@ int main(void) {
                     
                     break;
                 case 11:
-                    
+                    return 0;
                     break;
                     
                 default:
@@ -131,7 +133,7 @@ int main(void) {
         // end if, begin else
         // menu for directed graph
     } else if (graphType == 'd'){
-        DirGraph myGraph(fileName);
+        
         while(menuSelection != 11){
             cout << "Selection a menu option: \n"
             << "1: Empty?\n"
@@ -235,7 +237,7 @@ int main(void) {
                     }
                     break;
                 case 11:
-                    
+                    return 0;
                     break;
                     
                 default: 
