@@ -20,25 +20,25 @@ class HashEntry {
 
 public:
     
-    bool dataHere;
+    //bool dataHere;
     string key;
     Vertex v;
     list<Edge> edgeList;
     
-    HashEntry() : dataHere(false), key("") {
+   /* HashEntry() : dataHere(false), key("") {
         
-    }
+    }*/
     
     HashEntry(string key, Vertex v) {
         key = v.vertexName;
         this->v = v;
     }
-    HashEntry(string key, Vertex v, bool here) {
+    /*HashEntry(string key, Vertex v, bool here) {
         this->dataHere = here;
         key = v.vertexName;
         this->v = v;
         dataHere = here;
-    }
+    }*/
     
     string getKey() {
         return key;
@@ -52,18 +52,22 @@ class HashTable {
     
 public:
     
-    HashEntry *table;
+    HashEntry **table;
     Edge e;
     
 
     HashTable() {
-        table = new HashEntry[SIZE];
+        table = new HashEntry*[SIZE];
         for (int i = 0; i < SIZE; i++) {
-            table[i].dataHere = false;
+            table[i] = nullptr;
         }
     }
     
     ~HashTable() {
+        for (int i = 0; i < SIZE; i++) {
+            if (table[i] != nullptr)
+                delete table[i];
+        }
         delete[] table;
     }
     
@@ -79,40 +83,39 @@ public:
     Vertex get(string key) {
         int hash = hash_fun(key);
         
-        while (table[hash].dataHere && table[hash].getKey() != key){
+        while (table[hash] != nullptr && table[hash]->getKey() != key){
             hash = (hash + 1) % SIZE;
         }
         // Return the vertex associated with the key
-        return table[hash].getVertex();
+        return table[hash]->getVertex();
 
     }
     
     void put(string key, Vertex value) {
         int hash = hash_fun(key);
         
-        while (table[hash].dataHere && table[hash].getKey() != key) {
+        while (table[hash] != nullptr  && table[hash]->getKey() != key) {
             hash = (hash + 1) % SIZE;
         }
         
-        if (table[hash].dataHere) {
-            while (table[hash].dataHere) {
+        if (table[hash] != nullptr) {
+            while (table[hash] != nullptr) {
                 hash = (hash + 1) % SIZE;
             }
         }
         // create new HashEntry and add it to the table
-        HashEntry newEntry(key, value, true);
-        table[hash] = newEntry;
+        table[hash] = new HashEntry(key, value);
         
     }
     
     void putEdge(string key, Edge e) {
         int hash = hash_fun(key);
         
-        while (table[hash].dataHere && table[hash].getKey() != key){
+        while (table[hash] != nullptr && table[hash]->getKey() != key){
             hash = (hash + 1) % SIZE;
         }
         // Push the edge to the edge list at the hash position
-        table[hash].edgeList.push_back(e);
+        table[hash]->edgeList.push_back(e);
         
     }
 };
