@@ -155,11 +155,20 @@ public:
          else label edge as back edge
          */
 
-		reset();
-		Vertex startVertex, currentVertex, nextVertex;
-		startVertex = currentVertex = map.get(v);
-		cout << startVertex.vertexName;
-		startVertex.color();
+		// graph is reset in main before calling DFS
+		Vertex currentVertex;
+		currentVertex = map.get(v);
+		cout << currentVertex.vertexName << " ";
+		currentVertex.color();
+        int hash = map.hash_fun(v);
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
+			if(it->targetVertex.colored == false){
+				it->targetVertex.colored = true;
+				cout << it->targetVertex.vertexName << " ";
+				DFS(it->targetVertex.vertexName);		// recursive call to DFS
+			}
+		}
     }
     
     // performs breadth first search of graph starting at vertex v

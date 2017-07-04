@@ -93,6 +93,7 @@ int main(void) {
                     cout << "Enter vertex to start DFS search at: ";
                     cin.ignore();
                     getline(cin, tempStr1);
+					myGraph.reset();
                     myGraph.DFS(tempStr1);
                     break;
                     
