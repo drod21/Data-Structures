@@ -198,37 +198,61 @@ public:
     
     // builds undirected, weighted graph from data provided in text file
     void buildGraph() {
-		ifstream infile;
-		// open file for reading
-		infile.open(fileName, ios::in);
-		if(!infile){
-			cerr << "Error. file could not be opened" << endl;
-			exit(EXIT_FAILURE);
-		}
-		string from, to, temp;
-		double weight;
-
-		// DEBUGGING: output contetns of file
-		getline(infile, temp);
-		cout << "contents of file: " << endl;
-		cout << temp << endl;
-		while(infile >> from >> to >> weight){
-			cout << from << " " << to << " " << weight << endl;
-		}
-		cout << endl;
-		infile.clear();
-		infile.seekg(0, ios::beg);
-		// END DEBUGGING
-
-		// use first line of file to get number of vertices
-		getline(infile, temp);
-		for(int i = 0; i < temp.length(); i++){
-			if(isalpha(temp[i])) numberOfVertices++;
-		}
-		cout << "number of vertices: " << numberOfVertices << endl;	// DEBUGGING
-
-		// use remaining lines to insert vertices and edges
-
+        ifstream infile;
+        
+        string line;
+        string name; //name of vertex
+        string from, to; //for edge
+        
+        double w;
+        
+        array<char, 20> ch;
+        vector<Vertex> mVertex;
+        
+        //open file for reading
+        infile.open(fileName);
+        
+        //check input file
+        if(infile.fail()) {
+            cerr << "Could not open the file " << fileName << endl;
+            return;
+        } else {
+            int i = 0;
+            // read the first line, count for number of vertices
+            
+            getline(infile, line);
+            int j;
+            for (i = 0, j = 0; i < line.length(); i++) {
+                if (isalpha(line[i])) {
+                    numberOfVertices++;
+                    ch[j++] = line[i];
+                }
+            }
+            
+            // put the vertex names in the vertex vector, then in hash map.
+            for (i = 0; i < numberOfVertices; i++) {
+                name = ch[i];
+                p.vertexName = name;
+                mVertex.push_back(p);
+            }
+            
+            for (Vertex vert : mVertex) {
+                map.put(vert.vertexName, vert);
+            }
+            while (!infile.eof()) {
+                infile >> from;
+                infile >> to;
+                infile >> w;
+                numberOfEdges++;
+                try {
+                    insert(from, to, w);
+                } catch(invalid_argument &e) {
+                    cout << e.what() << endl;
+                }
+            }
+        }
+        //close input file
+        infile.close();
         
     }
     

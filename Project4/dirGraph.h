@@ -189,18 +189,15 @@ public:
     }
     // builds directed, weighted graph from data provided in text file
     void buildGraph() {
-        
         ifstream infile;
+        
         string line;
         string name; //name of vertex
         string from, to; //for edge
-        
-        double weight[20];
+
         double w;
         
         array<char, 20> ch;
-        ifstream input(fileName);
-        
         vector<Vertex> mVertex;
         
         //open file for reading
@@ -213,25 +210,14 @@ public:
         } else {
             int i = 0;
             // read the first line, count for number of vertices
-            char sing_char;
-            getline(input, line);
+
+            getline(infile, line);
             int j;
             for (i = 0, j = 0; i < line.length(); i++) {
                 if (isalpha(line[i])) {
                     numberOfVertices++;
                     ch[j++] = line[i];
                 }
-            }
-            j = 0;
-            //numberOfVertices = i;
-            while (input.good()) {
-                input.get(sing_char);
-                if ((isalpha(sing_char) && sing_char!= '\n') || (isalpha(sing_char) && sing_char != '\0')) {
-                    ch[i] = sing_char;
-                } else if (isdigit(sing_char)) {
-                    weight[j++] = sing_char;
-                }
-                i++;
             }
             
             // put the vertex names in the vertex vector, then in hash map.
@@ -244,38 +230,18 @@ public:
             for (Vertex vert : mVertex) {
                 map.put(vert.vertexName, vert);
             }
-            i = numberOfVertices;
-            j = 0;
-            while (i < DIR_GRAPH_SIZE) {
-                from = ch[i];
-                to = ch[i+1];
-                w = weight[j++];
+            while (!infile.eof()) {
+                infile >> from;
+                infile >> to;
+                infile >> w;
+                numberOfEdges++;
                 try {
-                 // insert(from, to, w);
+                    insert(from, to, w);
                 } catch(invalid_argument &e) {
                     cout << e.what() << endl;
                 }
-                i++;
-                numberOfEdges++;
             }
-        
-        //numberOfVertices = i;
-        
-        
-        
-       /* //read the edges
-        for (int i = 0; i < numberOfVertices; i++) {
-            infile >> from;
-            infile >> to;
-            infile >> w;
-            numberOfEdges++;
-            try {
-                insert(from, to, w);
-            } catch(invalid_argument &e) {
-                cout << e.what() << endl;
-            }
-        }//end  for*/
-        }
+           }
         //close input file
         infile.close();
         
