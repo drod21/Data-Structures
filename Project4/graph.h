@@ -131,7 +131,7 @@ public:
         int hash = map.hash_fun(u);
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
         while (it != map.table[hash]->edgeList.end()) {
-            if (*it == e) {
+            if (it->sourceVertex == a && it->targetVertex == b) {
                 w = e.weight;
             }
             it++;
