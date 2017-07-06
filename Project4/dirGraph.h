@@ -154,23 +154,23 @@ public:
     
     // performs a depth first search of graph starting at vertex v
     void DFS(string v) {
-		Vertex currentVertex;
-		currentVertex = map.get(v);
-		cout << currentVertex.vertexName << " ";
-		currentVertex.color();
+        Vertex currentVertex;
+        currentVertex = map.get(v);
+        currentVertex.color();
+        cout << currentVertex.vertexName << " ";
         int hash = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
-			if(it->targetVertex.colored == false){
-				it->targetVertex.colored = true;
-				cout << it->targetVertex.vertexName << " ";
-				DFS(it->targetVertex.vertexName);		// recursive call to DFS
-			}
-		}        
+        list<Edge>::iterator it;
+        for (it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it) {
+            if (!it->targetVertex.colored && it->targetVertex.vertexName != currentVertex.vertexName) {
+                it->targetVertex.colored = true;
+                DFS(it->targetVertex.vertexName);		// recursive call to DFS
+            }
+        }
     }
     
     // performs a breadth first search of graph starting at vertex v
     void BFS(string v) {
+        
         // Queue for BFS traversal
         queue<Vertex> q;
         // get the first vertex, mark it colored
@@ -195,44 +195,12 @@ public:
             // loop through the table's adjacency list, if the target
             // vertex in that edge is not colored, add it to the queue
             for (it = map.table[i]->edgeList.begin(); it != map.table[i]->edgeList.end(); ++it) {
-                if (!it->targetVertex.colored) {
+                if (!it->targetVertex.colored && it->targetVertex.vertexName != v) {
                     it->targetVertex.colored = true;
                     q.push(it->targetVertex);
                 }
             }
         }
-        /*// list for BFS traversal
-        list<Vertex> q;
-        // get the first vertex, mark it colored
-        Vertex a = map.get(v);
-        a.colored = true;
-        q.push_back(a);
-        // temp string
-        string s;
-        //iterator
-        list<Edge>::iterator it;
-        // location of v in the table
-        int i = map.hash_fun(v);
-        
-        // while the queue is not empty
-        while (!q.empty()) {
-            // set s to the vertex at the front of the queue
-            //print, then pop.
-            s = q.front().vertexName;
-            cout << s << " ";
-            q.pop_front();
-            
-            // loop through the table's adjacency list, if the target
-            // vertex in that edge is not colored, add it to the queue
-            for (it = map.table[i]->edgeList.begin(); it != map.table[i]->edgeList.end(); ++it) {
-                if (!it->targetVertex.colored) {
-                    it->targetVertex.colored = true;
-                    q.push_back(it->targetVertex);
-                }
-            }
-        }*/
-        
-        
     }
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
@@ -313,8 +281,12 @@ public:
     
     // marks all vertices as unvisited
     void reset(void) {
+        list<Edge>::iterator it;
         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
             if (map.table[i] != nullptr) {
+                it = map.table[i]->edgeList.begin();
+                it->sourceVertex.colored = false;
+                it->targetVertex.colored = false;
                 map.table[i]->getVertex().uncolor();
             }
         }
@@ -342,10 +314,24 @@ public:
         n.setVertexName(v);
         
         Edge e(m, n, w);
-        
+        int hash = map.hash_fun(u);
+        int hash2 = map.hash_fun(v);
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+        list<Edge>::iterator it2 = map.table[hash2]->edgeList.begin();
+        while (it != map.table[hash]->edgeList.end() && it2 != map.table[hash2]->edgeList.end()) {
+            if (*it == e) {
+                it->weight = e.weight;
+            }
+            
+            if (*it2 == e) {
+                it2->weight = e.weight;
+            }
+            ++it;
+            ++it2;
+        }
         // insert the edge at both locations, u and v
         map.putEdge(u, e);
-        map.putEdge(v, e);
+        //map.putEdge(v, e);
         
         /*e.setWeight(w);
          vector<list<Edge>>::iterator beg;
