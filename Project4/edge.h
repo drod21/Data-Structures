@@ -77,6 +77,11 @@ public:
         return ((sourceVertex == orig.sourceVertex) && (targetVertex == orig.targetVertex));
     }
     
+    // less than operator, SOLELY COMPARING WEIGHTS
+    bool operator<(const Edge& orig) const {
+        return (weight < orig.weight);
+    }
+    
 };
 
 #endif /* edge_h */
