@@ -43,8 +43,10 @@ public:
     }
     
     bool isColored(void){
-        if(colored == true) return true;
-        else return false;
+        if(colored == false)
+            return false;
+        
+        return true;
     }
     
     bool operator==(const Vertex &orig) const {
