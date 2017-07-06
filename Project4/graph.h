@@ -158,13 +158,15 @@ public:
 
 
 		// reset graph before beginning function
+
+		/*
 		Vertex currentVertex;
         stack<string> s;
         
         int hash = map.hash_fun(v);
         s.push(v);
 		currentVertex = map.get(v);
-        
+        currentVertex.color();
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
         while (!s.empty()) {
             string print = s.top();
@@ -177,10 +179,35 @@ public:
 			if (!it->targetVertex.colored && it->targetVertex.vertexName != currentVertex.vertexName) {
                 it->targetVertex.colored = true;
                 s.push(it->targetVertex.vertexName);
-                //DFS(it->targetVertex.vertexName);		// recursive call to DFS
+                DFS(it->targetVertex.vertexName);		// recursive call to DFS
 			}
 		}
         }
+		*/
+
+		Vertex currentVertex;
+		currentVertex = map.get(v);
+		cout << currentVertex.vertexName << " ";
+		currentVertex.color();
+        int hash = map.hash_fun(v);
+		Vertex nextVertex;
+		nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
+			//Edge minEdge = *it;
+			//Vertex nextVertex = it->targetVertex;
+			//list<Edge>::iterator it2 = map.table[hash]->edgeList.begin();
+			/*for(it2 = map.table[hash]->edgeList.begin(); it2 != map.table[hash]->edgeList.end(); ++it2){
+				if(it2->targetVertex.vertexName < nextVertex.vertexName)
+					nextVertex = it2->targetVertex;
+			
+			}
+			*/
+			if((it->targetVertex.vertexName < nextVertex.vertexName) && (it->targetVertex.colored == false)){
+				nextVertex = it->targetVertex;
+				DFS(nextVertex.vertexName);		// recursive call to DFS
+			}
+		}
     }
     
     // performs breadth first search of graph starting at vertex v
@@ -222,8 +249,47 @@ public:
     // uses Prim's algorithm to show minimum spanning tree of
     // the vertices that are connected to v
     void MST(string v) {
-        
+	/*
+	PSEUDO CODE
+	initialize MSTset to empty
+	add v to MSTset
+	find shorteset edge from v, add its target to MSTset, totalCost = edge legnth
+	while MSTset does not include all vertices
+		find shortest edge from all vertices in MSTset that does not lead to an already visited vertex and add that target to MSTset, totalCost += edge legnth
+	*/
+       
+	// graph reset in menu program
+		double MSTweight = 0;
+		vector<Vertex> MSTset;
+		Vertex currentVertex = map.get(v);
+		// start by adding closest vertex to v to MSTset
+		MSTset.push_back(currentVertex);
+		currentVertex.color();
+		int hash = map.hash_fun(v);
+		Edge shortestEdge;
+		//shortestEdge = map.table[hash]->edgeList.begin();
+		Vertex nextVertex;
+		nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
+			if((it->weight < shortestEdge.weight) && (it->targetVertex.colored == false)){
+				shortestEdge = *it;
+			}		
+		}
+		MSTweight += shortestEdge.weight;
+		nextVertex = shortestEdge.targetVertex;
+		nextVertex.color();
+		MSTset.push_back(nextVertex);
+
+		// while MSTset does not consist of all vertices, find shortest weight that
+		// does not make a loop and add its target to the MSTset 
+		while(MSTset.size() < numberOfVertices){
+			for(int i = 0; i < MSTset.size(); i++){
+				
+			}
+		}
     }
+		
     
     // builds undirected, weighted graph from data provided in text file
     void buildGraph() {

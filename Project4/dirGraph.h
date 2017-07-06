@@ -154,6 +154,7 @@ public:
     
     // performs a depth first search of graph starting at vertex v
     void DFS(string v) {
+	/*
         Vertex currentVertex;
         currentVertex = map.get(v);
         currentVertex.color();
@@ -166,6 +167,22 @@ public:
                 DFS(it->targetVertex.vertexName);		// recursive call to DFS
             }
         }
+		*/
+
+		Vertex currentVertex;
+		currentVertex = map.get(v);
+		cout << currentVertex.vertexName << " ";
+		currentVertex.color();
+        int hash = map.hash_fun(v);
+		Vertex nextVertex;
+		nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
+			if((it->targetVertex.vertexName < nextVertex.vertexName) && (it->targetVertex.colored == false)){
+				nextVertex = it->targetVertex;
+				DFS(nextVertex.vertexName);		// recursive call to DFS
+			}
+		}
     }
     
     // performs a breadth first search of graph starting at vertex v
