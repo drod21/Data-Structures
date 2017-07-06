@@ -26,7 +26,7 @@ public:
     }
     // mutators
     
-    void setVertexName(string n){
+    void setVertexName(string n) {
         vertexName = n;
     }
     void color(void){
@@ -38,13 +38,16 @@ public:
     
     // accessors
     
-    string getVertexName(void){
+    string getVertexName(){
         return vertexName;
     }
     
-    bool isColored(void){
-        if(colored == true) return true;
-        else return false;
+    bool isColored() {
+        if (!colored) {
+            return false;
+        }
+        
+        return true;
     }
     
     bool operator==(const Vertex &orig) const {
