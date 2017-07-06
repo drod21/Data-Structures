@@ -93,8 +93,8 @@ int main(void) {
                     cout << "Enter vertex to start DFS search at: ";
                     cin.ignore();
                     getline(cin, tempStr1);
-					myGraph.reset();
                     myGraph.DFS(tempStr1);
+                    myGraph.reset();
                     break;
                     
                 case 7:
@@ -102,6 +102,7 @@ int main(void) {
                     cin.ignore();
                     getline(cin, tempStr1);
                     myGraph.BFS(tempStr1);
+                    myGraph.reset();
                     break;
                     
                 case 8:
@@ -206,8 +207,8 @@ int main(void) {
                     cout << "Enter vertex to start DFS search at: ";
                     cin.ignore();
                     getline(cin, tempStr1);
-					myGraph.reset();
                     myGraph.DFS(tempStr1);
+                    myGraph.reset();
                     break;
                     
                 case 7:
@@ -215,6 +216,7 @@ int main(void) {
                     cin.ignore();
                     getline(cin, tempStr1);
                     myGraph.BFS(tempStr1);
+                    myGraph.reset();
                     break;
                     
                 case 8:
