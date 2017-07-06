@@ -142,6 +142,7 @@ public:
     // performs depth first search of graph starting at vertex v
     // recursive
     void DFS(string v) {
+        
         /* PSEUDO-CODE
          reset graph so all vertices are uncolored
          label v as visited
@@ -155,40 +156,36 @@ public:
          else label edge as back edge
          */
 
-		// graph is reset in main before calling DFS
+
+		// reset graph before beginning function
 		Vertex currentVertex;
-		currentVertex = map.get(v);
-		cout << currentVertex.vertexName << " ";
-		currentVertex.color();
+        stack<string> s;
+        
         int hash = map.hash_fun(v);
+        s.push(v);
+		currentVertex = map.get(v);
+        
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
-			if(it->targetVertex.colored == false){
-				it->targetVertex.colored = true;
-				cout << it->targetVertex.vertexName << " ";
-				DFS(it->targetVertex.vertexName);		// recursive call to DFS
+        while (!s.empty()) {
+            string print = s.top();
+            if (!it->targetVertex.colored) {
+                cout << print << " ";
+                currentVertex.color();
+            }
+            s.pop();
+		for (it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
+			if (!it->targetVertex.colored && it->targetVertex.vertexName != currentVertex.vertexName) {
+                it->targetVertex.colored = true;
+                s.push(it->targetVertex.vertexName);
+                //DFS(it->targetVertex.vertexName);		// recursive call to DFS
 			}
 		}
+        }
     }
     
     // performs breadth first search of graph starting at vertex v
     // non-recursive
     void BFS(string v) {
-        /*
-        	initialize collectionn L0 to contain vertex v
-         int i = 0
-         for all vertices in Li
-         for all edges on vertex
-         if edge is unexplored
-         tempVertex = vertex on opposite side of edge
-         if tempVertex is unexplored
-         label edge as discovery edge
-         insert tempVertex into Li+1
-         else label edge as cross edge
-         print tempVertex
-         i++
-         */
-        
         // Queue for BFS traversal
         queue<Vertex> q;
         // get the first vertex, mark it colored
@@ -203,7 +200,7 @@ public:
         int i = map.hash_fun(v);
         
         // while the queue is not empty
-        for (int j = i; j < MAX_GRAPH_SIZE; j++) {
+        while (!q.empty()) {
             // set s to the vertex at the front of the queue
             //print, then pop.
             s = q.front().vertexName;
@@ -212,13 +209,12 @@ public:
             
             // loop through the table's adjacency list, if the target
             // vertex in that edge is not colored, add it to the queue
-            for (it = map.table[j]->edgeList.begin(); it != map.table[j]->edgeList.end(); ++it) {
-                if (!it->targetVertex.colored) {
+            for (it = map.table[i]->edgeList.begin(); it != map.table[i]->edgeList.end(); ++it) {
+                if (!it->targetVertex.colored && it->targetVertex.vertexName != v) {
                     it->targetVertex.colored = true;
                     q.push(it->targetVertex);
                 }
             }
-        
         }
     }
 
@@ -325,7 +321,19 @@ public:
         n.setVertexName(v);
         
         Edge e(m, n, w);
-        
+        int hash = map.hash_fun(u);
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+        while (it != map.table[hash]->edgeList.end()) {
+            if (it->targetVertex == e.sourceVertex || it->sourceVertex == e.targetVertex) {
+                it->weight = e.weight;
+            }
+            
+            if (it->sourceVertex == e.sourceVertex || it->targetVertex == e.targetVertex) {
+                it->weight = e.weight;
+            }
+            ++it;
+        }
+
         // insert the edge at both locations, u and v
         map.putEdge(u, e);
         map.putEdge(v, e);
