@@ -188,7 +188,40 @@ public:
          print tempVertex
          i++
          */
+        
+        // Queue for BFS traversal
+        queue<Vertex> q;
+        // get the first vertex, mark it colored
+        Vertex a = map.get(v);
+        a.colored = true;
+        q.push(a);
+        // temp string
+        string s;
+        //iterator
+        list<Edge>::iterator it;
+        // location of v in the table
+        int i = map.hash_fun(v);
+        
+        // while the queue is not empty
+        for (int j = i; j < MAX_GRAPH_SIZE; j++) {
+            // set s to the vertex at the front of the queue
+            //print, then pop.
+            s = q.front().vertexName;
+            cout << s << " ";
+            q.pop();
+            
+            // loop through the table's adjacency list, if the target
+            // vertex in that edge is not colored, add it to the queue
+            for (it = map.table[j]->edgeList.begin(); it != map.table[j]->edgeList.end(); ++it) {
+                if (!it->targetVertex.colored) {
+                    it->targetVertex.colored = true;
+                    q.push(it->targetVertex);
+                }
+            }
+        
+        }
     }
+
     
     // uses Prim's algorithm to show minimum spanning tree of
     // the vertices that are connected to v

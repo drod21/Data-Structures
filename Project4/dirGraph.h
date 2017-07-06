@@ -76,6 +76,7 @@ public:
     }
     
     // returns in degree of vertex v
+    // Need to loop through whole array
     int inDegree(string v) {
         int deg = 0;
         /*Vertex a = map.get(v);
@@ -92,13 +93,14 @@ public:
          */
         int i = map.hash_fun(v);
         list<Edge>::iterator it = map.table[i]->edgeList.begin();
-        
+
         while (it != map.table[i]->edgeList.end()) {
             if (it->targetVertex.vertexName == v) {
                 deg++;
             }
             it++;
         }
+        
         return deg;
     }
     
@@ -169,9 +171,66 @@ public:
     
     // performs a breadth first search of graph starting at vertex v
     void BFS(string v) {
-        queue<string> q;
+        // Queue for BFS traversal
+        queue<Vertex> q;
+        // get the first vertex, mark it colored
+        Vertex a = map.get(v);
+        a.colored = true;
+        q.push(a);
+        // temp string
+        string s;
+        //iterator
+        list<Edge>::iterator it;
+        // location of v in the table
+        int i = map.hash_fun(v);
         
-        q.push(v);
+        // while the queue is not empty
+        while (!q.empty()) {
+            // set s to the vertex at the front of the queue
+            //print, then pop.
+            s = q.front().vertexName;
+            cout << s << " ";
+            q.pop();
+            
+            // loop through the table's adjacency list, if the target
+            // vertex in that edge is not colored, add it to the queue
+            for (it = map.table[i]->edgeList.begin(); it != map.table[i]->edgeList.end(); ++it) {
+                if (!it->targetVertex.colored) {
+                    it->targetVertex.colored = true;
+                    q.push(it->targetVertex);
+                }
+            }
+        }
+        /*// list for BFS traversal
+        list<Vertex> q;
+        // get the first vertex, mark it colored
+        Vertex a = map.get(v);
+        a.colored = true;
+        q.push_back(a);
+        // temp string
+        string s;
+        //iterator
+        list<Edge>::iterator it;
+        // location of v in the table
+        int i = map.hash_fun(v);
+        
+        // while the queue is not empty
+        while (!q.empty()) {
+            // set s to the vertex at the front of the queue
+            //print, then pop.
+            s = q.front().vertexName;
+            cout << s << " ";
+            q.pop_front();
+            
+            // loop through the table's adjacency list, if the target
+            // vertex in that edge is not colored, add it to the queue
+            for (it = map.table[i]->edgeList.begin(); it != map.table[i]->edgeList.end(); ++it) {
+                if (!it->targetVertex.colored) {
+                    it->targetVertex.colored = true;
+                    q.push_back(it->targetVertex);
+                }
+            }
+        }*/
         
         
     }
