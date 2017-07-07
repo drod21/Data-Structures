@@ -152,37 +152,73 @@ public:
         return w;
     }
     
-    // performs a depth first search of graph starting at vertex v
-    void DFS(string v) {
-	/*
-        Vertex currentVertex;
-        currentVertex = map.get(v);
-        currentVertex.color();
-        cout << currentVertex.vertexName << " ";
+    void DFS_Aux(string v, bool visited[]) {
+        // use separate array to mark each visited or not
         int hash = map.hash_fun(v);
-        list<Edge>::iterator it;
-        for (it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it) {
-            if (!it->targetVertex.colored && it->targetVertex.vertexName != currentVertex.vertexName) {
-                it->targetVertex.colored = true;
-                DFS(it->targetVertex.vertexName);		// recursive call to DFS
+        visited[hash] = true;
+        cout << v << " ";
+        int j;
+        
+        list<Edge>::iterator i;
+        for (i = map.table[hash]->edgeList.begin();
+             i != map.table[hash]->edgeList.end();
+             ++i) {
+            j = map.hash_fun(i->targetVertex.getVertexName());
+            if (!visited[j]) {
+                DFS_Aux(i->targetVertex.getVertexName(), visited);
             }
         }
-		*/
-
-		Vertex currentVertex;
-		currentVertex = map.get(v);
-		cout << currentVertex.vertexName << " ";
-		currentVertex.color();
-        int hash = map.hash_fun(v);
-		Vertex nextVertex;
-		nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
-        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
-			if((it->targetVertex.vertexName < nextVertex.vertexName) && (it->targetVertex.colored == false)){
-				nextVertex = it->targetVertex;
-				DFS(nextVertex.vertexName);		// recursive call to DFS
-			}
-		}
+    }
+    
+    // performs a depth first search of graph starting at vertex v
+    void DFS(string v) {
+        
+        bool *visited = new bool[numberOfVertices];
+        
+        for (int i = 0; i < numberOfVertices; i++) {
+            visited[i] = false;
+        }
+        
+        DFS_Aux(v, visited);
+        /*
+         Vertex currentVertex;
+         currentVertex = map.get(v);
+         currentVertex.color();
+         cout << currentVertex.vertexName << " ";
+         int hash = map.hash_fun(v);
+         list<Edge>::iterator it;
+         for (it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it) {
+         if (!it->targetVertex.colored && it->targetVertex.vertexName != currentVertex.vertexName) {
+         it->targetVertex.colored = true;
+         DFS(it->targetVertex.vertexName);		// recursive call to DFS
+         }
+         }
+         */
+        
+        /*Vertex currentVertex;
+         currentVertex = map.get(v);
+         cout << currentVertex.vertexName << " ";
+         currentVertex.color();
+         
+         int hash = map.hash_fun(v);
+         string name;
+         Vertex nextVertex;
+         if (!map.table[hash]->edgeList.begin()->targetVertex.isColored()) {
+         name = map.table[hash]->edgeList.begin()->targetVertex.getVertexName();
+         nextVertex = map.get(name);
+         }
+         
+         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+         
+         for (it = map.table[hash]->edgeList.begin();
+         it != map.table[hash]->edgeList.end();
+         ++it) {
+         if ((it->targetVertex.vertexName < nextVertex.vertexName)
+         && (it->targetVertex.colored == false)) {
+         name = it->targetVertex.getVertexName();
+         DFS(name);		// recursive call to DFS
+         }
+         }*/
     }
     
     // performs a breadth first search of graph starting at vertex v
