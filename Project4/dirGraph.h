@@ -12,6 +12,7 @@
 #include <queue>
 #include <stack>
 #include <limits>
+#include <cstdlib>
 
 
 #include "HashTable.h"
@@ -281,18 +282,35 @@ public:
     void shortPath(string u, string v) {
 		double cost[DIR_GRAPH_SIZE][DIR_GRAPH_SIZE];	// cost table for total weight
 		array<double, DIR_GRAPH_SIZE> D;				// distance table
-		array<double, DIR_GRAPH_SIZE> P;				// predecessor table;
-        
-		// populate cost table with edge values or infinity if no edge between vertices
+		array<string, DIR_GRAPH_SIZE> P;				// predecessor table;
+		// start and end for use with cost, distance, and predecessor tables
+		int start = map.hash_fun(u);
+		int end = map.hash_fun(v);
+		/*
+		int start = stoi(u) - 65;		// 65 is ASCII A value
+		int end = stoi(v) - 65;
+        */
+
+		// populate cost table with weights of edges connecting vertices
+		// diagonal of cost table becomes 0's
 		for(int i = 0; i < DIR_GRAPH_SIZE; i++){
 			for(int j = 0; j < DIR_GRAPH_SIZE; j++){
-				
+				if(adjacent(u, v) == -1) cost[i][j] = INFINITY;
+				else cost[i][j] = adjacent(u, v);
 			}
 		}
-
+		/*
 		// set diagonal of cost table (distance of any vertex to itself) to 0
 		for(int i = 0; i < DIR_GRAPH_SIZE; i++){
 			cost[i][i] = 0;
+		}
+		*/
+
+		// populate distance table with inital distances
+		// populate predecessor table with nil
+		for(int i = 0; i < DIR_GRAPH_SIZE; i++){
+			D[i] = cost[start][i];
+			P[i] = "nil";
 		}
     }
     
