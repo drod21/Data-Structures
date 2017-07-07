@@ -306,7 +306,7 @@ public:
 		currentVertex.color();
 		int hash = map.hash_fun(v);
 		Edge shortestEdge;
-		//shortestEdge = map.table[hash]->edgeList.begin();
+		shortestEdge = *(map.table[hash]->edgeList.begin());
 		Vertex nextVertex;
 		nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
