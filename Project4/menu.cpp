@@ -82,11 +82,10 @@ int main(void) {
                     cin.ignore();
                     getline(cin, tempStr1);
                     cout << "Enter name of second vertex: ";
-                    cin.ignore();
                     getline(cin, tempStr2);
                     cout << "The weight of the edge connecting " << tempStr1
                     << " with " << tempStr2 << " is "
-                    << myGraph.adjacent(tempStr1, tempStr2);
+                    << myGraph.adjacent(tempStr1, tempStr2) << endl;
                     break;
                     
                 case 6:
@@ -197,11 +196,10 @@ int main(void) {
                     cin.ignore();
                     getline(cin, tempStr1);
                     cout << "Enter name of second vertex: ";
-                    cin.ignore();
                     getline(cin, tempStr2);
                     cout << "The weight of the edge connecting " << tempStr1
                     << " with " << tempStr2 << " is "
-                    << myGraph.adjacent(tempStr1, tempStr2);
+                    << myGraph.adjacent(tempStr1, tempStr2) << endl;
                     break;
                     
                 case 6:
@@ -227,6 +225,7 @@ int main(void) {
                     getline(cin, tempStr1);
                     cout << "Enter name of second vertex: ";
                     cin.ignore();
+					getline(cin, tempStr2);
                     cout << "The shortest path between " << tempStr1 << " and "
                     << tempStr2 << " is: \n";
                     myGraph.shortPath(tempStr1, tempStr2);

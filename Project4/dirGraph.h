@@ -142,15 +142,23 @@ public:
         int hash = map.hash_fun(u);
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
         while (it != map.table[hash]->edgeList.end()) {
-            if (*it == e) {
-                w = e.weight;
+			if(it->sourceVertex == a && it->targetVertex == b){
+				w = adjacentAux(a, b);
             }
             it++;
-        }
-        
-        
+        }       
         return w;
     }
+	
+	double adjacentAux(Vertex a, Vertex b){
+			int hash = map.hash_fun(a.vertexName);
+			list<Edge>::iterator it;
+			for(it = map.table[hash]->edgeList.begin();
+				it != map.table[hash]->edgeList.end();
+				it++){
+				if(it->targetVertex == b) return it->weight;
+			}
+	}
     
     void DFS_Aux(string v, bool visited[]) {
         // use separate array to mark each visited or not
