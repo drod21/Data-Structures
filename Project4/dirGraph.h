@@ -20,6 +20,7 @@
 
 
 #define DIR_GRAPH_SIZE 20
+#define INFINITY 1000 		// for use with Dijkstra's algorithm
 
 class DirGraph {
     
@@ -158,6 +159,7 @@ public:
 				it++){
 				if(it->targetVertex == b) return it->weight;
 			}
+			return -1;
 	}
     
     void DFS_Aux(string v, bool visited[]) {
@@ -277,7 +279,21 @@ public:
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
     void shortPath(string u, string v) {
+		double cost[DIR_GRAPH_SIZE][DIR_GRAPH_SIZE];	// cost table for total weight
+		array<double, DIR_GRAPH_SIZE> D;				// distance table
+		array<double, DIR_GRAPH_SIZE> P;				// predecessor table;
         
+		// populate cost table with edge values or infinity if no edge between vertices
+		for(int i = 0; i < DIR_GRAPH_SIZE; i++){
+			for(int j = 0; j < DIR_GRAPH_SIZE; j++){
+				
+			}
+		}
+
+		// set diagonal of cost table (distance of any vertex to itself) to 0
+		for(int i = 0; i < DIR_GRAPH_SIZE; i++){
+			cost[i][i] = 0;
+		}
     }
     
     // returns shortest distance between vertices u and v

@@ -118,30 +118,6 @@ public:
     
     // returns weight of edge connecting vertices u and v
     double adjacent(string u, string v) {
-		/*
-		// will return -1 (infinity) if vertices do not share an edge
-        double w = -1;
-        // if same vertex, return 0
-        if(u == v){
-			w = 0.0;
-			return w;
-		}
-        Vertex a(u);
-        Vertex b(v);
-        Edge e(a, b);       
-        int hash = map.hash_fun(u);
-        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-        while (it != map.table[hash]->edgeList.end()) {
-            if (it->sourceVertex == a && it->targetVertex == b) {
-                w = e.weight;
-            }
-            it++;
-        }
-        return w;
-    }
-	*/
-
-		// will return -1 (infinity) if vertices do not share an edge
         double w = -1;
         // if same vertex, return 0
         if(u == v){
@@ -171,6 +147,7 @@ public:
 				it++){
 				if(it->targetVertex == b) return it->weight;
 			}
+			return -1;
 	}
     
     void DFS_Aux(string v, bool visited[]) {
