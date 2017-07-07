@@ -224,12 +224,15 @@ public:
     // performs a breadth first search of graph starting at vertex v
     void BFS(string v) {
         
+        bool *visited = new bool[numberOfVertices];
+        for (int i = 0; i < numberOfVertices; i++) {
+            visited[i] = false;
+        }
+        
         // Queue for BFS traversal
-        queue<Vertex> q;
+        queue<Vertex> queue;
         // get the first vertex, mark it colored
         Vertex a = map.get(v);
-        a.colored = true;
-        q.push(a);
         // temp string
         string s;
         //iterator
@@ -237,20 +240,28 @@ public:
         // location of v in the table
         int i = map.hash_fun(v);
         
+        queue.push(a);
+        string temp;
+        
         // while the queue is not empty
-        while (!q.empty()) {
+        while (!queue.empty()) {
             // set s to the vertex at the front of the queue
             //print, then pop.
-            s = q.front().vertexName;
+            s = queue.front().vertexName;
+            visited[i] = true;
             cout << s << " ";
-            q.pop();
+            queue.pop();
+            int j;
             
             // loop through the table's adjacency list, if the target
             // vertex in that edge is not colored, add it to the queue
-            for (it = map.table[i]->edgeList.begin(); it != map.table[i]->edgeList.end(); ++it) {
-                if (!it->targetVertex.colored && it->targetVertex.vertexName != v) {
-                    it->targetVertex.colored = true;
-                    q.push(it->targetVertex);
+            for (it = map.table[i]->edgeList.begin();
+                 it != map.table[i]->edgeList.end();
+                 ++it) {
+                j = map.hash_fun(it->targetVertex.getVertexName());
+                if (!visited[j]) {
+                    visited[j] = true;
+                    queue.push(it->targetVertex);
                 }
             }
         }
