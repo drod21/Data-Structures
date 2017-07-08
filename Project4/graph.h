@@ -95,8 +95,8 @@ public:
     int degree(string v) {
         int deg = 0;
 		int i = map.hash_fun(v);
-	    list<Edge>::iterator it = map.table[i].edgeList.begin();
-        while (it != map.table[i].edgeList.end()) {
+	    list<Edge>::iterator it = map.table[i]->edgeList.begin();
+        while (it != map.table[i]->edgeList.end()) {
 			deg++;
             it++;
         }
@@ -129,9 +129,9 @@ public:
         Edge e(a, b);
         
         int hash = map.hash_fun(u);
-        list<Edge>::iterator it = map.table[hash].
+        list<Edge>::iterator it = map.table[hash]->
         edgeList.begin();
-        while (it != map.table[hash].edgeList.end()) {
+        while (it != map.table[hash]->edgeList.end()) {
 			if(it->sourceVertex == a && it->targetVertex == b){
 				w = adjacentAux(a, b);
             }
@@ -143,8 +143,8 @@ public:
 	double adjacentAux(Vertex a, Vertex b){
 			int hash = map.hash_fun(a.vertexName);
 			list<Edge>::iterator it;
-			for(it = map.table[hash].edgeList.begin();
-				it != map.table[hash].edgeList.end();
+			for(it = map.table[hash]->edgeList.begin();
+				it != map.table[hash]->edgeList.end();
 				it++){
 				if(it->targetVertex == b) return it->weight;
 			}
@@ -159,8 +159,8 @@ public:
         int j;
         
         list<Edge>::iterator i;
-        for (i = map.table[hash].edgeList.begin();
-             i != map.table[hash].edgeList.end();
+        for (i = map.table[hash]->edgeList.begin();
+             i != map.table[hash]->edgeList.end();
              ++i) {
             j = map.hash_fun(i->targetVertex.getVertexName());
             if (!visited[j]) {
@@ -210,7 +210,7 @@ public:
             
             // loop through the table's adjacency list, if the target
             // vertex in that edge is not colored, add it to the queue
-            for (it = map.table[i].edgeList.begin(); it != map.table[i].edgeList.end(); ++it) {
+            for (it = map.table[i]->edgeList.begin(); it != map.table[i]->edgeList.end(); ++it) {
                 if (!it->targetVertex.colored && it->targetVertex.vertexName != v) {
                     it->targetVertex.colored = true;
                     q.push(it->targetVertex);
@@ -241,11 +241,11 @@ public:
 		currentVertex.color();
 		int hash = map.hash_fun(v);
 		Edge shortestEdge;
-		shortestEdge = *(map.table[hash].edgeList.begin());
+		shortestEdge = *(map.table[hash]->edgeList.begin());
 		Vertex nextVertex;
-		nextVertex = map.table[hash].edgeList.begin()->targetVertex;
-        list<Edge>::iterator it = map.table[hash].edgeList.begin();
-		for(it = map.table[hash].edgeList.begin(); it != map.table[hash].edgeList.end(); ++it){
+		nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
 			if((it->weight < shortestEdge.weight) && (it->targetVertex.colored == false)){
 				shortestEdge = *it;
 			}		
@@ -333,8 +333,8 @@ public:
     // marks all vertices as unvisited
     void reset(void) {
         for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
-            if (!map.table[i].v.vertexName.empty()) {
-                map.table[i].getVertex().uncolor();
+            if (map.table[i] != nullptr) {
+                map.table[i]->getVertex().uncolor();
             }
             
         }  
@@ -364,11 +364,10 @@ public:
         Edge e(m, n, w);
         int hash = map.hash_fun(u);
         int hash2 = map.hash_fun(v);
-        map.putEdge(u, e);
-        list<Edge>::iterator it = map.table[hash].edgeList.begin();
-        list<Edge>::iterator it2 = map.table[hash2].edgeList.begin();
-        if (adjacent(u, v) != -1) {
-            while (it != map.table[hash].edgeList.end()) {
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+        list<Edge>::iterator it2 = map.table[hash2]->edgeList.begin();
+        if ((adjacent(u, v) != -1) || (adjacent(v,u) != -1)) {
+            while (it != map.table[hash]->edgeList.end()) {
                 if (it->targetVertex.vertexName == e.sourceVertex.vertexName || it->sourceVertex.vertexName == e.targetVertex.vertexName) {
                     it->weight = e.weight;
                 } else if (it->sourceVertex.vertexName == e.sourceVertex.vertexName|| it->targetVertex.vertexName == e.targetVertex.vertexName) {

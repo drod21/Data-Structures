@@ -94,9 +94,9 @@ public:
          }
          */
         int i = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[i].edgeList.begin();
+        list<Edge>::iterator it = map.table[i]->edgeList.begin();
 
-        while (it != map.table[i].edgeList.end()) {
+        while (it != map.table[i]->edgeList.end()) {
             if (it->targetVertex.vertexName == v) {
                 deg++;
             }
@@ -111,9 +111,9 @@ public:
         int deg = 0;
         
         int i = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[i].edgeList.begin();
+        list<Edge>::iterator it = map.table[i]->edgeList.begin();
         
-        while (it != map.table[i].edgeList.end()) {
+        while (it != map.table[i]->edgeList.end()) {
             if (it->sourceVertex.vertexName == v) {
                 deg++;
             }
@@ -142,9 +142,8 @@ public:
         Edge e(a, b);
         
         int hash = map.hash_fun(u);
-        list<Edge>::iterator it = map.table[hash].edgeList.begin();
-        while (it != map.table[hash].
-               edgeList.end()) {
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+        while (it != map.table[hash]->edgeList.end()) {
 			if(it->sourceVertex == a && it->targetVertex == b){
 				w = adjacentAux(a, b);
             }
@@ -156,9 +155,8 @@ public:
 	double adjacentAux(Vertex a, Vertex b){
 			int hash = map.hash_fun(a.vertexName);
 			list<Edge>::iterator it;
-			for (it = map.table[hash].edgeList.begin();
-				it != map.table[hash].
-                 edgeList.end();
+			for (it = map.table[hash]->edgeList.begin();
+				it != map.table[hash]->edgeList.end();
 				it++) {
 				if(it->targetVertex == b) return it->weight;
 			}
@@ -173,8 +171,8 @@ public:
         int j;
         
         list<Edge>::iterator i;
-        for (i = map.table[hash].edgeList.begin();
-             i != map.table[hash].edgeList.end();
+        for (i = map.table[hash]->edgeList.begin();
+             i != map.table[hash]->edgeList.end();
              ++i) {
             j = map.hash_fun(i->targetVertex.getVertexName());
             if (!visited[j]) {
@@ -217,8 +215,8 @@ public:
             int i = map.hash_fun(v);
             // loop through the table's adjacency list, if the target
             // vertex in that edge is not colored, add it to the queue
-            for (it = map.table[i].edgeList.begin();
-                 it != map.table[i].edgeList.end();
+            for (it = map.table[i]->edgeList.begin();
+                 it != map.table[i]->edgeList.end();
                  ++it) {
                 string temp;
                 temp = it->targetVertex.vertexName;
@@ -364,11 +362,11 @@ public:
     void reset(void) {
         list<Edge>::iterator it;
         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-            if (!map.table[i].v.vertexName.empty()) {
-                it = map.table[i].edgeList.begin();
+            if (map.table[i] != nullptr) {
+                it = map.table[i]->edgeList.begin();
                 it->sourceVertex.colored = false;
                 it->targetVertex.colored = false;
-                map.table[i].getVertex().uncolor();
+                map.table[i]->getVertex().uncolor();
             }
         }
     }
@@ -380,12 +378,15 @@ public:
             throw invalid_argument("invalid arg");
         }
         
+        
+        
         Vertex p = map.get(u);
         Vertex q = map.get(v);
         
         //If the vertices do not exist or are equal, throw an illegal
         //argument exception.
-        if (p.vertexName.empty()|| q.vertexName.empty() || p.vertexName == q.vertexName) {
+        if ((p.vertexName.empty()) || (q.vertexName.empty())
+            || (p.vertexName == q.vertexName)) {
             throw invalid_argument("invalid arg");
         }
         
@@ -397,9 +398,9 @@ public:
         Edge e(m, n, w);
         int hash = map.hash_fun(u);
         int hash2 = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[hash].edgeList.begin();
-        list<Edge>::iterator it2 = map.table[hash2].edgeList.begin();
-        while (it != map.table[hash].edgeList.end() && it2 != map.table[hash2].edgeList.end()) {
+        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+        list<Edge>::iterator it2 = map.table[hash2]->edgeList.begin();
+        while (it != map.table[hash]->edgeList.end() && it2 != map.table[hash2]->edgeList.end()) {
             if (*it == e) {
                 it->weight = e.weight;
             }

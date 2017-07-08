@@ -83,9 +83,10 @@ int main(void) {
                     getline(cin, tempStr1);
                     cout << "Enter name of second vertex: ";
                     getline(cin, tempStr2);
+                    weight = myGraph.adjacent(tempStr1, tempStr2);
                     cout << "The weight of the edge connecting " << tempStr1
                     << " with " << tempStr2 << " is "
-                    << myGraph.adjacent(tempStr1, tempStr2) << endl;
+                    << weight << endl;
                     break;
                     
                 case 6:
