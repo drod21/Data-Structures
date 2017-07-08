@@ -22,54 +22,54 @@
 
 // adjacency list structure
 /*
- struct adjacencyList{
- string vertexName;
- string* next;
- };
- */
+struct adjacencyList{
+    string vertexName;
+    string* next;
+};
+*/
 
 class Graph {
     
 private:
-    /*
-     HashEntry **table;
-     Vertex v;
-     Edge e;
-     vector<adjacencyList*> adjListVector;
-     */
-    
+	/*
+    HashEntry **table;
+    Vertex v;
+    Edge e;
+    vector<adjacencyList*> adjListVector;
+    */
+
     HashTable map;
     vector<Vertex *> vertList;
     Vertex p;
     string fileName;
     int numberOfVertices; //number of vertices
     int numberOfEdges; //number of edges
-    
+
 public:
     
     // constructor
     Graph() {
-        /*
-         table = new HashEntry *[MAX_GRAPH_SIZE];
-         for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
-         table[i] = NULL;
-         }
-         Vertex u, v;
-         Edge e;
-         
-         u.vertexName = "";
-         v.vertexName = "";
-         e.setSource(u);
-         e.setTarget(v);
-         */
+		/*
+        table = new HashEntry *[MAX_GRAPH_SIZE];
+        for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
+            table[i] = NULL;
+        }
+        Vertex u, v;
+        Edge e;
         
+        u.vertexName = "";
+        v.vertexName = "";
+        e.setSource(u);
+        e.setTarget(v);
+		*/
+
         for (Vertex *v : vertList) {
             v = nullptr;
         }
         numberOfVertices = 0;
         numberOfEdges = 0;
     }
-    // constructor
+	// constructor
     Graph(string file_name) {
         for (Vertex *v : vertList) {
             v = nullptr;
@@ -87,17 +87,17 @@ public:
     
     // returns true iff graph is empty
     bool empty(void) {
-        if(numberOfVertices == 0) return true;
-        else return false;
+		if(numberOfVertices == 0) return true;
+		else return false;
     }
     
     // returns degree of vertex v
     int degree(string v) {
         int deg = 0;
-        int i = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[i]->edgeList.begin();
+		int i = map.hash_fun(v);
+	    list<Edge>::iterator it = map.table[i]->edgeList.begin();
         while (it != map.table[i]->edgeList.end()) {
-            deg++;
+			deg++;
             it++;
         }
         return deg;
@@ -121,9 +121,9 @@ public:
         double w = -1;
         // if same vertex, return 0
         if(u == v){
-            w = 0.0;
-            return w;
-        }
+			w = 0.0;
+			return w;
+		}
         Vertex a(u);
         Vertex b(v);
         Edge e(a, b);
@@ -132,24 +132,24 @@ public:
         list<Edge>::iterator it = map.table[hash]->
         edgeList.begin();
         while (it != map.table[hash]->edgeList.end()) {
-            if(it->sourceVertex == a && it->targetVertex == b){
-                w = adjacentAux(a, b);
+			if(it->sourceVertex == a && it->targetVertex == b){
+				w = adjacentAux(a, b);
             }
             it++;
-        }
+        }       
         return w;
     }
-    
-    double adjacentAux(Vertex a, Vertex b){
-        int hash = map.hash_fun(a.vertexName);
-        list<Edge>::iterator it;
-        for(it = map.table[hash]->edgeList.begin();
-            it != map.table[hash]->edgeList.end();
-            it++){
-            if(it->targetVertex == b) return it->weight;
-        }
-        return -1;
-    }
+	
+	double adjacentAux(Vertex a, Vertex b){
+			int hash = map.hash_fun(a.vertexName);
+			list<Edge>::iterator it;
+			for(it = map.table[hash]->edgeList.begin();
+				it != map.table[hash]->edgeList.end();
+				it++){
+				if(it->targetVertex == b) return it->weight;
+			}
+			return -1;
+	}
     
     void DFS_Aux(string v, bool visited[]) {
         // use separate array to mark each visited or not
@@ -186,7 +186,7 @@ public:
     
     // performs breadth first search of graph starting at vertex v
     // non-recursive
-    void BFS(string v) {
+   /* void BFS(string v) {
         // Queue for BFS traversal
         queue<Vertex> q;
         // get the first vertex, mark it colored
@@ -217,53 +217,110 @@ public:
                 }
             }
         }
+    }*/
+    
+    // Auxiliary function for BFS
+    void BFS_Aux(string v, bool visited[], queue<Vertex> q) {
+        // loop through and set vertex from initial vertex's list, then use the new
+        // vertex's edge list to do the same, etc.
+        //iterator
+        list<Edge>::iterator it;
+        string temp;
+        string s;
+        // while the queue is not empty
+        while (!q.empty()) {
+            // set s to the vertex at the front of the queue
+            //print, then pop.
+            s = q.front().vertexName;
+            cout << s << " ";
+            q.pop();
+            int j;
+            
+            int i = map.hash_fun(v);
+            // loop through the table's adjacency list, if the target
+            // vertex in that edge is not colored, add it to the queue
+            for (it = map.table[i]->edgeList.begin();
+                 it != map.table[i]->edgeList.end();
+                 ++it) {
+                string temp;
+                temp = it->targetVertex.vertexName;
+                j = map.hash_fun(temp);
+                if (!visited[j]) {
+                    visited[j] = true;
+                    q.push(it->targetVertex);
+                }
+            }
+        }
     }
     
+    // performs a breadth first search of graph starting at vertex v
+    void BFS(string v) {
+        
+        bool *visited = new bool[numberOfVertices];
+        for (int i = 0; i < numberOfVertices; i++) {
+            visited[i] = false;
+        }
+        // get the first vertex, mark it colored
+        Vertex a = map.get(v);
+        // location of v in the table
+        int i = map.hash_fun(v);
+        visited[i] = true;
+        
+        queue<Vertex> q;
+        q.push(a);
+        
+        BFS_Aux(v, visited, q);
+        
+        delete [] visited;
+        
+    }
+
+
     
     // uses Prim's algorithm to show minimum spanning tree of
     // the vertices that are connected to v
     void MST(string v) {
-        /*
-         PSEUDO CODE
-         initialize MSTset to empty
-         add v to MSTset
-         find shorteset edge from v, add its target to MSTset, totalCost = edge legnth
-         while MSTset does not include all vertices
-         find shortest edge from all vertices in MSTset that does not lead to an already visited vertex and add that target to MSTset, totalCost += edge legnth
-         */
-        
-        // graph reset in menu program
-        double MSTweight = 0;
-        vector<Vertex> MSTset;
-        Vertex currentVertex = map.get(v);
-        // start by adding closest vertex to v to MSTset
-        MSTset.push_back(currentVertex);
-        currentVertex.color();
-        int hash = map.hash_fun(v);
-        Edge shortestEdge;
-        shortestEdge = *(map.table[hash]->edgeList.begin());
-        Vertex nextVertex;
-        nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
+	/*
+	PSEUDO CODE
+	initialize MSTset to empty
+	add v to MSTset
+	find shorteset edge from v, add its target to MSTset, totalCost = edge legnth
+	while MSTset does not include all vertices
+		find shortest edge from all vertices in MSTset that does not lead to an already visited vertex and add that target to MSTset, totalCost += edge legnth
+	*/
+       
+	// graph reset in menu program
+		double MSTweight = 0;
+		vector<Vertex> MSTset;
+		Vertex currentVertex = map.get(v);
+		// start by adding closest vertex to v to MSTset
+		MSTset.push_back(currentVertex);
+		currentVertex.color();
+		int hash = map.hash_fun(v);
+		Edge shortestEdge;
+		shortestEdge = *(map.table[hash]->edgeList.begin());
+		Vertex nextVertex;
+		nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-        for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
-            if((it->weight < shortestEdge.weight) && (it->targetVertex.colored == false)){
-                shortestEdge = *it;
-            }
-        }
-        MSTweight += shortestEdge.weight;
-        nextVertex = shortestEdge.targetVertex;
-        nextVertex.color();
-        MSTset.push_back(nextVertex);
-        
-        // while MSTset does not consist of all vertices, find shortest weight that
-        // does not make a loop and add its target to the MSTset
-        while(MSTset.size() < numberOfVertices){
-            for(int i = 0; i < MSTset.size(); i++){
-                
-            }
-        }
+		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
+			if((it->weight < shortestEdge.weight) && (it->targetVertex.colored == false)){
+				shortestEdge = *it;
+			}		
+		}
+		MSTweight += shortestEdge.weight;
+		nextVertex = shortestEdge.targetVertex;
+		nextVertex.color();
+		MSTset.push_back(nextVertex);
+
+		// while MSTset does not consist of all vertices, find shortest weight that
+		// does not make a loop and add its target to the MSTset 
+		while(MSTset.size() < numberOfVertices){
+			for(int i = 0; i < MSTset.size(); i++){
+				
+			}
+		}
     }
-    
+		
     
     // builds undirected, weighted graph from data provided in text file
     void buildGraph() {
@@ -326,7 +383,7 @@ public:
     
     // removes all vertices from graph
     void clear(void) {
-        
+      
     }
     
     // marks all vertices as unvisited
@@ -336,7 +393,7 @@ public:
                 map.table[i]->getVertex().uncolor();
             }
             
-        }
+        }  
     }
     
     // inserts an edge with weight w between vertices u and v
@@ -389,7 +446,7 @@ public:
             map.putEdge(v, e2);
             numberOfEdges++;
         }
-        
+
         // insert the edge at both locations, u and v
     }
     

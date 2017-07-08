@@ -95,7 +95,7 @@ public:
          */
         int i = map.hash_fun(v);
         list<Edge>::iterator it = map.table[i]->edgeList.begin();
-        
+
         while (it != map.table[i]->edgeList.end()) {
             if (it->targetVertex.vertexName == v) {
                 deg++;
@@ -130,13 +130,13 @@ public:
     
     // returns weight of edge connecting adjacent vertices u and v
     double adjacent(string u, string v) {
-        // will return -1 (infinity) if vertices do not share an edge
+		// will return -1 (infinity) if vertices do not share an edge
         double w = -1;
         // if same vertex, return 0
         if(u == v){
-            w = 0.0;
-            return w;
-        }
+			w = 0.0;
+			return w;
+		}
         Vertex a(u);
         Vertex b(v);
         Edge e(a, b);
@@ -144,24 +144,24 @@ public:
         int hash = map.hash_fun(u);
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
         while (it != map.table[hash]->edgeList.end()) {
-            if(it->sourceVertex == a && it->targetVertex == b){
-                w = adjacentAux(a, b);
+			if(it->sourceVertex == a && it->targetVertex == b){
+				w = adjacentAux(a, b);
             }
             it++;
-        }
+        }       
         return w;
     }
-    
-    double adjacentAux(Vertex a, Vertex b){
-        int hash = map.hash_fun(a.vertexName);
-        list<Edge>::iterator it;
-        for (it = map.table[hash]->edgeList.begin();
-             it != map.table[hash]->edgeList.end();
-             it++) {
-            if(it->targetVertex == b) return it->weight;
-        }
-        return -1;
-    }
+	
+	double adjacentAux(Vertex a, Vertex b){
+			int hash = map.hash_fun(a.vertexName);
+			list<Edge>::iterator it;
+			for (it = map.table[hash]->edgeList.begin();
+				it != map.table[hash]->edgeList.end();
+				it++) {
+				if(it->targetVertex == b) return it->weight;
+			}
+			return -1;
+	}
     
     void DFS_Aux(string v, bool visited[]) {
         // use separate array to mark each visited or not
@@ -241,7 +241,7 @@ public:
         // location of v in the table
         int i = map.hash_fun(v);
         visited[i] = true;
-        
+
         queue<Vertex> q;
         q.push(a);
         
@@ -253,38 +253,38 @@ public:
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
     void shortPath(string u, string v) {
-        double cost[DIR_GRAPH_SIZE][DIR_GRAPH_SIZE];	// cost table for total weight
-        array<double, DIR_GRAPH_SIZE> D;				// distance table
-        array<string, DIR_GRAPH_SIZE> P;				// predecessor table;
-        // start and end for use with cost, distance, and predecessor tables
-        int start = map.hash_fun(u);
-        int end = map.hash_fun(v);
-        /*
-         int start = stoi(u) - 65;		// 65 is ASCII A value
-         int end = stoi(v) - 65;
-         */
-        
-        // populate cost table with weights of edges connecting vertices
-        // diagonal of cost table becomes 0's
-        for(int i = 0; i < DIR_GRAPH_SIZE; i++){
-            for(int j = 0; j < DIR_GRAPH_SIZE; j++){
-                if(adjacent(u, v) == -1) cost[i][j] = INFINITY;
-                else cost[i][j] = adjacent(u, v);
-            }
-        }
-        /*
-         // set diagonal of cost table (distance of any vertex to itself) to 0
-         for(int i = 0; i < DIR_GRAPH_SIZE; i++){
-         cost[i][i] = 0;
-         }
-         */
-        
-        // populate distance table with inital distances
-        // populate predecessor table with nil
-        for(int i = 0; i < DIR_GRAPH_SIZE; i++){
-            D[i] = cost[start][i];
-            P[i] = "nil";
-        }
+		double cost[DIR_GRAPH_SIZE][DIR_GRAPH_SIZE];	// cost table for total weight
+		array<double, DIR_GRAPH_SIZE> D;				// distance table
+		array<string, DIR_GRAPH_SIZE> P;				// predecessor table;
+		// start and end for use with cost, distance, and predecessor tables
+		int start = map.hash_fun(u);
+		int end = map.hash_fun(v);
+		/*
+		int start = stoi(u) - 65;		// 65 is ASCII A value
+		int end = stoi(v) - 65;
+        */
+
+		// populate cost table with weights of edges connecting vertices
+		// diagonal of cost table becomes 0's
+		for(int i = 0; i < DIR_GRAPH_SIZE; i++){
+			for(int j = 0; j < DIR_GRAPH_SIZE; j++){
+				if(adjacent(u, v) == -1) cost[i][j] = INFINITY;
+				else cost[i][j] = adjacent(u, v);
+			}
+		}
+		/*
+		// set diagonal of cost table (distance of any vertex to itself) to 0
+		for(int i = 0; i < DIR_GRAPH_SIZE; i++){
+			cost[i][i] = 0;
+		}
+		*/
+
+		// populate distance table with inital distances
+		// populate predecessor table with nil
+		for(int i = 0; i < DIR_GRAPH_SIZE; i++){
+			D[i] = cost[start][i];
+			P[i] = "nil";
+		}
     }
     
     // returns shortest distance between vertices u and v
@@ -300,7 +300,7 @@ public:
         string line;
         string name; //name of vertex
         string from, to; //for edge
-        
+
         double w;
         
         array<char, 20> ch;
@@ -316,7 +316,7 @@ public:
         } else {
             int i = 0;
             // read the first line, count for number of vertices
-            
+
             getline(infile, line);
             int j;
             for (i = 0, j = 0; i < line.length(); i++) {
@@ -347,7 +347,7 @@ public:
                     cout << e.what() << endl;
                 }
             }
-        }
+           }
         //close input file
         infile.close();
         
@@ -413,12 +413,11 @@ public:
                 ++it;
                 ++it2;
             }
-        } else {
-            // insert the edge at both locations, u and v
-            map.putEdge(u, e);
-            numberOfEdges++;
-            
-        }
+            } else {
+                // insert the edge at both locations, u and v
+                map.putEdge(u, e);
+                numberOfEdges++;
+            }
     }
     
 };

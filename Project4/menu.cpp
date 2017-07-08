@@ -109,28 +109,28 @@ int main(void) {
                     cout << "Enter vertex to get minimum spanning tree of: ";
                     cin.ignore();
                     getline(cin, tempStr1);
-                    myGraph.reset();
+					myGraph.reset();
                     myGraph.MST(tempStr1);
                     break;
                     
                 case 9:
                     myGraph.clear();
-                    cout << "Graph cleared" << endl;
+					cout << "Graph cleared" << endl;
                     break;
                     
                 case 10:
                     cout << "Enter first vertex: ";
-                    cin.ignore();
-                    getline(cin, tempStr1);
-                    cout << "Enter second vertex: ";
-                    getline(cin, tempStr2);
-                    cout << "Enter weight: ";
-                    cin >> weight;
+					cin.ignore();
+					getline(cin, tempStr1);
+					cout << "Enter second vertex: ";
+					getline(cin, tempStr2);
+					cout << "Enter weight: ";
+					cin >> weight;
                     try {
                         myGraph.insert(tempStr1, tempStr2, weight);
                     } catch (invalid_argument &e) {
                         cerr << e.what();
-                    }
+                    }					
                     break;
                 case 11:
                     return 0;
@@ -206,7 +206,7 @@ int main(void) {
                     cout << "Enter vertex to start DFS search at: ";
                     cin.ignore();
                     getline(cin, tempStr1);
-                    myGraph.reset();
+					myGraph.reset();
                     myGraph.DFS(tempStr1);
                     myGraph.reset();
                     break;
@@ -225,7 +225,7 @@ int main(void) {
                     getline(cin, tempStr1);
                     cout << "Enter name of second vertex: ";
                     cin.ignore();
-                    getline(cin, tempStr2);
+					getline(cin, tempStr2);
                     cout << "The shortest path between " << tempStr1 << " and "
                     << tempStr2 << " is: \n";
                     myGraph.shortPath(tempStr1, tempStr2);
@@ -258,7 +258,7 @@ int main(void) {
                     return 0;
                     break;
                     
-                default:
+                default: 
                     cout << "Invalid entry. Selection an option [1-11]: ";
                     cin >> menuSelection;
                     cout << endl;
