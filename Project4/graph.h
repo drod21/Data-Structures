@@ -163,9 +163,12 @@ public:
              i != map.table[hash]->edgeList.end();
              ++i) {
             j = map.hash_fun(i->targetVertex.getVertexName());
+            int h = map.hash_fun(i->sourceVertex.getVertexName());
             if (!visited[j]) {
                 DFS_Aux(i->targetVertex.getVertexName(), visited);
-                //DFS_Aux(i->sourceVertex.getVertexName(), visited);
+            }
+            if (!visited[h]) {
+                DFS_Aux(i->sourceVertex.getVertexName(), visited);
             }
         }
     }
@@ -219,40 +222,6 @@ public:
         }
     }*/
     
-    // Auxiliary function for BFS
-    void BFS_Aux(string v, bool visited[], queue<Vertex> q) {
-        // loop through and set vertex from initial vertex's list, then use the new
-        // vertex's edge list to do the same, etc.
-        //iterator
-        list<Edge>::iterator it;
-        string temp;
-        string s;
-        // while the queue is not empty
-        while (!q.empty()) {
-            // set s to the vertex at the front of the queue
-            //print, then pop.
-            s = q.front().vertexName;
-            cout << s << " ";
-            q.pop();
-            int j;
-            
-            int i = map.hash_fun(v);
-            // loop through the table's adjacency list, if the target
-            // vertex in that edge is not colored, add it to the queue
-            for (it = map.table[i]->edgeList.begin();
-                 it != map.table[i]->edgeList.end();
-                 ++it) {
-                string temp;
-                temp = it->targetVertex.vertexName;
-                j = map.hash_fun(temp);
-                if (!visited[j]) {
-                    visited[j] = true;
-                    q.push(it->targetVertex);
-                }
-            }
-        }
-    }
-    
     // performs a breadth first search of graph starting at vertex v
     void BFS(string v) {
         
@@ -269,12 +238,45 @@ public:
         queue<Vertex> q;
         q.push(a);
         
-        BFS_Aux(v, visited, q);
-        
-        delete [] visited;
+        // loop through and set vertex from initial vertex's list, then use the new
+        // vertex's edge list to do the same, etc.
+        //iterator
+        list<Edge>::iterator it;
+        string temp;
+        string s;
+        // while the queue is not empty
+        while (!q.empty()) {
+            // set s to the vertex at the front of the queue
+            //print, then pop.
+            s = q.front().vertexName;
+            cout << s << " ";
+            q.pop();
+            int j;
+            
+            int i = map.hash_fun(s);
+            // loop through the table's adjacency list, if the target
+            // vertex in that edge is not colored, add it to the queue
+            for (it = map.table[i]->edgeList.begin();
+                 it != map.table[i]->edgeList.end();
+                 ++it) {
+                j = map.hash_fun(it->targetVertex.getVertexName());
+                int h = map.hash_fun(it->sourceVertex.vertexName);
+                
+                if (!visited[j]) {
+                    visited[j] = true;
+                    q.push(it->targetVertex);
+                }
+                
+                
+                if (!visited[h]) {
+                    visited[h] = true;
+                    q.push(it->sourceVertex);
+                }
+                
+            }
+        }
         
     }
-
 
     
     // uses Prim's algorithm to show minimum spanning tree of

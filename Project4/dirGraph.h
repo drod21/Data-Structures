@@ -175,8 +175,12 @@ public:
              i != map.table[hash]->edgeList.end();
              ++i) {
             j = map.hash_fun(i->targetVertex.getVertexName());
+            int h = map.hash_fun(i->sourceVertex.getVertexName());
             if (!visited[j]) {
                 DFS_Aux(i->targetVertex.getVertexName(), visited);
+            }
+            if (!visited[h]) {
+                DFS_Aux(i->sourceVertex.getVertexName(), visited);
             }
         }
     }
@@ -192,11 +196,31 @@ public:
         
         DFS_Aux(v, visited);
         
-        delete [] visited;
     }
     
     // Auxiliary function for BFS
     void BFS_Aux(string v, bool visited[], queue<Vertex> q) {
+        // loop through and set vertex from initial vertex's list, then use the new
+        // vertex's edge list to do the same, etc.
+        //iterator
+            }
+    
+    // performs a breadth first search of graph starting at vertex v
+    void BFS(string v) {
+        
+        bool *visited = new bool[numberOfVertices];
+        for (int i = 0; i < numberOfVertices; i++) {
+            visited[i] = false;
+        }
+        // get the first vertex, mark it colored
+        Vertex a = map.get(v);
+        // location of v in the table
+        int i = map.hash_fun(v);
+        visited[i] = true;
+        
+        queue<Vertex> q;
+        q.push(a);
+        
         // loop through and set vertex from initial vertex's list, then use the new
         // vertex's edge list to do the same, etc.
         //iterator
@@ -212,44 +236,31 @@ public:
             q.pop();
             int j;
             
-            int i = map.hash_fun(v);
+            int i = map.hash_fun(s);
             // loop through the table's adjacency list, if the target
             // vertex in that edge is not colored, add it to the queue
             for (it = map.table[i]->edgeList.begin();
                  it != map.table[i]->edgeList.end();
                  ++it) {
-                string temp;
-                temp = it->targetVertex.vertexName;
-                j = map.hash_fun(temp);
+                j = map.hash_fun(it->targetVertex.getVertexName());
+                int h = map.hash_fun(it->sourceVertex.vertexName);
+                
                 if (!visited[j]) {
                     visited[j] = true;
                     q.push(it->targetVertex);
                 }
+                
+                
+                if (!visited[h]) {
+                    visited[h] = true;
+                    q.push(it->sourceVertex);
+                }
+                
             }
         }
+        
     }
     
-    // performs a breadth first search of graph starting at vertex v
-    void BFS(string v) {
-        
-        bool *visited = new bool[numberOfVertices];
-        for (int i = 0; i < numberOfVertices; i++) {
-            visited[i] = false;
-        }
-        // get the first vertex, mark it colored
-        Vertex a = map.get(v);
-        // location of v in the table
-        int i = map.hash_fun(v);
-        visited[i] = true;
-
-        queue<Vertex> q;
-        q.push(a);
-        
-        BFS_Aux(v, visited, q);
-        
-        delete [] visited;
-        
-    }
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
     void shortPath(string u, string v) {
@@ -416,6 +427,7 @@ public:
             } else {
                 // insert the edge at both locations, u and v
                 map.putEdge(u, e);
+                map.putEdge(v, e);
                 numberOfEdges++;
             }
     }
