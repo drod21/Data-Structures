@@ -94,9 +94,9 @@ public:
          }
          */
         int i = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[i]->edgeList.begin();
+        list<Edge>::iterator it = map.table[i].edgeList.begin();
 
-        while (it != map.table[i]->edgeList.end()) {
+        while (it != map.table[i].edgeList.end()) {
             if (it->targetVertex.vertexName == v) {
                 deg++;
             }
@@ -111,9 +111,9 @@ public:
         int deg = 0;
         
         int i = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[i]->edgeList.begin();
+        list<Edge>::iterator it = map.table[i].edgeList.begin();
         
-        while (it != map.table[i]->edgeList.end()) {
+        while (it != map.table[i].edgeList.end()) {
             if (it->sourceVertex.vertexName == v) {
                 deg++;
             }
@@ -142,8 +142,9 @@ public:
         Edge e(a, b);
         
         int hash = map.hash_fun(u);
-        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-        while (it != map.table[hash]->edgeList.end()) {
+        list<Edge>::iterator it = map.table[hash].edgeList.begin();
+        while (it != map.table[hash].
+               edgeList.end()) {
 			if(it->sourceVertex == a && it->targetVertex == b){
 				w = adjacentAux(a, b);
             }
@@ -155,9 +156,10 @@ public:
 	double adjacentAux(Vertex a, Vertex b){
 			int hash = map.hash_fun(a.vertexName);
 			list<Edge>::iterator it;
-			for(it = map.table[hash]->edgeList.begin();
-				it != map.table[hash]->edgeList.end();
-				it++){
+			for (it = map.table[hash].edgeList.begin();
+				it != map.table[hash].
+                 edgeList.end();
+				it++) {
 				if(it->targetVertex == b) return it->weight;
 			}
 			return -1;
@@ -171,8 +173,8 @@ public:
         int j;
         
         list<Edge>::iterator i;
-        for (i = map.table[hash]->edgeList.begin();
-             i != map.table[hash]->edgeList.end();
+        for (i = map.table[hash].edgeList.begin();
+             i != map.table[hash].edgeList.end();
              ++i) {
             j = map.hash_fun(i->targetVertex.getVertexName());
             if (!visited[j]) {
@@ -191,45 +193,42 @@ public:
         }
         
         DFS_Aux(v, visited);
-        /*
-         Vertex currentVertex;
-         currentVertex = map.get(v);
-         currentVertex.color();
-         cout << currentVertex.vertexName << " ";
-         int hash = map.hash_fun(v);
-         list<Edge>::iterator it;
-         for (it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it) {
-         if (!it->targetVertex.colored && it->targetVertex.vertexName != currentVertex.vertexName) {
-         it->targetVertex.colored = true;
-         DFS(it->targetVertex.vertexName);		// recursive call to DFS
-         }
-         }
-         */
         
-        /*Vertex currentVertex;
-         currentVertex = map.get(v);
-         cout << currentVertex.vertexName << " ";
-         currentVertex.color();
-         
-         int hash = map.hash_fun(v);
-         string name;
-         Vertex nextVertex;
-         if (!map.table[hash]->edgeList.begin()->targetVertex.isColored()) {
-         name = map.table[hash]->edgeList.begin()->targetVertex.getVertexName();
-         nextVertex = map.get(name);
-         }
-         
-         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-         
-         for (it = map.table[hash]->edgeList.begin();
-         it != map.table[hash]->edgeList.end();
-         ++it) {
-         if ((it->targetVertex.vertexName < nextVertex.vertexName)
-         && (it->targetVertex.colored == false)) {
-         name = it->targetVertex.getVertexName();
-         DFS(name);		// recursive call to DFS
-         }
-         }*/
+        delete [] visited;
+    }
+    
+    // Auxiliary function for BFS
+    void BFS_Aux(string v, bool visited[], queue<Vertex> q) {
+        // loop through and set vertex from initial vertex's list, then use the new
+        // vertex's edge list to do the same, etc.
+        //iterator
+        list<Edge>::iterator it;
+        string temp;
+        string s;
+        // while the queue is not empty
+        while (!q.empty()) {
+            // set s to the vertex at the front of the queue
+            //print, then pop.
+            s = q.front().vertexName;
+            cout << s << " ";
+            q.pop();
+            int j;
+            
+            int i = map.hash_fun(v);
+            // loop through the table's adjacency list, if the target
+            // vertex in that edge is not colored, add it to the queue
+            for (it = map.table[i].edgeList.begin();
+                 it != map.table[i].edgeList.end();
+                 ++it) {
+                string temp;
+                temp = it->targetVertex.vertexName;
+                j = map.hash_fun(temp);
+                if (!visited[j]) {
+                    visited[j] = true;
+                    q.push(it->targetVertex);
+                }
+            }
+        }
     }
     
     // performs a breadth first search of graph starting at vertex v
@@ -239,43 +238,19 @@ public:
         for (int i = 0; i < numberOfVertices; i++) {
             visited[i] = false;
         }
-        
-        // Queue for BFS traversal
-        queue<Vertex> queue;
         // get the first vertex, mark it colored
         Vertex a = map.get(v);
-        // temp string
-        string s;
-        //iterator
-        list<Edge>::iterator it;
         // location of v in the table
         int i = map.hash_fun(v);
+        visited[i] = true;
+
+        queue<Vertex> q;
+        q.push(a);
         
-        queue.push(a);
-        string temp;
+        BFS_Aux(v, visited, q);
         
-        // while the queue is not empty
-        while (!queue.empty()) {
-            // set s to the vertex at the front of the queue
-            //print, then pop.
-            s = queue.front().vertexName;
-            visited[i] = true;
-            cout << s << " ";
-            queue.pop();
-            int j;
-            
-            // loop through the table's adjacency list, if the target
-            // vertex in that edge is not colored, add it to the queue
-            for (it = map.table[i]->edgeList.begin();
-                 it != map.table[i]->edgeList.end();
-                 ++it) {
-                j = map.hash_fun(it->targetVertex.getVertexName());
-                if (!visited[j]) {
-                    visited[j] = true;
-                    queue.push(it->targetVertex);
-                }
-            }
-        }
+        delete [] visited;
+        
     }
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
@@ -389,11 +364,11 @@ public:
     void reset(void) {
         list<Edge>::iterator it;
         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-            if (map.table[i] != nullptr) {
-                it = map.table[i]->edgeList.begin();
+            if (!map.table[i].v.vertexName.empty()) {
+                it = map.table[i].edgeList.begin();
                 it->sourceVertex.colored = false;
                 it->targetVertex.colored = false;
-                map.table[i]->getVertex().uncolor();
+                map.table[i].getVertex().uncolor();
             }
         }
     }
@@ -422,9 +397,9 @@ public:
         Edge e(m, n, w);
         int hash = map.hash_fun(u);
         int hash2 = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-        list<Edge>::iterator it2 = map.table[hash2]->edgeList.begin();
-        while (it != map.table[hash]->edgeList.end() && it2 != map.table[hash2]->edgeList.end()) {
+        list<Edge>::iterator it = map.table[hash].edgeList.begin();
+        list<Edge>::iterator it2 = map.table[hash2].edgeList.begin();
+        while (it != map.table[hash].edgeList.end() && it2 != map.table[hash2].edgeList.end()) {
             if (*it == e) {
                 it->weight = e.weight;
             }
