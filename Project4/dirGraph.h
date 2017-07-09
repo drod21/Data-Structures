@@ -11,7 +11,7 @@
 #include <array>
 #include <queue>
 #include <stack>
-#include <limits>
+#include <climits>
 #include <cstdlib>
 
 
@@ -265,8 +265,20 @@ public:
         int hash_end = map.hash_fun(v);
         int hash = map.hash_fun(u);
         //int end = map.hash_fun(v);
+        int min = INFINITY;
         
-        Vertex verts[numberOfVertices];
+        bool final[numberOfVertices];
+        D[start] = 0;
+        
+        
+        for (int i = 0; i < numberOfVertices; i++) {
+            for (int j = 0; j < numberOfVertices; j++) {
+                adj[i][j] = 0;
+            }
+            D[i] = 0;
+            P[i] = "";
+        }
+        Vertex verts[DIR_GRAPH_SIZE];
         
         
         // populate cost table with weights of edges connecting vertices
@@ -290,9 +302,29 @@ public:
         
         // populate distance table with inital distances
         // populate predecessor table with nil
-        for(int i = 0; i < DIR_GRAPH_SIZE; i++){
-            D[i] = adj[start][i];
-            P[i] = "nil";
+        int m;
+        for(m = 1; m < numberOfVertices; m++){
+            D[m] = adj[start][m];
+            P[m] = "nil";
+            final[m] = false;
+        }
+        
+        int i, j;
+        
+        for (i = 1; i < numberOfVertices; i++) {
+            for (j = 1; j < numberOfVertices; j++) {
+                if (!final[j] && D[j] < min) {
+                    verts[m] = mVertex[j];
+                }
+            }
+            
+            final[j] = true;
+            for (j = 1; j < numberOfVertices; j++) {
+                if (!final[j] && min + adj[m][j]) {
+                    D[j] = min + adj[m][j];
+                    P[j] = verts[m].vertexName;
+                }
+            }
         }
     }
     
