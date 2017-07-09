@@ -302,6 +302,10 @@ public:
 	*/
        
 	// graph reset in menu program
+        bool *visited = new bool[numberOfVertices];
+        for (int i = 0; i < numberOfVertices; i++) {
+            visited[i] = false;
+        }
 		double MSTweight = 0;
 		vector<Vertex> MSTset;
 		vector<Vertex> notMSTset;
