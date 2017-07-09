@@ -116,26 +116,7 @@ public:
         
         return connected;
     }
-    
-    bool isCycle(Vertex a, vector<Vertex> notMst) {
-        
-        int count = 0;
-        
-        for (Vertex vert : notMst) {
-            
-            if (adjacent(vert, a) != -1) {
-                count++;
-            }
-        }
-        
-        if (count >= 2) {
-            return true;
-            
-        }
-        
-        return false;
-        
-    }
+
     
     // returns weight of edge connecting vertices u and v
     double adjacent(string u, string v) {
@@ -264,15 +245,36 @@ public:
         
     }
     
-    bool inMst(Vertex a, vector<Vertex> mst) {
+    bool inMst(Vertex a, vector<Vertex> notMSTlist) {
         
-        for (Vertex vert : mst) {
+        for (Vertex vert : notMSTlist) {
             if (vert == a) {
                 return true;
             }
         }
         
         return false;
+    }
+
+    
+    bool isCycle(Vertex a, vector<Vertex> notMst) {
+        
+        int count = 0;
+        
+        for (Vertex vert : notMst) {
+            
+            if (adjacent(vert.vertexName, a.vertexName) != -1) {
+                count++;
+            }
+        }
+        
+        if (count >= 2) {
+            return true;
+            
+        }
+        
+        return false;
+        
     }
     
     bool colored(bool visited[], Edge e) {
@@ -332,10 +334,10 @@ public:
 			for(it = map.table[hash]->edgeList.begin(); 
 				it != map.table[hash]->edgeList.end();
 				++it){
-				if(/*it->weight < shortestEdge.weight &&
-				   targetInMST == true &&
-				   it is not used edge &&
-				   does not form a loop */){
+				if(it->weight < shortestEdge.weight &&
+				   inMst(currentVertex, notMSTset) == true &&
+				  // it is not used edge &&
+				   !isCycle(currentVertex, notMSTset) ){
 						shortestEdge = *it;
 						MSTset.push_back(currentVertex);
 						currentVertex.color();
