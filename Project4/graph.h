@@ -304,7 +304,7 @@ public:
 	// graph reset in menu program
 
 		// set up notMSTset
-        bool *visited = new bool[numberOfVertices];
+        bool *visited = new bool[numberOfEdges];
         for (int i = 0; i < numberOfVertices; i++) {
             visited[i] = false;
         }
