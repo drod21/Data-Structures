@@ -339,7 +339,7 @@ public:
 				++it){
 				if(it->weight < shortestEdge.weight &&
 				   inMst(currentVertex, notMSTset) == true &&
-				  // it is not used edge &&
+				   !colored(visited, *it) &&
 				   !isCycle(currentVertex, notMSTset) ){
 						shortestEdge = *it;
 						MSTset.push_back(currentVertex);
