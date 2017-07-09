@@ -294,6 +294,28 @@ public:
 	// graph reset in menu program
 		double MSTweight = 0;
 		vector<Vertex> MSTset;
+		vector<Vertex> notMSTset;
+		for(int i = 0; i < MAX_GRAPH_SIZE; i++){
+			if(map.table[i] != nullptr){
+				notMSTset.push_back(map.table[i]->getVertex());
+			}
+		}
+		// DEBUGGING
+		cout << "notMSTset: ";
+		//for(int i = 0; i < numberOfVertices; i++){
+		for(Vertex v: notMSTset){
+			notMSTset.pop_back();
+			cout << v.vertexName << " ";
+		}
+		cout << endl;
+		// END DEBUGGING
+
+		while(!notMSTset.empty()){
+			int hash = 
+			for()
+		}
+
+		/*
 		Vertex currentVertex = map.get(v);
 		// start by adding closest vertex to v to MSTset
 		MSTset.push_back(currentVertex);
@@ -303,7 +325,7 @@ public:
 		shortestEdge = *(map.table[hash]->edgeList.begin());
 		Vertex nextVertex;
 		nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
-        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
+        list<Edge>::iterator it;
 		for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
 			if((it->weight < shortestEdge.weight) && (it->targetVertex.colored == false)){
 				shortestEdge = *it;
@@ -314,13 +336,18 @@ public:
 		nextVertex.color();
 		MSTset.push_back(nextVertex);
 
+		currentVertex = nextVertex;
 		// while MSTset does not consist of all vertices, find shortest weight that
 		// does not make a loop and add its target to the MSTset 
 		while(MSTset.size() < numberOfVertices){
 			for(int i = 0; i < MSTset.size(); i++){
+				hash = map.hash_fun(currentVertex.vertexName)
+				shortestEdge = *(map.table[hash]->edgeList.begin());
+				if(currentVertex.targetVertex )
 				
 			}
 		}
+		*/
     }
 		
     
