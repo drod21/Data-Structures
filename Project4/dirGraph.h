@@ -192,13 +192,6 @@ public:
         
     }
     
-    // Auxiliary function for BFS
-    void BFS_Aux(string v, bool visited[], queue<Vertex> q) {
-        // loop through and set vertex from initial vertex's list, then use the new
-        // vertex's edge list to do the same, etc.
-        //iterator
-    }
-    
     // performs a breadth first search of graph starting at vertex v
     void BFS(string v) {
         
@@ -279,16 +272,16 @@ public:
             P[i] = "";
         }
         Vertex verts[DIR_GRAPH_SIZE];
-        
+        final[start] = true;
         
         // populate cost table with weights of edges connecting vertices
         // diagonal of cost table becomes 0's
         for(int i = 0; i < numberOfVertices; i++){
             for(int j = 0; j < numberOfVertices; j++){
-                if(adjacent(mVertex[j].getVertexName(), mVertex[j+1].getVertexName()) == -1) {
+                if(adjacent(mVertex[i].getVertexName(), mVertex[j].getVertexName()) == -1) {
                     adj[i][j] = INFINITY;
                 } else {
-                    adj[i][j] = adjacent(mVertex[j].getVertexName(), mVertex[j+1].getVertexName());
+                    adj[i][j] = adjacent(mVertex[i].getVertexName(), mVertex[j].getVertexName());
                 }
                 
             }
@@ -300,6 +293,13 @@ public:
          }
          */
         
+        cout << " adj table " << endl;
+        for (int i = 0; i < numberOfVertices; i++) {
+            for (int j = 0; j < numberOfVertices; j++) {
+                cout << adj[i][j] << " " ;
+            }
+            cout << endl;
+        }
         // populate distance table with inital distances
         // populate predecessor table with nil
         int m;
