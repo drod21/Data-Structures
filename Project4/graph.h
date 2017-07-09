@@ -116,6 +116,26 @@ public:
         return connected;
     }
     
+    bool isCycle(Vertex a, vector<Vertex> notMst) {
+        
+        int count = 0;
+        
+        for (Vertex vert : notMst) {
+            
+            if (adjacent(vert, a) != -1) {
+                count++;
+            }
+        }
+        
+        if (count >= 2) {
+            return true;
+            
+        }
+        
+        return false;
+        
+    }
+    
     // returns weight of edge connecting vertices u and v
     double adjacent(string u, string v) {
         double w = -1;
@@ -186,41 +206,6 @@ public:
         DFS_Aux(v, visited);
         
     }
-    
-    // performs breadth first search of graph starting at vertex v
-    // non-recursive
-   /* void BFS(string v) {
-        // Queue for BFS traversal
-        queue<Vertex> q;
-        // get the first vertex, mark it colored
-        Vertex a = map.get(v);
-        a.colored = true;
-        q.push(a);
-        // temp string
-        string s;
-        //iterator
-        list<Edge>::iterator it;
-        // location of v in the table
-        int i = map.hash_fun(v);
-        
-        // while the queue is not empty
-        while (!q.empty()) {
-            // set s to the vertex at the front of the queue
-            //print, then pop.
-            s = q.front().vertexName;
-            cout << s << " ";
-            q.pop();
-            
-            // loop through the table's adjacency list, if the target
-            // vertex in that edge is not colored, add it to the queue
-            for (it = map.table[i]->edgeList.begin(); it != map.table[i]->edgeList.end(); ++it) {
-                if (!it->targetVertex.colored && it->targetVertex.vertexName != v) {
-                    it->targetVertex.colored = true;
-                    q.push(it->targetVertex);
-                }
-            }
-        }
-    }*/
     
     // performs a breadth first search of graph starting at vertex v
     void BFS(string v) {
