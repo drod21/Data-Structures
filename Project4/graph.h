@@ -40,6 +40,7 @@ private:
 
     HashTable map;
     vector<Vertex *> vertList;
+    vector<Edge> edgeList;
     Vertex p;
     string fileName;
     int numberOfVertices; //number of vertices
@@ -262,6 +263,30 @@ public:
         }
         
     }
+    
+    bool inMst(Vertex a, vector<Vertex> mst) {
+        
+        for (Vertex vert : mst) {
+            if (vert == a) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    bool colored(bool visited[], Edge e) {
+        int edgeIndex;
+        
+        for (int i = 0; i < edgeList.size(); i++) {
+            
+            if (e == edgeList[i]) {
+                edgeIndex = i;
+            }
+        }
+        
+        return (visited[edgeIndex]);
+    }
 
     
     // uses Prim's algorithm to show minimum spanning tree of
@@ -434,6 +459,7 @@ public:
         Edge e(m, n, w);
         Edge e2(n, m, w);
         
+        
         int hash = map.hash_fun(u);
         int hash2 = map.hash_fun(v);
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
@@ -456,8 +482,13 @@ public:
         } else {
             map.putEdge(u, e);
             map.putEdge(u, e2);
+            
             map.putEdge(v, e);
             map.putEdge(v, e2);
+            
+            edgeList.push_back(e);
+            edgeList.push_back(e2);
+            
             numberOfEdges++;
         }
 
