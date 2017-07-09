@@ -292,6 +292,7 @@ public:
 	*/
        
 	// graph reset in menu program
+		// set up notMSTset
 		double MSTweight = 0;
 		vector<Vertex> MSTset;
 		vector<Vertex> notMSTset;
@@ -301,6 +302,7 @@ public:
 			}
 		}
 		// DEBUGGING
+		/*
 		cout << "notMSTset: ";
 		//for(int i = 0; i < numberOfVertices; i++){
 		for(Vertex v: notMSTset){
@@ -308,12 +310,39 @@ public:
 			cout << v.vertexName << " ";
 		}
 		cout << endl;
+		*/
 		// END DEBUGGING
-
+		
+		// build MST
 		while(!notMSTset.empty()){
-			int hash = 
-			for()
+			Vertex currentVertex = *(notMSTset.end());
+			int hash = map.hash_fun(currentVertex.vertexName);
+        	list<Edge>::iterator it;
+			Edge shortestEdge = *(map.table[hash]->edgeList.begin());
+			for(it = map.table[hash]->edgeList.begin(); 
+				it != map.table[hash]->edgeList.end();
+				++it){
+				if(/*it->weight < shortestEdge.weight &&
+				   targetInMST == true &&
+				   it is not used edge &&
+				   does not form a loop */){
+						shortestEdge = *it;
+						MSTset.push_back(currentVertex);
+						currentVertex.color();
+						MSTweight += shortestEdge.weight;
+						notMSTset.pop_back();
+				}
+					
+			}
 		}
+
+		// display MST and MST weight
+		cout << "MST: ";
+		for(Vertex v: MSTset){
+			cout << v.vertexName << " ";			
+		}
+		cout << endl << "MST weight: " << MSTweight << endl; 
+		
 
 		/*
 		Vertex currentVertex = map.get(v);
