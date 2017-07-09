@@ -116,7 +116,6 @@ public:
         
         return connected;
     }
-
     
     // returns weight of edge connecting vertices u and v
     double adjacent(string u, string v) {
@@ -248,6 +247,7 @@ public:
     bool inMst(Vertex a, vector<Vertex> notMSTlist) {
         
         for (Vertex vert : notMSTlist) {
+
             if (vert == a) {
                 return true;
             }
@@ -255,8 +255,6 @@ public:
         
         return false;
     }
-
-    
     bool isCycle(Vertex a, vector<Vertex> notMst) {
         
         int count = 0;
@@ -304,7 +302,12 @@ public:
 	*/
        
 	// graph reset in menu program
+
 		// set up notMSTset
+        bool *visited = new bool[numberOfVertices];
+        for (int i = 0; i < numberOfVertices; i++) {
+            visited[i] = false;
+        }
 		double MSTweight = 0;
 		vector<Vertex> MSTset;
 		vector<Vertex> notMSTset;
