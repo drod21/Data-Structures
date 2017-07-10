@@ -220,11 +220,10 @@ int main(void) {
                     break;
                     
                 case 8:
-                    cout << "Enter name of first vertex";
+                    cout << "Enter name of first vertex: ";
                     cin.ignore();
                     getline(cin, tempStr1);
                     cout << "Enter name of second vertex: ";
-                    cin.ignore();
 					getline(cin, tempStr2);
                     cout << "The shortest path between " << tempStr1 << " and "
                     << tempStr2 << " is: \n";
