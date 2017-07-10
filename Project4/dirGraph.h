@@ -348,19 +348,19 @@ public:
         int hash_end = map.hash_fun(v);
         int hash = map.hash_fun(u);
         //int end = map.hash_fun(v);
-        int min = INFINITY;
+        
         
         bool visited[numberOfVertices];
         D[start] = 0;
         
         
-        for (int i = 0; i < numberOfVertices; i++) {
-            for (int j = 0; j < numberOfVertices; j++) {
-                adj[i][j] = 0;
-            }
-            D[i] = 0;
-            P[i] = "";
-        }
+        /*        for (int i = 0; i < numberOfVertices; i++) {
+         for (int j = 0; j < numberOfVertices; j++) {
+         adj[i][j] = 0;
+         }
+         D[i] = 0;
+         P[i] = "";
+         }*/
         Vertex verts[DIR_GRAPH_SIZE];
         visited[start] = true;
         
@@ -376,12 +376,6 @@ public:
                 
             }
         }
-        /*
-         // set diagonal of cost table (distance of any vertex to itself) to 0
-         for(int i = 0; i < DIR_GRAPH_SIZE; i++){
-         cost[i][i] = 0;
-         }
-         */
         
         cout << " adj table " << endl;
         for (int i = 0; i < numberOfVertices; i++) {
@@ -402,19 +396,23 @@ public:
         int i, j;
         
         for (i = 1; i < numberOfVertices; i++) {
+            int min = INFINITY;
             for (j = 1; j < numberOfVertices; j++) {
-                if (!visited[j] && D[j] < min) {
-                    m = j;
-                    min = D[j];
-                    //verts[m] = mVertex[j];
-                }
+                if (!visited[j])
+                    if (D[j] < min) {
+                        m = j;
+                        min = D[j];
+                        //verts[m] = mVertex[j];
+                    }
             }
             
             visited[m] = true;
             for (j = 1; j < numberOfVertices; j++) {
-                if (!visited[j] && min + adj[m][j]) {
-                    D[j] = min + adj[m][j];
-                    P[j] = verts[m].vertexName;
+                if (!visited[j]) {
+                    if (min + adj[m][j] < D[j]) {
+                        D[j] = min + adj[m][j];
+                        P[j] = mVertex[m].vertexName;
+                    }
                 }
             }
         }
@@ -440,7 +438,7 @@ public:
         
         cout << "verts bool: " << endl;
         for (int l = 0; l < numberOfVertices; l++) {
-            cout << verts[l].vertexName << " ";
+            cout << mVertex[l].vertexName << " ";
         }
         cout << endl;
     }
@@ -591,8 +589,6 @@ public:
             throw invalid_argument("invalid arg");
         }
         
-        
-        
         Vertex p = map.get(u);
         Vertex q = map.get(v);
         
@@ -609,29 +605,11 @@ public:
         n.setVertexName(v);
         
         Edge e(m, n, w);
-        int hash = map.hash_fun(u);
-        int hash2 = map.hash_fun(v);
-        list<Edge>::iterator it = map.table[hash]->edgeList.begin();
-        list<Edge>::iterator it2 = map.table[hash2]->edgeList.begin();
-        if ((adjacent(u,v) != -1)) {
-            while (it != map.table[hash]->edgeList.end() &&
-                   it2 != map.table[hash2]->edgeList.end()) {
-                if (*it == e) {
-                    it->weight = e.weight;
-                }
-                
-                if (*it2 == e) {
-                    it2->weight = e.weight;
-                }
-                ++it;
-                ++it2;
-            }
-        } else {
-            // insert the edge at both locations, u and v
-            map.putEdge(u, e);
-            map.putEdge(v, e);
-            numberOfEdges++;
-        }
+        
+        // insert the edge at both locations, u and v
+        map.putEdge(u, e);
+        numberOfEdges++;
+        
     }
     
 };
