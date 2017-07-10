@@ -340,10 +340,9 @@ public:
                 ++it) {
                 if(it->weight < shortestEdge.weight &&
                    inMst(currentVertex, notMSTset) &&
-                   visited[hash] &&
+                   //visited[hash] &&
                    !isCycle(currentVertex, notMSTset)) {
-                    shortestEdge = *it;
-                    
+                   shortestEdge = *it;
                 }
             }
             
