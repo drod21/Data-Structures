@@ -343,11 +343,11 @@ public:
                    visited[hash] &&
                    !isCycle(currentVertex, notMSTset)) {
                     shortestEdge = *it;
-                    MSTweight += shortestEdge.weight;
+                    
                 }
             }
             
-            
+            MSTweight += shortestEdge.weight;
         }
         while (!tempStack.empty()) {
             MSTset.push_back(tempStack.top());
