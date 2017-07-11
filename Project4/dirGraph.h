@@ -344,14 +344,18 @@ public:
         double D[numberOfVertices];				// distance table
         string P[numberOfVertices];				// predecessor table;
         // start and end for use with cost, distance, and predecessor tables
-        int start = 0;
-        int hash_end = map.hash_fun(v);
-        int hash = map.hash_fun(u);
-        //int end = map.hash_fun(v);
+        Vertex a = map.get(u);
         
+        auto it = std::find(mVertex.begin(), mVertex.end(),a) - mVertex.begin();
+        
+        int q = (int) it;
+        int start = q;
+        //int end = map.hash_fun(v);
         
         bool visited[numberOfVertices];
         D[start] = 0;
+        Vertex verts[DIR_GRAPH_SIZE];
+        visited[start] = true;
         
         
         /*        for (int i = 0; i < numberOfVertices; i++) {
@@ -361,12 +365,10 @@ public:
          D[i] = 0;
          P[i] = "";
          }*/
-        Vertex verts[DIR_GRAPH_SIZE];
-        visited[start] = true;
         
         // populate cost table with weights of edges connecting vertices
         // diagonal of cost table becomes 0's
-        for(int i = 0; i < numberOfVertices; i++){
+        for(int i = q; i < numberOfVertices; i++){
             for(int j = 0; j < numberOfVertices; j++){
                 if(adjacent(mVertex[i].getVertexName(), mVertex[j].getVertexName()) == -1) {
                     adj[i][j] = INFINITY;
@@ -417,30 +419,36 @@ public:
             }
         }
         
-        cout << "final bool: " << endl;
-        for (int l = 0; l < numberOfVertices; l++) {
-            cout << visited[l] << " ";
+        cout << "Vertex\tDistance from Source" << endl;
+        for (int i = 0; i < numberOfVertices; i++) {
+            cout << mVertex[i].vertexName << "\t" << D[i] << endl;
         }
         cout << endl;
         
-        cout << "dist bool: " << endl;
-        for (int l = 0; l < numberOfVertices; l++) {
-            cout << D[l] << " ";
-        }
-        cout << endl;
-        
-        cout << "pred bool: " << endl;
-        for (int l = 0; l < numberOfVertices; l++) {
-            cout << P[l] << " ";
-        }
-        cout << endl;
-        
-        
-        cout << "verts bool: " << endl;
-        for (int l = 0; l < numberOfVertices; l++) {
-            cout << mVertex[l].vertexName << " ";
-        }
-        cout << endl;
+        /*  cout << "final bool: " << endl;
+         for (int l = 0; l < numberOfVertices; l++) {
+         cout << visited[l] << " ";
+         }
+         cout << endl;
+         
+         cout << "dist bool: " << endl;
+         for (int l = 0; l < numberOfVertices; l++) {
+         cout << D[l] << " ";
+         }
+         cout << endl;
+         
+         cout << "pred bool: " << endl;
+         for (int l = 0; l < numberOfVertices; l++) {
+         cout << P[l] << " ";
+         }
+         cout << endl;
+         
+         
+         cout << "verts bool: " << endl;
+         for (int l = 0; l < numberOfVertices; l++) {
+         cout << mVertex[l].vertexName << " ";
+         }
+         cout << endl;*/
     }
     
     // returns shortest distance between vertices u and v
@@ -566,6 +574,15 @@ public:
     
     // removes all vertices in graph
     void clearGraph(void) {
+        
+        for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
+            if (map.table[i] != nullptr) {
+                delete map.table[i];
+            }
+        }
+        
+        numberOfVertices = 0;
+        numberOfEdges = 0;
         
     }
     
