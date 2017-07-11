@@ -353,7 +353,7 @@ public:
 
          // build MST
         for (int i = 0; i < edgeList.size(); i++) {
-            Edge currentEdge = notMSTset.back();
+            Edge currentEdge = notMSTset[i];
              Edge shortestEdge = notMSTset[i + 1];
             if (currentEdge.weight < shortestEdge.weight && !visited[i]) {
                 shortestEdge = currentEdge;
