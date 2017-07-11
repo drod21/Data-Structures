@@ -315,20 +315,7 @@ public:
         
         return e;
     }
-    
-    int minKey(int key[], bool mstSet[])
-    {
-        // Initialize min value
-        int min = INT_MAX, min_index = 0;
-        
-        for (int v = 0; v < numberOfVertices; v++)
-            if (mstSet[v] == false && key[v] < min)
-                min = key[v], min_index = v;
-        
-        return min_index;
-    }
-    
-    
+
     
     // uses Prim's algorithm to show minimum spanning tree of
     // the vertices that are connected to v
