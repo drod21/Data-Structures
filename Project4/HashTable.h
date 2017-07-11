@@ -70,7 +70,20 @@ public:
         while (table[hash] != nullptr && table[hash]->getKey() != key){
             hash = (hash + 1) % SIZE;
         }
+        bool found = false;
         // Return the vertex associated with the key
+        if (key != table[hash]->v.vertexName) {
+            while (table[hash] != nullptr && table[hash]->v.vertexName != key){
+                hash = (hash + 1) % SIZE;
+            }
+        } else {
+            found = true;
+        }
+        
+        if (!found) {
+            throw invalid_argument("invalid arg");
+        }
+        
         return table[hash]->v;
     }
     

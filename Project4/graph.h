@@ -97,15 +97,25 @@ public:
     
     // returns weight of edge connecting vertices u and v
     double adjacent(string u, string v) {
+        
+        try
+        {
+            map.get(u);
+            map.get(v);
+        } catch (invalid_argument &e) {
+            cerr << e.what() << endl;
+        }
+        
         double w = -1;
         // if same vertex, return 0
-        if(u == v){
+        if (u == v) {
             w = 0.0;
             return w;
         }
         Vertex a(u);
         Vertex b(v);
         Edge e(a, b);
+        
         
         int hash = map.hash_fun(u);
         list<Edge>::iterator it = map.table[hash]->
@@ -119,7 +129,7 @@ public:
         return w;
     }
     
-    double adjacentAux(Vertex a, Vertex b){
+    double adjacentAux(Vertex a, Vertex b) {
         int hash = map.hash_fun(a.vertexName);
         list<Edge>::iterator it;
         for(it = map.table[hash]->edgeList.begin();
@@ -301,6 +311,13 @@ public:
     // the vertices that are connected to v
     void MST(string v) {
 
+        try
+        {
+            map.get(v);
+        } catch (invalid_argument &e) {
+            cerr << e.what() << endl;
+        }
+            
         bool visited[numberOfEdges];
         for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
              visited[i] = false;
@@ -336,7 +353,7 @@ public:
 
          // build MST
         for (int i = 0; i < edgeList.size(); i++) {
-             Edge currentEdge = notMSTset[i];
+            Edge currentEdge = notMSTset.back();
              Edge shortestEdge = notMSTset[i + 1];
             if (currentEdge.weight < shortestEdge.weight && !visited[i]) {
                 shortestEdge = currentEdge;

@@ -106,10 +106,19 @@ public:
         // will return -1 (infinity) if vertices do not share an edge
         double w = -1;
         // if same vertex, return 0
-        if(u == v){
+        if (u == v) {
             w = 0.0;
             return w;
         }
+        
+        try
+        {
+            map.get(u);
+            map.get(v);
+        } catch (invalid_argument &e) {
+            cerr << e.what() << endl;
+        }
+        
         Vertex a(u);
         Vertex b(v);
         Edge e(a, b);
@@ -122,6 +131,7 @@ public:
             }
             it++;
         }
+
         return w;
     }
     

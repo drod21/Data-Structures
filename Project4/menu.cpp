@@ -13,12 +13,15 @@ using namespace std;
 
 int main(void) {
     char graphType;
+    
     string fileName;
-    int menuSelection = 0;
     string vertexToGetDegree;
     string tempStr1, tempStr2;
+    
+    int menuSelection = 0;
+    int inDeg, outDeg, deg;
+    
     double weight;
-    double dist;
     
     // get graph type and text file name from user
     cout << "Enter graph type [d: directed; u: undirected]: ";
@@ -48,18 +51,26 @@ int main(void) {
             
             switch(menuSelection) {
                 case 1:
-                    if(myGraph.empty() == true)
-                        cout << "Graph is empty" << endl;
-                    else
-                        cout << "Graph is not empty" << endl;
+                    myGraph.empty() ?
+                    cout << "Graph is empty" << endl :
+                    cout << "Graph is not empty" << endl;
                     break;
                     
                 case 2:
                     cout << "Enter vertex name to get degree of:";
                     cin.ignore();
                     getline(cin, vertexToGetDegree);
-                    cout << "Degree of vertex " << vertexToGetDegree << " is "
-                    << myGraph.degree(vertexToGetDegree) << endl;
+                    try
+                    {
+                        deg = myGraph.degree(vertexToGetDegree);
+                        cout << "Degree of vertex " << vertexToGetDegree << " is "
+                        << deg << endl;
+                    }
+                    catch (invalid_argument &e)
+                    {
+                        cerr << endl;
+                    }
+                    
                     break;
                     
                 case 3:
@@ -78,7 +89,12 @@ int main(void) {
                     getline(cin, tempStr1);
                     cout << "Enter name of second vertex: ";
                     getline(cin, tempStr2);
-                    weight = myGraph.adjacent(tempStr1, tempStr2);
+                    try {
+                        weight = myGraph.adjacent(tempStr1, tempStr2);
+                    } catch (invalid_argument &e) {
+                        cerr << e.what() << endl;
+                    }
+                             
                     cout << "The weight of the edge connecting " << tempStr1
                     << " with " << tempStr2 << " is "
                     << weight << endl;
@@ -162,26 +178,37 @@ int main(void) {
             
             switch(menuSelection) {
                 case 1:
-                    if(myGraph.empty() == true)
-                        cout << "Graph is empty" << endl;
-                    else
-                        cout << "Graph is not empty" << endl;
+                    myGraph.empty() ?
+                    cout << "Graph is empty" << endl :
+                    cout << "Graph is not empty" << endl;
                     break;
                     
                 case 2:
                     cout << "Enter vertex name to get inDegree of:";
                     cin.ignore();
                     getline(cin, vertexToGetDegree);
-                    cout << "InDegree of vertex " << vertexToGetDegree << " is "
-                    << myGraph.inDegree(vertexToGetDegree) << endl;
+                    try {
+                        inDeg = myGraph.inDegree(vertexToGetDegree);
+                        cout << "InDegree of vertex " << vertexToGetDegree << " is "
+                        << inDeg << endl;
+                    } catch (invalid_argument &e) {
+                        cerr << e.what() << endl;
+                    }
+                    
                     break;
                     
                 case 3:
                     cout << "Enter vertex name to get outDegree of:";
                     cin.ignore();
                     getline(cin, vertexToGetDegree);
-                    cout << "OutDegree of vertex " << vertexToGetDegree << " is "
-                    << myGraph.outDegree(vertexToGetDegree) << endl;
+                    try {
+                        outDeg = myGraph.outDegree(vertexToGetDegree);
+                        cout << "OutDegree of vertex " << vertexToGetDegree << " is "
+                        << outDeg << endl;
+                    } catch (invalid_argument &e) {
+                        cerr << e.what() << endl;
+                    }
+                    
                     break;
                     
                 case 4:
@@ -218,12 +245,17 @@ int main(void) {
                     break;
                     
                 case 8:
-                    cout << "Enter name of first vertex: ";
+                    cout << "Enter the vertex name to begin shortest path: ";
                     cin.ignore();
                     getline(cin, tempStr1);
                     cout << "The shortest path between " << tempStr1 <<
-							" and each vertex: " << endl; 
-                    myGraph.shortPath(tempStr1);
+							" and each vertex: " << endl;
+                    try {
+                        myGraph.shortPath(tempStr1);
+                    } catch (invalid_argument &e) {
+                        cerr << e.what() << endl;
+                    }
+                    
                     break;
                     
                 case 9:
@@ -246,7 +278,7 @@ int main(void) {
                     try {
                         myGraph.insert(tempStr1, tempStr2, weight);
                     } catch (invalid_argument &e) {
-                        cerr << e.what();
+                        cerr << e.what() << endl;
                     }
                     break;
                 case 11:
