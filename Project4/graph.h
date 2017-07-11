@@ -329,9 +329,6 @@ public:
         int h = map.hash_fun(v);
         stack<Edge> tempStack;
 
-		// DEBUGGING
-		cout << "test1 second call" << endl;
-
          // DEBUGGING
 		 /*
          cout << "notMSTset: ";
@@ -348,9 +345,6 @@ public:
             notMSTset.push_back(e);
         }
 		    
-		// DEBUGGING
-		cout << "test2 second call" << endl;
-
          // build MST
         for (int i = 0; i < edgeList.size(); i++) {
             Edge currentEdge = notMSTset[i];
@@ -362,9 +356,6 @@ public:
                 MSTweight += shortestEdge.weight;
             }
         }
-         
-		// DEBUGGGING 
-		cout << "test3 second call" << endl;
 
          // display MST and MST weight
         cout << "MST starting at " << v << ": " <<endl;

@@ -115,6 +115,7 @@ int main(void) {
                     getline(cin, tempStr1);
                     myGraph.BFS(tempStr1);
                     myGraph.reset();
+					cout << endl;
                     break;
                     
                 case 8:
@@ -242,6 +243,7 @@ int main(void) {
                     getline(cin, tempStr1);
                     myGraph.BFS(tempStr1);
                     myGraph.reset();
+					cout << endl;
                     break;
                     
                 case 8:
