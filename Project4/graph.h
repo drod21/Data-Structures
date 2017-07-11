@@ -371,6 +371,7 @@ public:
         }
         
         // build MST
+
         for (int i = 0; i < edgeList.size(); i++) {
             Edge currentEdge = notMSTset[i];
             Edge shortestEdge = notMSTset[i + 1];
@@ -380,6 +381,27 @@ public:
                 
                 visited[i] = true;
                 MSTweight += shortestEdge.weight;
+/*
+        while (!notMSTset.empty()) {
+            Vertex currentVertex = notMSTset.back();
+            int hash = map.hash_fun(currentVertex.vertexName);
+            list<Edge>::iterator it;
+            Edge shortestEdge = map.table[hash]->edgeList.front();
+            
+            tempStack.push(currentVertex);
+            visited[hash] = true;
+            
+            notMSTset.pop_back();
+            for(it = map.table[hash]->edgeList.begin();
+                it != map.table[hash]->edgeList.end();
+                ++it) {
+                if(it->weight < shortestEdge.weight &&
+                   inMst(currentVertex, notMSTset) &&
+                   //visited[hash] &&
+                   !isCycle(currentVertex, notMSTset)) {
+                   shortestEdge = *it;
+                }
+*/
             }
         }
         
