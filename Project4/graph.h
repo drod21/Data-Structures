@@ -13,6 +13,7 @@
 #include <vector>
 #include <fstream>
 #include <array>
+#include <algorithm>
 
 #include "HashTable.h"
 #include "vertex.h"

@@ -13,6 +13,7 @@
 #include <stack>
 #include <climits>
 #include <cstdlib>
+#include <algorithm>
 
 
 #include "HashTable.h"
@@ -287,59 +288,7 @@ public:
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
     void shortPath(string u, string v) {
-        
-        
-        /* priority_queue<STP, vector<STP>, greater<STP>> pq;
-         
-         double dist[numberOfEdges];
-         for (int i = 0; i < numberOfVertices; i++) {
-         dist[i] = INFINITY;
-         }
-         pq.push(make_pair(0, u));
-         int start = 0;
-         dist[start] = 0;
-         
-         while (!pq.empty()) {
-         // The first vertex in pair is the minimum distance
-         // vertex, extract it from priority queue.
-         // vertex label is stored in second of pair (it
-         // has to be done this way to keep the vertices
-         // sorted distance (distance must be first item
-         // in pair)
-         string a = pq.top().second;
-         int start = 0;
-         int hash = map.hash_fun(a);
-         pq.pop();
-         // 'i' is used to get all adjacent vertices of a vertex
-         list<Edge>::iterator i;
-         for (i = map.table[hash]->edgeList.begin(); i != map.table[hash]->edgeList.end(); ++i)
-         {
-         // Get vertex label and weight of current adjacent
-         // of u.
-         Vertex v = i->targetVertex;
-         string vert_name = v.vertexName;
-         double weight = i->weight;
-         int hash_next = map.hash_fun(vert_name);
-         int j = 1;
-         
-         //  If there is shorted path to v through u.
-         if (dist[j] > dist[start] + weight && j < numberOfEdges)
-         {
-         // Updating distance of v
-         dist[j++] = dist[start] + weight;
-         pq.push(make_pair(dist[j], vert_name));
-         }
-         
-         }
-         }
-         
-         
-         cout << "Vertex \t Distance from Source" << endl;
-         for (int i = 0; i < numberOfVertices; ++i) {
-         cout << dist[i] << " ";
-         }
-         cout << endl;
-         }*/
+
         double adj[numberOfVertices][numberOfVertices];	// cost table for total weight
         double D[numberOfVertices];				// distance table
         string P[numberOfVertices];				// predecessor table;
@@ -356,15 +305,6 @@ public:
         D[start] = 0;
         Vertex verts[DIR_GRAPH_SIZE];
         visited[start] = true;
-        
-        
-        /*        for (int i = 0; i < numberOfVertices; i++) {
-         for (int j = 0; j < numberOfVertices; j++) {
-         adj[i][j] = 0;
-         }
-         D[i] = 0;
-         P[i] = "";
-         }*/
         
         // populate cost table with weights of edges connecting vertices
         // diagonal of cost table becomes 0's
@@ -424,64 +364,10 @@ public:
             cout << mVertex[i].vertexName << "\t" << D[i] << endl;
         }
         cout << endl;
-        
-      /*  cout << "final bool: " << endl;
-        for (int l = 0; l < numberOfVertices; l++) {
-            cout << visited[l] << " ";
-        }
-        cout << endl;
-        
-        cout << "dist bool: " << endl;
-        for (int l = 0; l < numberOfVertices; l++) {
-            cout << D[l] << " ";
-        }
-        cout << endl;
-        
-        cout << "pred bool: " << endl;
-        for (int l = 0; l < numberOfVertices; l++) {
-            cout << P[l] << " ";
-        }
-        cout << endl;
-        
-        
-        cout << "verts bool: " << endl;
-        for (int l = 0; l < numberOfVertices; l++) {
-            cout << mVertex[l].vertexName << " ";
-        }
-        cout << endl;*/
-    }
+         }
     
     // returns shortest distance between vertices u and v
     double distance(string u, string v) {
-        
-        /*HashEntry *m[numberOfVertices];
-         for (int i = 0; i < SIZE; i++) {
-         m[i] = nullptr;
-         }
-         
-         double dis = 0.0;
-         double distance[numberOfVertices];
-         int hash_start = map.hash_fun(u);
-         int hash_end = map.hash_fun(v);
-         m[0]->key = dis;
-         
-         
-         if (adjacent(u, v) != -1) {
-         dis = adjacent(u, v);
-         
-         } else {
-         auto iter = map.table[hash_start]->edgeList.begin();
-         int i = 0;
-         while (iter != map.table[hash_start]->edgeList.end()) {
-         distance[i++] = iter->weight;
-         ++iter;
-         }
-         
-         }
-         
-         
-         return dis;*/
-        
         int hash = map.hash_fun(u);
         
         bool *visited = new bool[numberOfVertices];
