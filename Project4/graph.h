@@ -333,7 +333,7 @@ public:
     // the vertices that are connected to v
     void MST(string v) {
         
-        /*PSEUDO CODE
+         /*PSEUDO CODE
          initialize MSTset to empty
          add v to MSTset
          find shorteset edge from v, add its target to MSTset, totalCost = edge legnth
@@ -341,21 +341,21 @@ public:
          find shortest edge from all vertices in MSTset that does not lead to an already visited vertex and add that target to MSTset, totalCost += edge legnth
          
          */
-        // graph reset in menu program
-        
-        // set up notMSTset
+         // graph reset in menu program
+         
+         // set up notMSTset
         bool visited[numberOfEdges];
         for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
-            visited[i] = false;
-        }
+             visited[i] = false;
+         }
         double MSTweight = 0;
         vector<Edge> MSTset;
         vector<Edge> notMSTset;
-        
+
         int h = map.hash_fun(v);
         stack<Edge> tempStack;
-        // DEBUGGING
-        /*
+         // DEBUGGING
+         /*
          cout << "notMSTset: ";
          //for(int i = 0; i < numberOfVertices; i++){
          for(Vertex v: notMSTset){
@@ -369,64 +369,42 @@ public:
         for (Edge e : edgeList) {
             notMSTset.push_back(e);
         }
-        
-        // build MST
-
+    
+         // build MST
         for (int i = 0; i < edgeList.size(); i++) {
-            Edge currentEdge = notMSTset[i];
-            Edge shortestEdge = notMSTset[i + 1];
+             Edge currentEdge = notMSTset[i];
+             Edge shortestEdge = notMSTset[i + 1];
             if (currentEdge.weight < shortestEdge.weight && !visited[i]) {
                 shortestEdge = currentEdge;
                 MSTset.push_back(shortestEdge);
                 
                 visited[i] = true;
                 MSTweight += shortestEdge.weight;
-/*
-        while (!notMSTset.empty()) {
-            Vertex currentVertex = notMSTset.back();
-            int hash = map.hash_fun(currentVertex.vertexName);
-            list<Edge>::iterator it;
-            Edge shortestEdge = map.table[hash]->edgeList.front();
-            
-            tempStack.push(currentVertex);
-            visited[hash] = true;
-            
-            notMSTset.pop_back();
-            for(it = map.table[hash]->edgeList.begin();
-                it != map.table[hash]->edgeList.end();
-                ++it) {
-                if(it->weight < shortestEdge.weight &&
-                   inMst(currentVertex, notMSTset) &&
-                   //visited[hash] &&
-                   !isCycle(currentVertex, notMSTset)) {
-                   shortestEdge = *it;
-                }
-*/
             }
         }
-        
-        // display MST and MST weight
+         
+         // display MST and MST weight
         cout << "MST: " << endl;;
-        for(Edge v: MSTset){
-            cout << v.sourceVertex.getVertexName() << "\t" << v.targetVertex.getVertexName() << "\t" << v.weight << endl;
-        }
-        cout << endl << "MST weight: " << MSTweight << endl;
-        
-        
-        /*
-         Vertex currentVertex = map.get(v);
-         // start by adding closest vertex to v to MSTset
-         MSTset.push_back(currentVertex);
-         currentVertex.color();
-         int hash = map.hash_fun(v);
-         Edge shortestEdge;
-         shortestEdge = *(map.table[hash]->edgeList.begin());
-         Vertex nextVertex;
-         nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
-         list<Edge>::iterator it;
-         for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
-         if((it->weight < shortestEdge.weight) && (it->targetVertex.colored == false)){
-         shortestEdge = *it;
+         for(Edge v: MSTset){
+             cout << v.sourceVertex.getVertexName() << "\t" << v.targetVertex.getVertexName() << "\t" << v.weight << endl;
+         }
+            cout << endl << "MST weight: " << MSTweight << endl;
+         
+         
+         /*
+            Vertex currentVertex = map.get(v);
+            // start by adding closest vertex to v to MSTset
+            MSTset.push_back(currentVertex);
+            currentVertex.color();
+            int hash = map.hash_fun(v);
+            Edge shortestEdge;
+            shortestEdge = *(map.table[hash]->edgeList.begin());
+            Vertex nextVertex;
+            nextVertex = map.table[hash]->edgeList.begin()->targetVertex;
+            list<Edge>::iterator it;
+            for(it = map.table[hash]->edgeList.begin(); it != map.table[hash]->edgeList.end(); ++it){
+                if((it->weight < shortestEdge.weight) && (it->targetVertex.colored == false)){
+                    shortestEdge = *it;
          }
          }
          MSTweight += shortestEdge.weight;
@@ -445,59 +423,59 @@ public:
          
          }
          }*/
-        /*
-         
-         int parent[numberOfVertices]; // Array to store constructed MST
-         int key[numberOfVertices];   // Key values used to pick minimum weight edge in cut
-         bool mstSet[numberOfVertices];  // To represent set of vertices not yet included in MST
-         double adj[numberOfVertices][numberOfVertices];
-         // Initialize all keys as INFINITE
-         for (int i = 0; i < numberOfVertices; i++)
-         key[i] = INT_MAX, mstSet[i] = false;
-         
-         // Always include first 1st vertex in MST.
-         key[0] = 0;     // Make key 0 so that this vertex is picked as first vertex
-         parent[0] = -1; // First node is always root of MST
-         
-         for(int i = 0; i < numberOfVertices; i++){
-         for(int j = 0; j < numberOfVertices; j++){
-         if(adjacent(mVertex[i].getVertexName(), mVertex[j].getVertexName()) == -1) {
-         adj[i][j] = 0;
-         } else {
-         adj[i][j] = adjacent(mVertex[i].getVertexName(), mVertex[j].getVertexName());
-         }
-         
-         }
-         }
-         
-         // The MST will have V vertices
-         for (int count = 0; count < numberOfVertices-1; count++)
-         {
-         // Pick the minimum key vertex from the set of vertices
-         // not yet included in MST
-         int u = minKey(key, mstSet);
-         
-         // Add the picked vertex to the MST Set
-         mstSet[u] = true;
-         cout << key[count] << "   " << mstSet[count] << endl;
-         
-         // Update key value and parent index of the adjacent vertices of
-         // the picked vertex. Consider only those vertices which are not yet
-         // included in MST
-         for (int m = 0; m < numberOfVertices; m++)
-         
-         // graph[u][v] is non zero only for adjacent vertices of m
-         // mstSet[v] is false for vertices not yet included in MST
-         // Update the key only if graph[u][v] is smaller than key[v]
-         if (adj[u][m] && mstSet[m] == false && adj[u][m] <  key[m])
-         parent[m]  = u;
-         }
-         int j;
-         printf("Edge   Weight\n");
-         for (int i = 0; i < numberOfVertices; i++) {
-         j = parent[i];
-         printf("%d - %d    %f \n", parent[i], i, adj[i][j]);
-         }*/
+         /*
+        
+        int parent[numberOfVertices]; // Array to store constructed MST
+        int key[numberOfVertices];   // Key values used to pick minimum weight edge in cut
+        bool mstSet[numberOfVertices];  // To represent set of vertices not yet included in MST
+        double adj[numberOfVertices][numberOfVertices];
+        // Initialize all keys as INFINITE
+        for (int i = 0; i < numberOfVertices; i++)
+            key[i] = INT_MAX, mstSet[i] = false;
+        
+        // Always include first 1st vertex in MST.
+        key[0] = 0;     // Make key 0 so that this vertex is picked as first vertex
+        parent[0] = -1; // First node is always root of MST
+        
+        for(int i = 0; i < numberOfVertices; i++){
+            for(int j = 0; j < numberOfVertices; j++){
+                if(adjacent(mVertex[i].getVertexName(), mVertex[j].getVertexName()) == -1) {
+                    adj[i][j] = 0;
+                } else {
+                    adj[i][j] = adjacent(mVertex[i].getVertexName(), mVertex[j].getVertexName());
+                }
+                
+            }
+        }
+        
+        // The MST will have V vertices
+        for (int count = 0; count < numberOfVertices-1; count++)
+        {
+            // Pick the minimum key vertex from the set of vertices
+            // not yet included in MST
+            int u = minKey(key, mstSet);
+            
+            // Add the picked vertex to the MST Set
+            mstSet[u] = true;
+            cout << key[count] << "   " << mstSet[count] << endl;
+            
+            // Update key value and parent index of the adjacent vertices of
+            // the picked vertex. Consider only those vertices which are not yet
+            // included in MST
+            for (int m = 0; m < numberOfVertices; m++)
+                
+                // graph[u][v] is non zero only for adjacent vertices of m
+                // mstSet[v] is false for vertices not yet included in MST
+                // Update the key only if graph[u][v] is smaller than key[v]
+                if (adj[u][m] && mstSet[m] == false && adj[u][m] <  key[m])
+                    parent[m]  = u;
+        }
+        int j;
+        printf("Edge   Weight\n");
+        for (int i = 0; i < numberOfVertices; i++) {
+            j = parent[i];
+            printf("%d - %d    %f \n", parent[i], i, adj[i][j]);
+        }*/
     }
     
     
@@ -635,7 +613,6 @@ public:
             map.putEdge(v, e2);
             
             edgeList.push_back(e);
-            edgeList.push_back(e2);
             
             numberOfEdges++;
         }

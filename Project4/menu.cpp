@@ -18,6 +18,7 @@ int main(void) {
     string vertexToGetDegree;
     string tempStr1, tempStr2;
     double weight;
+    double dist;
     
     // get graph type and text file name from user
     cout << "Enter graph type [d: directed; u: undirected]: ";
@@ -66,15 +67,9 @@ int main(void) {
                     break;
                     
                 case 4:
-                    cout << "Enter first vertex to check connection or not" << endl;
-                    getline(cin, tempStr1);
-                    cout << "Enter second vertex: ";
-                    getline(cin, tempStr2);
-                    cout << endl;
-                    if(myGraph.isConnected(tempStr1, tempStr2) == true)
-                        cout << "The graph is connected" << endl;
-                    else
-                        cout << "The graph is not connected" << endl;
+                    myGraph.isConnected() ?
+                    cout << "The graph is connected" << endl :
+                    cout << "The graph is not connected" << endl;
                     break;
                     
                 case 5:
@@ -228,6 +223,9 @@ int main(void) {
                     cout << "The shortest path between " << tempStr1 << " and "
                     << tempStr2 << " is: \n";
                     myGraph.shortPath(tempStr1, tempStr2);
+                    cout << "Shortest distance is: ";
+                    dist = myGraph.distance(tempStr1, tempStr2);
+                    cout << dist << endl;
                     break;
                     
                 case 9:

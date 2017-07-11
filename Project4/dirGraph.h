@@ -425,30 +425,30 @@ public:
         }
         cout << endl;
         
-        /*  cout << "final bool: " << endl;
-         for (int l = 0; l < numberOfVertices; l++) {
-         cout << visited[l] << " ";
-         }
-         cout << endl;
-         
-         cout << "dist bool: " << endl;
-         for (int l = 0; l < numberOfVertices; l++) {
-         cout << D[l] << " ";
-         }
-         cout << endl;
-         
-         cout << "pred bool: " << endl;
-         for (int l = 0; l < numberOfVertices; l++) {
-         cout << P[l] << " ";
-         }
-         cout << endl;
-         
-         
-         cout << "verts bool: " << endl;
-         for (int l = 0; l < numberOfVertices; l++) {
-         cout << mVertex[l].vertexName << " ";
-         }
-         cout << endl;*/
+      /*  cout << "final bool: " << endl;
+        for (int l = 0; l < numberOfVertices; l++) {
+            cout << visited[l] << " ";
+        }
+        cout << endl;
+        
+        cout << "dist bool: " << endl;
+        for (int l = 0; l < numberOfVertices; l++) {
+            cout << D[l] << " ";
+        }
+        cout << endl;
+        
+        cout << "pred bool: " << endl;
+        for (int l = 0; l < numberOfVertices; l++) {
+            cout << P[l] << " ";
+        }
+        cout << endl;
+        
+        
+        cout << "verts bool: " << endl;
+        for (int l = 0; l < numberOfVertices; l++) {
+            cout << mVertex[l].vertexName << " ";
+        }
+        cout << endl;*/
     }
     
     // returns shortest distance between vertices u and v
