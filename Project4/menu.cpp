@@ -31,7 +31,7 @@ int main(void) {
     if (graphType == 'u') {
         Graph myGraph(fileName);
         while(menuSelection != 11){
-            cout << "Selection a menu option: \n"
+            cout << "Select a menu option: \n"
             << "1: Empty?\n"
             << "2: Degree (v)\n"
             << "3: Edge count\n"
@@ -89,6 +89,7 @@ int main(void) {
                     cin.ignore();
                     getline(cin, tempStr1);
                     myGraph.DFS(tempStr1);
+					cout << endl;
                     myGraph.reset();
                     break;
                     
@@ -140,10 +141,11 @@ int main(void) {
         } // end while
         // end if, begin else
         // menu for directed graph
+
     } else if (graphType == 'd'){
         DirGraph myGraph(fileName);
         while(menuSelection != 11){
-            cout << "Selection a menu option: \n"
+            cout << "Select a menu option: \n"
             << "1: Empty?\n"
             << "2: InDegree (v)\n"
             << "3: OutDegree\n"
@@ -203,6 +205,7 @@ int main(void) {
                     getline(cin, tempStr1);
 					myGraph.reset();
                     myGraph.DFS(tempStr1);
+					cout << endl;
                     myGraph.reset();
                     break;
                     
@@ -218,14 +221,9 @@ int main(void) {
                     cout << "Enter name of first vertex: ";
                     cin.ignore();
                     getline(cin, tempStr1);
-                    cout << "Enter name of second vertex: ";
-					getline(cin, tempStr2);
-                    cout << "The shortest path between " << tempStr1 << " and "
-                    << tempStr2 << " is: \n";
-                    myGraph.shortPath(tempStr1, tempStr2);
-                    cout << "Shortest distance is: ";
-                    dist = myGraph.distance(tempStr1, tempStr2);
-                    cout << dist << endl;
+                    cout << "The shortest path between " << tempStr1 <<
+							" and each vertex: " << endl; 
+                    myGraph.shortPath(tempStr1);
                     break;
                     
                 case 9:

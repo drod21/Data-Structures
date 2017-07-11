@@ -51,7 +51,6 @@ public:
     
     // destructor
     ~DirGraph() {
-        //delete[] map.table;
         numberOfEdges = 0;
         numberOfVertices = 0;
         fileName = "";
@@ -59,14 +58,6 @@ public:
     
     // returns true iff graph is empty
     bool empty(void) {
-        /*bool notEmpty = false;
-         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-         if (map.table[i].dataHere)
-         notEmpty = true;
-         }
-         
-         return notEmpty;*/
-        
         if (numberOfVertices > 0) {
             return false;
         }
@@ -77,18 +68,6 @@ public:
     // Need to loop through whole array
     int inDegree(string v) {
         int deg = 0;
-        /*Vertex a = map.get(v);
-         
-         list<Edge>::iterator it;
-         for (int i = 0; i < DIR_GRAPH_SIZE; i++) {
-         it = map.table[i].edgeList.begin();
-         while (it != map.table[i].edgeList.end()) {
-         if (it->getTarget().vertexName == a.vertexName) {
-         deg++;
-         }
-         }
-         }
-         */
         int i = map.hash_fun(v);
         list<Edge>::iterator it = map.table[i]->edgeList.begin();
         
@@ -97,8 +76,7 @@ public:
                 deg++;
             }
             it++;
-        }
-        
+        }    
         return deg;
     }
     
@@ -114,8 +92,7 @@ public:
                 deg++;
             }
             it++;
-        }
-        
+        }       
         return deg;
     }
     
@@ -190,8 +167,7 @@ public:
             visited[i] = false;
         }
         
-        DFS_Aux(v, visited);
-        
+        DFS_Aux(v, visited);        
     }
     
     // performs a breadth first search of graph starting at vertex v
@@ -281,13 +257,12 @@ public:
             }
             ++it;
             ++it2;
-        }
-        
+        }       
         return e;
     }
     
     // shows the shortest path (using Dijkstra's algorithm) between vertices u and v
-    void shortPath(string u, string v) {
+    void shortPath(string u) {
 
         double adj[numberOfVertices][numberOfVertices];	// cost table for total weight
         double D[numberOfVertices];				// distance table
@@ -318,14 +293,7 @@ public:
                 
             }
         }
-        
-        cout << " adj table " << endl;
-        for (int i = 0; i < numberOfVertices; i++) {
-            for (int j = 0; j < numberOfVertices; j++) {
-                cout << adj[i][j] << " " ;
-            }
-            cout << endl;
-        }
+
         // populate distance table with inital distances
         // populate predecessor table with nil
         int m;
@@ -344,7 +312,6 @@ public:
                     if (D[j] < min) {
                         m = j;
                         min = D[j];
-                        //verts[m] = mVertex[j];
                     }
             }
             

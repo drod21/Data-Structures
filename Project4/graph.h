@@ -24,13 +24,6 @@
 class Graph {
     
 private:
-    /*
-     HashEntry **table;
-     Vertex v;
-     Edge e;
-     vector<adjacencyList*> adjListVector;
-     */
-    
     HashTable map;
     vector<Edge> edgeList;
     Vertex p;
@@ -81,8 +74,7 @@ public:
     int edgeCount(void) {
         return numberOfEdges;
     }
-    
-    
+       
     // returns true if graph is connected
     bool isConnected() {
         
@@ -237,23 +229,19 @@ public:
         
     }
     
-    bool inMst(Edge a, vector<Edge> notMSTlist) {
-        
+    bool inMst(Edge a, vector<Edge> notMSTlist) {        
         for (Edge edge : notMSTlist) {
             
             if (edge == a) {
                 return true;
             }
         }
-        
         return false;
     }
-    bool isCycle(Edge a, vector<Edge> notMst) {
-        
-        int count = 0;
-        
+
+    bool isCycle(Edge a, vector<Edge> notMst) {        
+        int count = 0;        
         for (Edge edge : notMst) {
-            
             if (adjacent(edge.targetVertex.vertexName, a.targetVertex.vertexName) != -1) {
                 count++;
             } else if (adjacent(edge.sourceVertex.vertexName, a.targetVertex.vertexName) != -1) {
@@ -263,14 +251,11 @@ public:
                 count++;
             }
         }
-        
         if (count >= 2) {
             return true;
             
         }
-        
         return false;
-        
     }
     
     bool colored(bool visited[], Edge e) {
@@ -281,25 +266,21 @@ public:
             if (e == edgeList[i]) {
                 edgeIndex = i;
             }
-        }
-        
+        }        
         return (visited[edgeIndex]);
     }
     
     Edge nextMinVert(Vertex vert) {
         Vertex a = vert;
         int hash = map.hash_fun(vert.vertexName);
-        Edge e;
-        
+        Edge e;        
         list<Edge> mList = map.table[hash]->edgeList;
-        
         auto it = mList.begin();
         auto it2= mList.begin();
         double minWeight = -1;
         
         while (it != mList.end() || it2 != mList.end()) {
-            ++it;
-            
+            ++it;            
             if (it2->weight < it->weight && it2->weight < minWeight) {
                 minWeight = it2->weight;
                 a = it2->targetVertex;
@@ -311,8 +292,7 @@ public:
             }
             ++it;
             ++it2;
-        }
-        
+        }        
         return e;
     }
 
@@ -320,18 +300,7 @@ public:
     // uses Prim's algorithm to show minimum spanning tree of
     // the vertices that are connected to v
     void MST(string v) {
-        
-         /*PSEUDO CODE
-         initialize MSTset to empty
-         add v to MSTset
-         find shorteset edge from v, add its target to MSTset, totalCost = edge legnth
-         while MSTset does not include all vertices
-         find shortest edge from all vertices in MSTset that does not lead to an already visited vertex and add that target to MSTset, totalCost += edge legnth
-         
-         */
-         // graph reset in menu program
-         
-         // set up notMSTset
+
         bool visited[numberOfEdges];
         for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
              visited[i] = false;
@@ -342,42 +311,100 @@ public:
 
         int h = map.hash_fun(v);
         stack<Edge> tempStack;
+
+		// DEBUGGING
+		cout << "test1 second call" << endl;
+
          // DEBUGGING
-         /*
+		 /*
          cout << "notMSTset: ";
          //for(int i = 0; i < numberOfVertices; i++){
          for(Vertex v: notMSTset){
          notMSTset.pop_back();
          cout << v.vertexName << " ";
          }
-         cout << endl;
-         
-         // END DEBUGGING*/
+         cout << endl;  
+		 */     
+         // END DEBUGGING
         
         for (Edge e : edgeList) {
             notMSTset.push_back(e);
         }
-    
+		    
+		// DEBUGGING
+		cout << "test2 second call" << endl;
+
          // build MST
         for (int i = 0; i < edgeList.size(); i++) {
              Edge currentEdge = notMSTset[i];
              Edge shortestEdge = notMSTset[i + 1];
             if (currentEdge.weight < shortestEdge.weight && !visited[i]) {
                 shortestEdge = currentEdge;
-                MSTset.push_back(shortestEdge);
-                
+                MSTset.push_back(shortestEdge); 
                 visited[i] = true;
                 MSTweight += shortestEdge.weight;
             }
         }
          
+		// DEBUGGGING 
+		cout << "test3 second call" << endl;
+
          // display MST and MST weight
-        cout << "MST: " << endl;;
+        cout << "MST starting at " << v << ": " <<endl;
          for(Edge v: MSTset){
              cout << v.sourceVertex.getVertexName() << "\t" << v.targetVertex.getVertexName() << "\t" << v.weight << endl;
          }
             cout << endl << "MST weight: " << MSTweight << endl;
+
+
          
+/*
+		// set up notMSTset
+        bool *visited = new bool[numberOfEdges];
+        for (int i = 0; i < numberOfVertices; i++) {
+            visited[i] = false;
+        }
+		double MSTweight = 0;
+		vector<Vertex> MSTset;
+		vector<Vertex> notMSTset;
+		for(int i = 0; i < MAX_GRAPH_SIZE; i++){
+			if(map.table[i] != nullptr){
+				notMSTset.push_back(map.table[i]->getVertex());
+			}
+}
+		
+		// build MST
+		while(!notMSTset.empty()){
+			Vertex currentVertex = *(notMSTset.end());
+			int hash = map.hash_fun(currentVertex.vertexName);
+        	list<Edge>::iterator it;
+			Edge shortestEdge = *(map.table[hash]->edgeList.begin());
+			for(it = map.table[hash]->edgeList.begin(); 
+				it != map.table[hash]->edgeList.end();
+				++it){
+				if(it->weight < shortestEdge.weight &&
+				   inMst(currentVertex *it, notMSTset) == true &&
+				   !colored(visited, *it) &&
+				   !isCycle(currentVertex*it, notMSTset) ){
+						shortestEdge = *it;
+						MSTset.push_back(currentVertex);
+						currentVertex.color();
+						MSTweight += shortestEdge.weight;
+						notMSTset.pop_back();
+				}
+					
+			}
+		}
+
+		// display MST and MST weight
+		cout << "MST: ";
+		for(Vertex v: MSTset){
+			cout << v.vertexName << " ";			
+		}
+		cout << endl << "MST weight: " << MSTweight << endl; 
+
+
+*/
          
          /*
             Vertex currentVertex = map.get(v);
@@ -488,8 +515,7 @@ public:
             return;
         } else {
             int i = 0;
-            // read the first line, count for number of vertices
-            
+            // read the first line, count for number of vertices           
             getline(infile, line);
             int j;
             for (i = 0, j = 0; i < line.length(); i++) {
@@ -526,17 +552,14 @@ public:
     }
     
     // removes all vertices from graph
-    void clear(void) {
-        
+    void clear(void) {        
         for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
             if (map.table[i] != nullptr) {
                 delete map.table[i];
             }
-        }
-        
+        }       
         numberOfVertices = 0;
-        numberOfEdges = 0;
-        
+        numberOfEdges = 0;       
     }
     
     // marks all vertices as unvisited
@@ -544,8 +567,7 @@ public:
         for (int i = 0; i < MAX_GRAPH_SIZE; i++) {
             if (map.table[i] != nullptr) {
                 map.table[i]->getVertex().uncolor();
-            }
-            
+            }           
         }
     }
     
@@ -572,8 +594,7 @@ public:
         
         Edge e(m, n, w);
         Edge e2(n, m, w);
-        
-        
+               
         int hash = map.hash_fun(u);
         int hash2 = map.hash_fun(v);
         list<Edge>::iterator it = map.table[hash]->edgeList.begin();
@@ -604,11 +625,7 @@ public:
             
             numberOfEdges++;
         }
-        
-        // insert the edge at both locations, u and v
     }
-    
-    
 };
 
 #endif /* graph_h */

@@ -16,14 +16,11 @@ using namespace std;
 class HashEntry {
 
 public:
-    
-    //bool dataHere;
     string key;
     Vertex v;
     list<Edge> edgeList;
     
-    HashEntry() {
-        
+    HashEntry() {       
     }
     
     HashEntry(string key, Vertex v) {
@@ -31,16 +28,11 @@ public:
 		this->key = key;
         this->v = v;
     }
-    /*HashEntry(string key, Vertex v, bool here) {
-        this->dataHere = here;
-        key = v.vertexName;
-        this->v = v;
-        dataHere = here;
-    }*/
     
     string getKey() {
         return key;
     }
+
     Vertex getVertex() {
         return v;
     }
@@ -52,10 +44,8 @@ public:
     
     HashEntry *table[SIZE];
     Edge e;
-    
-
-    HashTable() {
-        
+   
+    HashTable() {     
         for (int i = 0; i < SIZE; i++) {
             table[i] = nullptr;
         }
@@ -71,26 +61,21 @@ public:
     int hash_fun(string key) const {
         int hash;
         char ch = key[0];
-        hash = ch % SIZE;
-        
-        
+        hash = ch % SIZE;        
         return hash;
     }
     
     Vertex get(string key) {
-        int hash = hash_fun(key);
-        
+        int hash = hash_fun(key);        
         while (table[hash] != nullptr && table[hash]->getKey() != key){
             hash = (hash + 1) % SIZE;
         }
         // Return the vertex associated with the key
         return table[hash]->v;
-
     }
     
     void put(string key, Vertex value) {
-        int hash = hash_fun(key);
-        
+        int hash = hash_fun(key);       
         while (table[hash] != nullptr  && table[hash]->getKey() != key) {
             hash = (hash + 1) % SIZE;
         }
@@ -114,9 +99,7 @@ public:
             hash = (hash + 1) % SIZE;
         }
         // Push the edge to the edge list at the hash position
-        table[hash]->edgeList.push_back(e);
-        
-        
+        table[hash]->edgeList.push_back(e);        
     }
 };
 
